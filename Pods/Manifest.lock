@@ -1,0 +1,40 @@
+PODS:
+  - Bolts (1.1.2)
+  - CardIO (3.8.3)
+  - Facebook-iOS-SDK (3.17.0):
+    - Bolts
+  - FlatUIKit (1.4)
+  - JSQFlatButton (2.0.0)
+  - libPhoneNumber-iOS (0.7.3)
+  - LTPhoneNumberField (0.5.0):
+    - libPhoneNumber-iOS (~> 0.7.2)
+  - Parse (1.2.21):
+    - Facebook-iOS-SDK (~> 3.17)
+  - PaymentKit (1.0.5)
+  - Shimmer (1.0.1)
+  - Stripe (1.1.4):
+    - PaymentKit (~> 1.0.4)
+
+DEPENDENCIES:
+  - CardIO
+  - FlatUIKit
+  - JSQFlatButton
+  - LTPhoneNumberField
+  - Parse
+  - Shimmer
+  - Stripe
+
+SPEC CHECKSUMS:
+  Bolts: 2635e8698a630774689441047f3465d78c48d485
+  CardIO: de8d02da5003619533f52e4a5c44d84496ddb25c
+  Facebook-iOS-SDK: f20274d809f112ba540842e2b6cbe50128d51b7b
+  FlatUIKit: edc1ed0c130687dc64a10e45851cc58925f6893d
+  JSQFlatButton: e8a11ba46496e7db757ddc24469774c254365ece
+  libPhoneNumber-iOS: 98fc07d70c8fdb5e6a8e3442c37e97353065c20e
+  LTPhoneNumberField: 5c7357f959e8175d297132c4dd09cf262922fe35
+  Parse: 4be4e9fe2ee6dae16010e7622a5641a7c89154b7
+  PaymentKit: 14b54835f57ae9e2bf5628140fcd67001740cba2
+  Shimmer: 35aa2a57b8fbc17f9e16706021665966fd93dbd1
+  Stripe: a0ed1c0675a3c36f6e8d575820cfec1dc9335f53
+
+COCOAPODS: 0.33.1

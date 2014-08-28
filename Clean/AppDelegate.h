@@ -2,7 +2,7 @@
 //  AppDelegate.h
 //  Clean
 //
-//  Created by Sapan Bhuta on 8/28/14.
+//  Created by Sapan Bhuta on 8/27/14.
 //  Copyright (c) 2014 SapanBhuta. All rights reserved.
 //
 
@@ -11,5 +11,5 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
++ (UIViewController *)nextVC;
 @end
