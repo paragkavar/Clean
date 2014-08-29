@@ -30,6 +30,12 @@
 #define COCOAPODS_VERSION_MINOR_FlatUIKit 4
 #define COCOAPODS_VERSION_PATCH_FlatUIKit 0
 
+// INTULocationManager
+#define COCOAPODS_POD_AVAILABLE_INTULocationManager
+#define COCOAPODS_VERSION_MAJOR_INTULocationManager 1
+#define COCOAPODS_VERSION_MINOR_INTULocationManager 2
+#define COCOAPODS_VERSION_PATCH_INTULocationManager 0
+
 // JSQFlatButton
 #define COCOAPODS_POD_AVAILABLE_JSQFlatButton
 #define COCOAPODS_VERSION_MAJOR_JSQFlatButton 2

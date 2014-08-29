@@ -4,6 +4,7 @@ PODS:
   - Facebook-iOS-SDK (3.17.0):
     - Bolts
   - FlatUIKit (1.4)
+  - INTULocationManager (1.2.0)
   - JSQFlatButton (2.0.0)
   - libPhoneNumber-iOS (0.7.3)
   - LTPhoneNumberField (0.5.0):
@@ -18,6 +19,7 @@ PODS:
 DEPENDENCIES:
   - CardIO
   - FlatUIKit
+  - INTULocationManager
   - JSQFlatButton
   - LTPhoneNumberField
   - Parse
@@ -29,6 +31,7 @@ SPEC CHECKSUMS:
   CardIO: de8d02da5003619533f52e4a5c44d84496ddb25c
   Facebook-iOS-SDK: f20274d809f112ba540842e2b6cbe50128d51b7b
   FlatUIKit: edc1ed0c130687dc64a10e45851cc58925f6893d
+  INTULocationManager: 596c57e35a00ca1ee9d59bf4cc2b63dc299b580e
   JSQFlatButton: e8a11ba46496e7db757ddc24469774c254365ece
   libPhoneNumber-iOS: 98fc07d70c8fdb5e6a8e3442c37e97353065c20e
   LTPhoneNumberField: 5c7357f959e8175d297132c4dd09cf262922fe35
