@@ -10,6 +10,7 @@
 #import "IntroViewController.h"
 #import "GetPhoneNumberViewController.h"
 #import "GetAddressViewController.h"
+#import "GetHomeInfoViewController.h"
 #import "GetPaymentCardViewController.h"
 #import "RootViewController.h"
 #import <Parse/Parse.h>
@@ -42,6 +43,11 @@
     else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"address"])
     {
         return [GetAddressViewController new];
+    }
+    else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"bedrooms"] &&
+             ![[NSUserDefaults standardUserDefaults] objectForKey:@"bathrooms"])
+    {
+        return [GetHomeInfoViewController new];
     }
     else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"])
     {
