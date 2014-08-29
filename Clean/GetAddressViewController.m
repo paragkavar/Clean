@@ -195,10 +195,6 @@
 
 - (void)save:(JSQFlatButton *)sender
 {
-    if (!_addressString)
-    {
-        _addressString = _addressField.text;
-    }
     [[NSUserDefaults standardUserDefaults] setObject:_addressString forKey:@"address"];
     [self presentViewController:[GetHomeInfoViewController new] animated:NO completion:nil];
 }
