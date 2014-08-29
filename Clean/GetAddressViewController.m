@@ -29,6 +29,8 @@
     [self createButton];
     [self createEntryField];
     [self createLocationButton];
+
+#warning get number of bedrooms, bathrooms
 }
 
 - (void)createTitle

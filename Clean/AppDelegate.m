@@ -43,7 +43,7 @@
     {
         return [GetAddressViewController new];
     }
-    else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"stripeToken"])
+    else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"])
     {
         return [GetPaymentCardViewController new];
     }

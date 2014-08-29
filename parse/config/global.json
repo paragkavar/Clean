@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Clean": {
+            "applicationId": "53godaMM1NHAkE58b6w4ezaZ1bytmhxhF9BjCsCQ", 
+            "masterKey": "l3WIc677xOwpbAfr2438lxNnMdlelAnoKI53tFtl"
+        }, 
+        "_default": {
+            "link": "Clean"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.19"
+    }
+}

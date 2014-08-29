@@ -213,7 +213,8 @@
         {
             NSLog(@"Error in creating customer: %@",error);
             [self handleStripeError:error];
-            [self presentViewController:self animated:NO completion:nil];
+//            [self presentViewController:self animated:NO completion:nil];
+#warning figure out
         }
         else
         {
@@ -222,20 +223,24 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
             [self addUserToDataBase];
             [self presentViewController:[RootViewController new] animated:NO completion:nil];
-
-#warning create stripe subscription
         }
     }];
 }
 
 - (void)addUserToDataBase
 {
-#warning may create duplicates
-    PFObject *user = [PFObject objectWithClassName:@"User"];
-    user[@"phoneNumber"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
-    user[@"address"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"address"];
-    user[@"customerId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
-    [user saveInBackground];
+    PFQuery *query = [PFQuery queryWithClassName:@"User"];
+    [query whereKey:@"phoneNumber" equalTo:[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        for (PFObject *object in objects) {
+            [object deleteInBackground];
+        }
+        PFObject *user = [PFObject objectWithClassName:@"User"];
+        user[@"phoneNumber"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
+        user[@"address"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"address"];
+        user[@"customerId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
+        [user saveInBackground];
+    }];
 }
 
 @end

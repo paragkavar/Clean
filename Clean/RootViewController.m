@@ -55,7 +55,7 @@
 - (void)createButton
 {
     self.clean = [[JSQFlatButton alloc] initWithFrame:buttonFrame
-                                      backgroundColor:[UIColor colorWithRed:0.18f green:0.67f blue:0.84f alpha:1.0f]
+                                      backgroundColor:[UIColor colorWithRed:1.00f green:1.00f blue:1.00f alpha:1.0f]
                                       foregroundColor:[UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f]
                                                 title:@"Clean"
                                                 image:nil];
@@ -65,13 +65,12 @@
 
 - (void)clean:(JSQFlatButton *)sender
 {
-    if (NO) //on service
+    if (NO) //already subscribed
     {
-
     }
-    else //go to charge
+    else //start subscription
     {
-
+#warning create stripe subscription
     }
 }
 
