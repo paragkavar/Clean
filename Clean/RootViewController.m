@@ -14,10 +14,12 @@
 #import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
 #import "FBShimmeringView.h"
+#import <Parse/Parse.h>
 
-@interface RootViewController ()
+@interface RootViewController () <UIAlertViewDelegate>
 @property JSQFlatButton *clean;
 @property UIDatePicker *datePicker;
+@property UIActivityIndicatorView *activity;
 @end
 
 @implementation RootViewController
@@ -29,6 +31,7 @@
     [self createTitle];
     [self createDatePicker];
     [self createButton];
+    [self createActivityView];
 }
 
 - (void)createTitle
@@ -52,6 +55,14 @@
     [self.view addSubview:_datePicker];
 }
 
+- (void)createActivityView
+{
+    _activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    _activity.center = _datePicker.center;
+    [_activity hidesWhenStopped];
+    [self.view addSubview:_activity];
+}
+
 - (void)createButton
 {
     self.clean = [[JSQFlatButton alloc] initWithFrame:buttonFrame
@@ -65,24 +76,54 @@
 
 - (void)clean:(JSQFlatButton *)sender
 {
-    if (NO) //already subscribed
-    {
-    }
-    else //start subscription
-    {
-#warning create stripe subscription
-    }
+    _clean.enabled = NO;
+    [_activity startAnimating];
+    [self createCharge];
+}
+
+- (void)createCharge
+{
+    NSString *amount = @"50";
+    NSString *customerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
+    [PFCloud callFunctionInBackground:@"createCharge"
+                       withParameters:@{@"amount":amount, @"customer":customerId}
+                                block:^(id chargeId, NSError *error)
+     {
+         [_activity stopAnimating];
+         if (!error)
+         {
+             NSString *message = [NSString stringWithFormat:@"Cleaner will come on %@",[self getDate]];
+             [[[UIAlertView alloc] initWithTitle:@"Awesome!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+             [self recordTransaction:chargeId];
+         }
+         else
+         {
+             [[[UIAlertView alloc] initWithTitle:@"Error creating charge" message:@"Please check your network connection and try again" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+         }
+     }];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    _clean.enabled = YES;
+}
+
+- (void)recordTransaction:(NSString *)chargeId
+{
+    PFObject *transaction = [PFObject objectWithClassName:@"Transaction"];
+    transaction[@"phoneNumber"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
+    transaction[@"address"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"address"];
+    transaction[@"date"] = [self getDate];
+    transaction[@"customerId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
+    transaction[@"chargeId"] = chargeId;
+    [transaction saveInBackground];
 }
 
 - (NSString *)getDate
 {
-    NSLocale *usLocale = [[NSLocale alloc]
-                          initWithLocaleIdentifier:@"en_US"];
-
+    NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
     NSDate *pickerDate = [_datePicker date];
-    NSString *selectionString = [[NSString alloc]
-                                 initWithFormat:@"%@",
-                                 [pickerDate descriptionWithLocale:usLocale]];
+    NSString *selectionString = [[NSString alloc] initWithFormat:@"%@", [pickerDate descriptionWithLocale:usLocale]];
     return selectionString;
 }
 

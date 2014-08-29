@@ -213,7 +213,7 @@
         {
             NSLog(@"Error in creating customer: %@",error);
             [self handleStripeError:error];
-//            [self presentViewController:self animated:NO completion:nil];
+            [self presentViewController:self animated:NO completion:nil];
 #warning figure out
         }
         else
@@ -229,6 +229,7 @@
 
 - (void)addUserToDataBase
 {
+#warning duplicates problem in parse and stripe
     PFQuery *query = [PFQuery queryWithClassName:@"User"];
     [query whereKey:@"phoneNumber" equalTo:[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"]];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {

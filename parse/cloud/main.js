@@ -31,3 +31,18 @@ Parse.Cloud.define("createCustomer", function(request, response) {
     }
   });
 });
+
+Parse.Cloud.define("createCharge", function(request, response) {
+  Stripe.Charges.create({
+    amount: 100*request.params.amount,
+    currency: "usd",
+    customer: request.params.customer
+  }, {
+    success: function(httpResponse) {
+      response.success(httpResponse.id);
+    },
+    error: function(httpResponse) {
+      response.error(httpResponse.message);
+    }
+  });
+});

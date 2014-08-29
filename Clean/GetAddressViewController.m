@@ -19,6 +19,7 @@
 @property UIButton *locationButton;
 @property BOOL gettingLocation;
 @property int requestID;
+@property CLLocation *location;
 @property NSArray *formattedAddress;
 @property NSString *addressString;
 @property UIActivityIndicatorView *activity;
@@ -147,6 +148,7 @@
                      else
                      {
                          [_activity stopAnimating];
+                         _location = currentLocation;
                          _formattedAddress = [placemarks.firstObject addressDictionary][@"FormattedAddressLines"];
                          _addressString = [NSString stringWithFormat:@"%@\n%@",_formattedAddress[0],_formattedAddress[1]];
                          _addressLabel.text = _addressString;
@@ -180,6 +182,7 @@
 - (void)revertFromLocationGetting
 {
     [_activity stopAnimating];
+    _save.enabled = NO;
     _addressLabel.hidden = YES;
     [UIView animateWithDuration:.3 animations:^{
         _locationButton.center = CGPointMake(self.view.frame.size.width/2, 110);
