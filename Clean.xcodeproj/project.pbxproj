@@ -29,6 +29,7 @@
 		8EB9A86C19AFE8F50013849E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A86B19AFE8F50013849E /* main.m */; };
 		8EB9A86F19AFE9030013849E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A86E19AFE9030013849E /* AppDelegate.m */; };
 		8EB9A87119AFE9180013849E /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 8EB9A87019AFE9180013849E /* Podfile */; };
+		8EB9A87419B0E7AE0013849E /* GetHomeInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A87319B0E7AE0013849E /* GetHomeInfoViewController.m */; };
 		FA4BA2F8D8D14E50BB713358 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5C194B615694DD88512E74F /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -76,6 +77,8 @@
 		8EB9A86D19AFE9030013849E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8EB9A86E19AFE9030013849E /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		8EB9A87019AFE9180013849E /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		8EB9A87219B0E7AE0013849E /* GetHomeInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetHomeInfoViewController.h; sourceTree = "<group>"; };
+		8EB9A87319B0E7AE0013849E /* GetHomeInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetHomeInfoViewController.m; sourceTree = "<group>"; };
 		A5C194B615694DD88512E74F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -191,6 +194,8 @@
 				8EB9A86219AFE8D00013849E /* VerifyPhoneNumberViewController.m */,
 				8EB9A85219AFE8AD0013849E /* GetAddressViewController.h */,
 				8EB9A85319AFE8AD0013849E /* GetAddressViewController.m */,
+				8EB9A87219B0E7AE0013849E /* GetHomeInfoViewController.h */,
+				8EB9A87319B0E7AE0013849E /* GetHomeInfoViewController.m */,
 				8EB9A85419AFE8AD0013849E /* GetPaymentCardViewController.h */,
 				8EB9A85519AFE8AD0013849E /* GetPaymentCardViewController.m */,
 				8EB9A86519AFE8DF0013849E /* camera-old.png */,
@@ -335,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EB9A85B19AFE8AD0013849E /* GetPaymentCardViewController.m in Sources */,
+				8EB9A87419B0E7AE0013849E /* GetHomeInfoViewController.m in Sources */,
 				8EB9A86419AFE8D00013849E /* VerifyPhoneNumberViewController.m in Sources */,
 				8EB9A86319AFE8D00013849E /* RootViewController.m in Sources */,
 				8EB9A85D19AFE8AD0013849E /* IntroViewController.m in Sources */,

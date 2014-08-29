@@ -83,22 +83,48 @@
 
 - (void)createCharge
 {
-    NSString *amount = @"50";
-    NSString *customerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
-    [PFCloud callFunctionInBackground:@"createCharge"
-                       withParameters:@{@"amount":amount, @"customer":customerId}
-                                block:^(id chargeId, NSError *error)
+    NSString *bedrooms = [[NSUserDefaults standardUserDefaults] stringForKey:@"bedrooms"];
+    NSString *bathrooms = [[NSUserDefaults standardUserDefaults] stringForKey:@"bathrooms"];
+
+    [PFCloud callFunctionInBackground:@"costCalc"
+                       withParameters:@{@"bedrooms":bedrooms, @"bathrooms":bathrooms}
+                                block:^(NSString *amount, NSError *error)
      {
-         [_activity stopAnimating];
          if (!error)
          {
-             NSString *message = [NSString stringWithFormat:@"Cleaner will come on %@",[self getDate]];
-             [[[UIAlertView alloc] initWithTitle:@"Awesome!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
-             [self recordTransaction:chargeId];
+             NSString *customerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
+             [PFCloud callFunctionInBackground:@"createCharge"
+                                withParameters:@{@"amount":amount, @"customer":customerId}
+                                         block:^(id chargeId, NSError *error)
+              {
+                  [_activity stopAnimating];
+                  if (!error)
+                  {
+                      NSString *message = [NSString stringWithFormat:@"Cleaner will come on %@",[self getDate]];
+                      [[[UIAlertView alloc] initWithTitle:@"Awesome!"
+                                                  message:message
+                                                 delegate:self
+                                        cancelButtonTitle:@"OK"
+                                        otherButtonTitles:nil, nil] show];
+                      [self recordTransaction:chargeId];
+                  }
+                  else
+                  {
+                      [[[UIAlertView alloc] initWithTitle:@"Error creating charge"
+                                                  message:@"Please check your network connection and try again"
+                                                 delegate:self
+                                        cancelButtonTitle:@"OK"
+                                        otherButtonTitles:nil, nil] show];
+                  }
+              }];
          }
          else
          {
-             [[[UIAlertView alloc] initWithTitle:@"Error creating charge" message:@"Please check your network connection and try again" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+             [[[UIAlertView alloc] initWithTitle:@"Error creating charge"
+                                         message:@"Please check your network connection and try again"
+                                        delegate:self
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles:nil, nil] show];
          }
      }];
 }

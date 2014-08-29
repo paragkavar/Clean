@@ -46,3 +46,8 @@ Parse.Cloud.define("createCharge", function(request, response) {
     }
   });
 });
+
+Parse.Cloud.define("costCalc", function(request, response) {
+  response.success('50');
+  response.error('YOLO');
+});

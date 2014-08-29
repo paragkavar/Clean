@@ -7,7 +7,7 @@
 //
 
 #import "GetAddressViewController.h"
-#import "GetPaymentCardViewController.h"
+#import "GetHomeInfoViewController.h"
 #import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
 #import "INTULocationManager.h"
@@ -200,7 +200,7 @@
         _addressString = _addressField.text;
     }
     [[NSUserDefaults standardUserDefaults] setObject:_addressString forKey:@"address"];
-    [self presentViewController:[GetPaymentCardViewController new] animated:NO completion:nil];
+    [self presentViewController:[GetHomeInfoViewController new] animated:NO completion:nil];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
