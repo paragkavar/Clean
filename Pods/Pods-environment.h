@@ -42,12 +42,6 @@
 #define COCOAPODS_VERSION_MINOR_JSQFlatButton 0
 #define COCOAPODS_VERSION_PATCH_JSQFlatButton 0
 
-// LTPhoneNumberField
-#define COCOAPODS_POD_AVAILABLE_LTPhoneNumberField
-#define COCOAPODS_VERSION_MAJOR_LTPhoneNumberField 0
-#define COCOAPODS_VERSION_MINOR_LTPhoneNumberField 5
-#define COCOAPODS_VERSION_PATCH_LTPhoneNumberField 0
-
 // Parse
 #define COCOAPODS_POD_AVAILABLE_Parse
 #define COCOAPODS_VERSION_MAJOR_Parse 1
@@ -71,10 +65,4 @@
 #define COCOAPODS_VERSION_MAJOR_Stripe 1
 #define COCOAPODS_VERSION_MINOR_Stripe 1
 #define COCOAPODS_VERSION_PATCH_Stripe 4
-
-// libPhoneNumber-iOS
-#define COCOAPODS_POD_AVAILABLE_libPhoneNumber_iOS
-#define COCOAPODS_VERSION_MAJOR_libPhoneNumber_iOS 0
-#define COCOAPODS_VERSION_MINOR_libPhoneNumber_iOS 7
-#define COCOAPODS_VERSION_PATCH_libPhoneNumber_iOS 3
 

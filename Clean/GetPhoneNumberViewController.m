@@ -41,7 +41,6 @@
 
 - (void)createEntryField
 {
-#warning problem here with LTPhoneNumberField
     _phoneEntry = [[UITextField alloc] initWithFrame:CGRectMake(20, 100, self.view.frame.size.width-2*20, 100)];
     _phoneEntry.delegate = self;
     _phoneEntry.placeholder = @"enter phone number";
