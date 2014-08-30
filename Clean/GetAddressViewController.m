@@ -38,8 +38,6 @@
     [self createLocationButton];
     [self createActivityView];
     _gettingLocation = NO;
-
-#warning get number of bedrooms, bathrooms
 }
 
 - (void)createTitle
@@ -108,8 +106,6 @@
     [_locationButton setImage:[UIImage imageNamed:@"location"] forState:UIControlStateNormal];
     _locationButton.frame = CGRectMake(self.view.frame.size.width - 53, 121.5, 48, 48);
     _locationButton.center = CGPointMake(self.view.frame.size.width/2, 110);
-//    _locationButton.hidden = ![UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera];
-#warning check if GPS is available
     [self.view addSubview:_locationButton];
 }
 

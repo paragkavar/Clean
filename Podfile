@@ -5,4 +5,3 @@ pod 'JSQFlatButton'
 pod 'FlatUIKit'
 pod 'Shimmer'
 pod 'INTULocationManager'
-pod "LTPhoneNumberField"
