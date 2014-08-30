@@ -13,6 +13,7 @@
 #import "LTPhoneNumberField.h"
 
 @interface GetPhoneNumberViewController ()
+//@property UITextField *phoneEntry;
 @property LTPhoneNumberField *phoneEntry;
 @property NSTimer *buttonCheckTimer;
 @property JSQFlatButton *verify;
@@ -50,7 +51,7 @@
     _phoneEntry.keyboardAppearance = UIKeyboardAppearanceDark;
     _phoneEntry.keyboardType = UIKeyboardTypePhonePad;
     _phoneEntry.textAlignment = NSTextAlignmentCenter;
-//    [self.view addSubview:_phoneEntry];
+    [self.view addSubview:_phoneEntry];
     [_phoneEntry becomeFirstResponder];
 }
 

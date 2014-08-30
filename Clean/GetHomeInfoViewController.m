@@ -10,7 +10,6 @@
 #import "GetPaymentCardViewController.h"
 #import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
-#import "SBLabel.h"
 
 @interface GetHomeInfoViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
 @property UIPickerView *bedroomPicker;
@@ -31,8 +30,12 @@
 
 - (void)createTitle
 {
-    SBLabel *title = [[SBLabel alloc] initWithFrame:CGRectMake(10, 30, self.view.frame.size.width-2*10, 50)];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, self.view.frame.size.width-2*10, 50)];
     title.text = @"About";
+    title.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:50];
+    title.textColor = [UIColor whiteColor];
+    title.adjustsFontSizeToFitWidth = YES;
+    title.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:title];
 }
 
@@ -52,12 +55,20 @@
 
 - (void)createPickers
 {
-    SBLabel *bedroom = [[SBLabel alloc] initWithFrame:CGRectMake(10, 100, 140, 50)];
+    UILabel *bedroom = [[UILabel alloc] initWithFrame:CGRectMake(10, 100, 140, 50)];
     bedroom.text = @"# of bedrooms";
+    bedroom.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:50];
+    bedroom.textColor = [UIColor whiteColor];
+    bedroom.adjustsFontSizeToFitWidth = YES;
+    bedroom.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:bedroom];
 
-    SBLabel *bathroom = [[SBLabel alloc] initWithFrame:CGRectMake(170, 100, 140, 50)];
+    UILabel *bathroom = [[UILabel alloc] initWithFrame:CGRectMake(170, 100, 140, 50)];
     bathroom.text = @"# of bathrooms";
+    bathroom.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:50];
+    bathroom.textColor = [UIColor whiteColor];
+    bathroom.adjustsFontSizeToFitWidth = YES;
+    bathroom.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:bathroom];
 
     _bedroomPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(100, 100, 40, 60)];

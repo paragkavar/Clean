@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8E07DB5919B130E100C5058F /* SBLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E07DB5819B130E100C5058F /* SBLabel.m */; };
 		8E23CE8819AFE842007A5319 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E23CE8719AFE842007A5319 /* Foundation.framework */; };
 		8E23CE8A19AFE842007A5319 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E23CE8919AFE842007A5319 /* CoreGraphics.framework */; };
 		8E23CE8C19AFE842007A5319 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E23CE8B19AFE842007A5319 /* UIKit.framework */; };
@@ -46,8 +45,6 @@
 
 /* Begin PBXFileReference section */
 		8BEA0FB23BB84A43B7D3B9B3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		8E07DB5719B130E100C5058F /* SBLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLabel.h; sourceTree = "<group>"; };
-		8E07DB5819B130E100C5058F /* SBLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLabel.m; sourceTree = "<group>"; };
 		8E23CE8419AFE842007A5319 /* Clean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clean.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E23CE8719AFE842007A5319 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8E23CE8919AFE842007A5319 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -110,16 +107,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8E07DB5D19B1473C00C5058F /* Helper */ = {
+		8E07DB5D19B1473C00C5058F /* Assets */ = {
 			isa = PBXGroup;
 			children = (
 				8EB9A86519AFE8DF0013849E /* camera-old.png */,
 				8EB9A86619AFE8DF0013849E /* camera.png */,
 				8EB9A86719AFE8DF0013849E /* location.png */,
-				8E07DB5719B130E100C5058F /* SBLabel.h */,
-				8E07DB5819B130E100C5058F /* SBLabel.m */,
 			);
-			name = Helper;
+			name = Assets;
 			sourceTree = "<group>";
 		};
 		8E23CE7B19AFE842007A5319 = {
@@ -161,7 +156,7 @@
 				8EB9A86E19AFE9030013849E /* AppDelegate.m */,
 				8EB9A85F19AFE8D00013849E /* RootViewController.h */,
 				8EB9A86019AFE8D00013849E /* RootViewController.m */,
-				8E07DB5D19B1473C00C5058F /* Helper */,
+				8E07DB5D19B1473C00C5058F /* Assets */,
 				8EB9A85E19AFE8B30013849E /* Onboard */,
 				8EB9A87019AFE9180013849E /* Podfile */,
 				8E23CE9919AFE842007A5319 /* Images.xcassets */,
@@ -355,7 +350,6 @@
 				8EB9A85B19AFE8AD0013849E /* GetPaymentCardViewController.m in Sources */,
 				8EB9A87419B0E7AE0013849E /* GetHomeInfoViewController.m in Sources */,
 				8EB9A86419AFE8D00013849E /* VerifyPhoneNumberViewController.m in Sources */,
-				8E07DB5919B130E100C5058F /* SBLabel.m in Sources */,
 				8EB9A86319AFE8D00013849E /* RootViewController.m in Sources */,
 				8EB9A85D19AFE8AD0013849E /* IntroViewController.m in Sources */,
 				8EB9A86F19AFE9030013849E /* AppDelegate.m in Sources */,

@@ -10,7 +10,6 @@
 #import "GetPhoneNumberViewController.h"
 #import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
-#import "SBLabel.h"
 
 @interface IntroViewController ()
 @property JSQFlatButton *start;
@@ -28,8 +27,12 @@
 
 - (void)createTitle
 {
-    SBLabel *title = [[SBLabel alloc] initWithFrame:CGRectMake(10, 30, self.view.frame.size.width-2*10, 50)];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, self.view.frame.size.width-2*10, 50)];
     title.text = @"Welcome!";
+    title.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:50];
+    title.textColor = [UIColor whiteColor];
+    title.adjustsFontSizeToFitWidth = YES;
+    title.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:title];
 }
 
