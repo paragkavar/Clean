@@ -11,12 +11,13 @@
 
 #import "GetPaymentCardViewController.h"
 #import "STPView.h"
+#import "PKTextField.h"
 #import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
 #import "CardIO.h"
 #import <Parse/Parse.h>
+#import "SubscribeViewController.h"
 #import "RootViewController.h"
-#import "PKTextField.h"
 
 @interface GetPaymentCardViewController () <STPViewDelegate, CardIOPaymentViewControllerDelegate>
 @property STPView *stripeView;
@@ -32,10 +33,23 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor midnightBlueColor];
+    [self createPage];
     [self createTitle];
     [self createStripeViewDefault];
     [self createSaveButton];
     [self createCameraButton];
+}
+
+- (void)createPage
+{
+    UIPageControl *page = [[UIPageControl alloc] init];
+    page.center = CGPointMake(self.view.center.x, 100);
+    page.numberOfPages = 7;
+    page.currentPage = 5;
+    page.backgroundColor = [UIColor clearColor];
+    page.tintColor = [UIColor whiteColor];
+    page.currentPageIndicatorTintColor = [UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
+    [self.view addSubview:page];
 }
 
 - (void)createTitle
@@ -221,28 +235,8 @@
             NSLog(@"Customer created successfully with id: %@", customer);
             [[NSUserDefaults standardUserDefaults] setObject:customer[@"id"] forKey:@"customerId"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            [self addUserToDataBase];
-            [self presentViewController:[RootViewController new] animated:NO completion:nil];
+            [self presentViewController:[SubscribeViewController new] animated:NO completion:nil];
         }
-    }];
-}
-
-- (void)addUserToDataBase
-{
-#warning duplicates problem in parse and stripe
-    PFQuery *query = [PFQuery queryWithClassName:@"User"];
-    [query whereKey:@"phoneNumber" equalTo:[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"]];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (PFObject *object in objects) {
-            [object deleteInBackground];
-        }
-        PFObject *user = [PFObject objectWithClassName:@"User"];
-        user[@"phoneNumber"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
-        user[@"address"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"address"];
-        user[@"customerId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
-        user[@"bedrooms"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"bedrooms"];
-        user[@"bathrooms"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"bathrooms"];
-        [user saveInBackground];
     }];
 }
 

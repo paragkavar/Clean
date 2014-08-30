@@ -1,6 +1,7 @@
 PODS:
   - Bolts (1.1.2)
   - CardIO (3.8.3)
+  - CKCalendar (1.0.0)
   - Facebook-iOS-SDK (3.17.0):
     - Bolts
   - FlatUIKit (1.4)
@@ -15,6 +16,7 @@ PODS:
 
 DEPENDENCIES:
   - CardIO
+  - CKCalendar
   - FlatUIKit
   - INTULocationManager
   - JSQFlatButton
@@ -25,6 +27,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Bolts: 2635e8698a630774689441047f3465d78c48d485
   CardIO: de8d02da5003619533f52e4a5c44d84496ddb25c
+  CKCalendar: a361e9851d97e266f4e38dd50e2c57478706cc09
   Facebook-iOS-SDK: f20274d809f112ba540842e2b6cbe50128d51b7b
   FlatUIKit: edc1ed0c130687dc64a10e45851cc58925f6893d
   INTULocationManager: 596c57e35a00ca1ee9d59bf4cc2b63dc299b580e

@@ -11,15 +11,18 @@
 #define buttonFrame CGRectMake(0, self.view.frame.size.height-54, self.view.frame.size.width, 54)
 
 #import "RootViewController.h"
+#import <Parse/Parse.h>
 #import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
 #import "FBShimmeringView.h"
-#import <Parse/Parse.h>
+#import "CKCalendarView.h"
 
-@interface RootViewController () <UIAlertViewDelegate>
+@interface RootViewController () <UIAlertViewDelegate, CKCalendarDelegate>
 @property JSQFlatButton *clean;
+@property JSQFlatButton *subscribe;
 @property UIDatePicker *datePicker;
 @property UIActivityIndicatorView *activity;
+@property CKCalendarView *calendar;
 @end
 
 @implementation RootViewController
@@ -29,7 +32,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor midnightBlueColor];
     [self createTitle];
-    [self createDatePicker];
+    [self createCalendar];
     [self createButton];
     [self createActivityView];
 }
@@ -47,18 +50,28 @@
     shimmeringView.shimmering = YES;
 }
 
-- (void)createDatePicker
+- (void)createCalendar
 {
-    _datePicker = [[UIDatePicker alloc] initWithFrame:dateFrame];
-//    _datePicker.datePickerMode = UIDatePickerModeTime;
-    _datePicker.center = self.view.center;
-    [self.view addSubview:_datePicker];
+    _calendar = [[CKCalendarView alloc] init];
+    _calendar.onlyShowCurrentMonth = YES;
+    _calendar.center = CGPointMake(self.view.center.x, self.view.center.y+25);
+    [self.view addSubview:_calendar];
+}
+
+- (void)calendar:(CKCalendarView *)calendar didSelectDate:(NSDate *)date
+{
+    _clean.enabled = YES;
+}
+
+- (void)calendar:(CKCalendarView *)calendar didDeselectDate:(NSDate *)date
+{
+    _clean.enabled = NO;
 }
 
 - (void)createActivityView
 {
     _activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    _activity.center = _datePicker.center;
+    _activity.center = self.view.center;
     [_activity hidesWhenStopped];
     [self.view addSubview:_activity];
 }
@@ -72,6 +85,7 @@
                                                 image:nil];
     [self.clean addTarget:self action:@selector(clean:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.clean];
+    self.clean.enabled = NO;
 }
 
 - (void)clean:(JSQFlatButton *)sender
@@ -83,51 +97,32 @@
 
 - (void)createCharge
 {
-    NSString *bedrooms = [[NSUserDefaults standardUserDefaults] stringForKey:@"bedrooms"];
-    NSString *bathrooms = [[NSUserDefaults standardUserDefaults] stringForKey:@"bathrooms"];
-
-    [PFCloud callFunctionInBackground:@"costCalc"
-                       withParameters:@{@"bedrooms":bedrooms, @"bathrooms":bathrooms}
-                                block:^(NSString *amount, NSError *error)
-     {
-         if (!error)
-         {
-             NSString *customerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
-             [PFCloud callFunctionInBackground:@"createCharge"
-                                withParameters:@{@"amount":amount, @"customer":customerId}
-                                         block:^(id chargeId, NSError *error)
-              {
-                  [_activity stopAnimating];
-                  if (!error)
-                  {
-                      NSString *message = [NSString stringWithFormat:@"Cleaner will come on %@",[self getDate]];
-                      [[[UIAlertView alloc] initWithTitle:@"Awesome!"
-                                                  message:message
-                                                 delegate:self
-                                        cancelButtonTitle:@"OK"
-                                        otherButtonTitles:nil, nil] show];
-                      [self recordTransaction:chargeId];
-                  }
-                  else
-                  {
-                      [[[UIAlertView alloc] initWithTitle:@"Error creating charge"
-                                                  message:@"Please check your network connection and try again"
-                                                 delegate:self
-                                        cancelButtonTitle:@"OK"
-                                        otherButtonTitles:nil, nil] show];
-                  }
-              }];
-         }
-         else
-         {
-             [_activity stopAnimating];
-             [[[UIAlertView alloc] initWithTitle:@"Error creating charge"
-                                         message:@"Please check your network connection and try again"
-                                        delegate:self
-                               cancelButtonTitle:@"OK"
-                               otherButtonTitles:nil, nil] show];
-         }
-     }];
+    NSString *customerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
+    NSString *amount = [[NSUserDefaults standardUserDefaults] objectForKey:@"amount"];
+    [PFCloud callFunctionInBackground:@"createCharge"
+                    withParameters:@{@"amount":amount, @"customer":customerId}
+                             block:^(id chargeId, NSError *error)
+    {
+        [_activity stopAnimating];
+        if (!error)
+        {
+            NSString *message = [NSString stringWithFormat:@"Cleaner will come on %@",[self getDate]];
+            [[[UIAlertView alloc] initWithTitle:@"Awesome!"
+                                      message:message
+                                     delegate:self
+                            cancelButtonTitle:@"OK"
+                            otherButtonTitles:nil, nil] show];
+            [self recordTransaction:chargeId];
+        }
+        else
+        {
+            [[[UIAlertView alloc] initWithTitle:@"Error creating charge"
+                                      message:@"Please check your network connection and try again"
+                                     delegate:self
+                            cancelButtonTitle:@"OK"
+                            otherButtonTitles:nil, nil] show];
+        }
+    }];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex

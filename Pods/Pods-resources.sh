@@ -41,6 +41,10 @@ install_resource()
       ;;
   esac
 }
+install_resource "CKCalendar/Source/resources/left_arrow.png"
+install_resource "CKCalendar/Source/resources/left_arrow@2x.png"
+install_resource "CKCalendar/Source/resources/right_arrow.png"
+install_resource "CKCalendar/Source/resources/right_arrow@2x.png"
 install_resource "Facebook-iOS-SDK/src/FBUserSettingsViewResources.bundle"
 install_resource "FlatUIKit/Resources/Lato-Bold.ttf"
 install_resource "FlatUIKit/Resources/Lato-Italic.ttf"

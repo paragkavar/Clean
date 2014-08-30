@@ -23,9 +23,22 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor midnightBlueColor];
+    [self createPage];
     [self createTitle];
     [self createButton];
     [self createPickers];
+}
+
+- (void)createPage
+{
+    UIPageControl *page = [[UIPageControl alloc] init];
+    page.center = CGPointMake(self.view.center.x, 100);
+    page.numberOfPages = 7;
+    page.currentPage = 4;
+    page.backgroundColor = [UIColor clearColor];
+    page.tintColor = [UIColor whiteColor];
+    page.currentPageIndicatorTintColor = [UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
+    [self.view addSubview:page];
 }
 
 - (void)createTitle

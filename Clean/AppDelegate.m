@@ -12,6 +12,7 @@
 #import "GetAddressViewController.h"
 #import "GetHomeInfoViewController.h"
 #import "GetPaymentCardViewController.h"
+#import "SubscribeViewController.h"
 #import "RootViewController.h"
 #import <Parse/Parse.h>
 
@@ -52,6 +53,10 @@
     else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"])
     {
         return [GetPaymentCardViewController new];
+    }
+    else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"subscriptionId"])
+    {
+        return [SubscribeViewController new];
     }
     else
     {

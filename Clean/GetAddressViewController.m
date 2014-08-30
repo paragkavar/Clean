@@ -23,6 +23,7 @@
 @property NSArray *formattedAddress;
 @property NSString *addressString;
 @property UIActivityIndicatorView *activity;
+@property NSTimer *buttonCheckTimer;
 @end
 
 @implementation GetAddressViewController
@@ -31,6 +32,7 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor midnightBlueColor];
+    [self createPage];
     [self createTitle];
     [self createButton];
     [self createEntryField];
@@ -38,6 +40,31 @@
     [self createLocationButton];
     [self createActivityView];
     _gettingLocation = NO;
+    self.buttonCheckTimer = [NSTimer scheduledTimerWithTimeInterval:1/10 target:self selector:@selector(buttonCheck) userInfo:nil repeats:YES];
+}
+
+- (void)buttonCheck
+{
+    if (_formattedAddress || _addressField.text.length > 0)
+    {
+        _save.enabled = YES;
+    }
+    else
+    {
+        _save.enabled = NO;
+    }
+}
+
+- (void)createPage
+{
+    UIPageControl *page = [[UIPageControl alloc] init];
+    page.center = CGPointMake(self.view.center.x, 100);
+    page.numberOfPages = 7;
+    page.currentPage = 3;
+    page.backgroundColor = [UIColor clearColor];
+    page.tintColor = [UIColor whiteColor];
+    page.currentPageIndicatorTintColor = [UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
+    [self.view addSubview:page];
 }
 
 - (void)createTitle
@@ -65,7 +92,7 @@
 
 - (void)createEntryField
 {
-    _addressField = [[UITextField alloc] initWithFrame:CGRectMake(20, 120, self.view.frame.size.width-2*20, 100)];
+    _addressField = [[UITextField alloc] initWithFrame:CGRectMake(20, 150, self.view.frame.size.width-2*20, 100)];
     _addressField.placeholder = @"enter address";
     _addressField.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:35];
     _addressField.textColor = [UIColor whiteColor];
@@ -79,7 +106,7 @@
 
 - (void)createAddressLabel
 {
-    _addressLabel = [[UITextView alloc] initWithFrame:CGRectMake(20, 120, self.view.frame.size.width-2*20, 100)];
+    _addressLabel = [[UITextView alloc] initWithFrame:CGRectMake(20, 150, self.view.frame.size.width-2*20, 100)];
     _addressLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:25];
     _addressLabel.backgroundColor = [UIColor clearColor];
     _addressLabel.textColor = [UIColor whiteColor];
@@ -105,7 +132,7 @@
     [_locationButton addTarget:self action:@selector(location:) forControlEvents:UIControlEventTouchUpInside];
     [_locationButton setImage:[UIImage imageNamed:@"location"] forState:UIControlStateNormal];
     _locationButton.frame = CGRectMake(self.view.frame.size.width - 53, 121.5, 48, 48);
-    _locationButton.center = CGPointMake(self.view.frame.size.width/2, 110);
+    _locationButton.center = CGPointMake(self.view.frame.size.width/2, 140);
     [self.view addSubview:_locationButton];
 }
 
@@ -178,10 +205,10 @@
     _gettingLocation = NO;
     [[INTULocationManager sharedInstance] cancelLocationRequest:_requestID];
     [_activity stopAnimating];
-    _save.enabled = NO;
+//    _save.enabled = NO;
     _addressLabel.hidden = YES;
     [UIView animateWithDuration:.3 animations:^{
-        _locationButton.center = CGPointMake(self.view.frame.size.width/2, 110);
+        _locationButton.center = CGPointMake(self.view.frame.size.width/2, 140);
         _save.transform = CGAffineTransformMakeTranslation(0, 0);
     } completion:^(BOOL finished) {
         _addressField.hidden = NO;
@@ -193,7 +220,17 @@
 
 - (void)save:(JSQFlatButton *)sender
 {
-    [[NSUserDefaults standardUserDefaults] setObject:_addressString forKey:@"address"];
+    NSString *location;
+    if (_addressString && _gettingLocation)
+    {
+        location = _addressString;
+    }
+    else
+    {
+        location = _addressField.text;
+    }
+    NSLog(@"LOCATION: %@",location);
+    [[NSUserDefaults standardUserDefaults] setObject:location forKey:@"address"];
     [self presentViewController:[GetHomeInfoViewController new] animated:NO completion:nil];
 }
 
