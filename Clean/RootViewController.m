@@ -120,6 +120,7 @@
          }
          else
          {
+             [_activity stopAnimating];
              [[[UIAlertView alloc] initWithTitle:@"Error creating charge"
                                          message:@"Please check your network connection and try again"
                                         delegate:self

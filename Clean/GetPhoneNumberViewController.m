@@ -50,7 +50,7 @@
     _phoneEntry.keyboardAppearance = UIKeyboardAppearanceDark;
     _phoneEntry.keyboardType = UIKeyboardTypePhonePad;
     _phoneEntry.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:_phoneEntry];
+//    [self.view addSubview:_phoneEntry];
     [_phoneEntry becomeFirstResponder];
 }
 

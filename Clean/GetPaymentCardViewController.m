@@ -240,6 +240,8 @@
         user[@"phoneNumber"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
         user[@"address"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"address"];
         user[@"customerId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
+        user[@"bedrooms"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"bedrooms"];
+        user[@"bathrooms"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"bathrooms"];
         [user saveInBackground];
     }];
 }

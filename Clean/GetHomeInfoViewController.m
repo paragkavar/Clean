@@ -92,8 +92,8 @@
 
 - (void)save:(JSQFlatButton *)sender
 {
-    [[NSUserDefaults standardUserDefaults] setObject:@([_bedroomPicker selectedRowInComponent:0]).description forKey:@"bedrooms"];
-    [[NSUserDefaults standardUserDefaults] setObject:@([_bathroomPicker selectedRowInComponent:0]).description forKey:@"bathrooms"];
+    [[NSUserDefaults standardUserDefaults] setObject:@([_bedroomPicker selectedRowInComponent:0]+1).description forKey:@"bedrooms"];
+    [[NSUserDefaults standardUserDefaults] setObject:@([_bathroomPicker selectedRowInComponent:0]+1).description forKey:@"bathrooms"];
     [self presentViewController:[GetPaymentCardViewController new] animated:NO completion:nil];
 }
 

@@ -117,8 +117,6 @@
 {
     if (_gettingLocation)
     {
-        _gettingLocation = NO;
-        [[INTULocationManager sharedInstance] cancelLocationRequest:_requestID];
         [self revertFromLocationGetting];
     }
     else
@@ -181,6 +179,8 @@
 
 - (void)revertFromLocationGetting
 {
+    _gettingLocation = NO;
+    [[INTULocationManager sharedInstance] cancelLocationRequest:_requestID];
     [_activity stopAnimating];
     _save.enabled = NO;
     _addressLabel.hidden = YES;
@@ -189,7 +189,9 @@
         _save.transform = CGAffineTransformMakeTranslation(0, 0);
     } completion:^(BOOL finished) {
         _addressField.hidden = NO;
+        _locationButton.enabled = YES;
         [_addressField becomeFirstResponder];
+        _gettingLocation = NO;
     }];
 }
 
