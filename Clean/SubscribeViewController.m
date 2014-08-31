@@ -76,21 +76,21 @@
     visits.textAlignment = NSTextAlignmentLeft;
     [self.view addSubview:visits];
 
-    _costLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 300, self.view.frame.size.width-2*10, 50)];
+    _costLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 200, self.view.frame.size.width-2*10, 50)];
     _costLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:25];
     _costLabel.textColor = [UIColor whiteColor];
     _costLabel.text = @"Cost: $0/month";
     _costLabel.adjustsFontSizeToFitWidth = YES;
-    _costLabel.textAlignment = NSTextAlignmentCenter;
+    _costLabel.textAlignment = NSTextAlignmentLeft;
     [self.view addSubview:_costLabel];
 }
 
 - (void)createButton
 {
-    _subscribe = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2+.25,
-                                                                 self.view.frame.size.height-54,
-                                                                 self.view.frame.size.width/2-.25,
-                                                                 54)
+//    CGRect frame = CGRectMake(self.view.frame.size.width/2+.25,  self.view.frame.size.height-54, self.view.frame.size.width/2-.25, 54);
+    CGRect frame = CGRectMake(0, self.view.frame.size.height-54, self.view.frame.size.width, 54);
+
+    _subscribe = [[JSQFlatButton alloc] initWithFrame:frame
                                       backgroundColor:[UIColor whiteColor]
                                       foregroundColor:[UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f]
                                                 title:@"subscribe"
@@ -100,17 +100,16 @@
     [self.view addSubview:_subscribe];
     _subscribe.enabled = NO;
 
-    _later = [[JSQFlatButton alloc] initWithFrame:CGRectMake(0,
-                                                             self.view.frame.size.height-54,
-                                                             self.view.frame.size.width/2-.25,
-                                                             54)
-                                  backgroundColor:[UIColor whiteColor]
-                                  foregroundColor:[UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f]
-                                            title:@"later"
-                                            image:nil];
-    [_later addTarget:self action:@selector(later:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_later];
-
+//    _later = [[JSQFlatButton alloc] initWithFrame:CGRectMake(0,
+//                                                             self.view.frame.size.height-54,
+//                                                             self.view.frame.size.width/2-.25,
+//                                                             54)
+//                                  backgroundColor:[UIColor whiteColor]
+//                                  foregroundColor:[UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f]
+//                                            title:@"later"
+//                                            image:nil];
+//    [_later addTarget:self action:@selector(later:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:_later];
 }
 
 - (void)createPlans
@@ -151,22 +150,14 @@
     return (_bedrooms + _bathrooms)*10*_selectedPlan;
 }
 
-- (void)nextVC
-{
-    [[NSUserDefaults standardUserDefaults] setObject:@(_selectedPlan) forKey:@"plan"];
-    [[NSUserDefaults standardUserDefaults] setObject:@(_cost).description forKey:@"amount"];
-    [self presentViewController:[RootViewController new] animated:NO completion:nil];
-}
-
-- (void)later:(JSQFlatButton *)sender
-{
-    [self nextVC];
-}
-
 - (void)subscribe:(JSQFlatButton *)sender
 {
-    _subscribe.enabled = NO;
+    [[NSUserDefaults standardUserDefaults] setObject:@"test" forKey:@"subscriptionId"];
+    [self nextVC];
+
 #warning setup
+    /*
+     _subscribe.enabled = NO;
     [PFCloud callFunctionInBackground:@"createSubscription"
                        withParameters:@{@"bedrooms":[[NSUserDefaults standardUserDefaults] objectForKey:@"bedrooms"],
                                         @"bathrooms":[[NSUserDefaults standardUserDefaults] objectForKey:@"bathrooms"]}
@@ -184,27 +175,28 @@
             [self nextVC];
         }
     }];
+    */
+}
+
+- (void)nextVC
+{
+    [[NSUserDefaults standardUserDefaults] setObject:@(_selectedPlan) forKey:@"visits"];
+    [[NSUserDefaults standardUserDefaults] setObject:@(_cost).description forKey:@"amount"];
+    [self presentViewController:[RootViewController new] animated:NO completion:nil];
 }
 
 - (void)addUserToDataBase
 {
-#warning duplicates problem in parse and stripe
-#warning add subscription data
-    PFQuery *query = [PFQuery queryWithClassName:@"User"];
-    [query whereKey:@"phoneNumber" equalTo:[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"]];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (PFObject *object in objects) {
-            [object deleteInBackground];
-        }
-        PFObject *user = [PFObject objectWithClassName:@"User"];
-        user[@"phoneNumber"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
-        user[@"address"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"address"];
-        user[@"customerId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
-        user[@"subscriptionId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"subscriptionId"];
-        user[@"bedrooms"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"bedrooms"];
-        user[@"bathrooms"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"bathrooms"];
-        [user saveInBackground];
-    }];
+    PFObject *user = [PFObject objectWithClassName:@"User"];
+    user[@"phoneNumber"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
+    user[@"address"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"address"];
+    user[@"customerId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
+    user[@"subscriptionId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"subscriptionId"];
+    user[@"bedrooms"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"bedrooms"];
+    user[@"bathrooms"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"bathrooms"];
+    user[@"visits"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"visits"];
+    user[@"amount"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"amount"];
+    [user saveInBackground];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle

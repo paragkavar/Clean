@@ -15,14 +15,20 @@
 #import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
 #import "FBShimmeringView.h"
-#import "CKCalendarView.h"
+#import "SBCollectionViewCell.h"
 
-@interface RootViewController () <UIAlertViewDelegate, CKCalendarDelegate>
+@interface RootViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
+@property UICollectionView *collectionView;
+@property int visits;
+@property UIPageControl *page;
 @property JSQFlatButton *clean;
 @property JSQFlatButton *subscribe;
 @property UIDatePicker *datePicker;
 @property UIActivityIndicatorView *activity;
-@property CKCalendarView *calendar;
+@property UIView *infoView;
+@property BOOL showingBack;
+@property UIView *containerView;
+@property NSDate *selectedDate;
 @end
 
 @implementation RootViewController
@@ -31,10 +37,28 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor midnightBlueColor];
+    _visits = [[[NSUserDefaults standardUserDefaults] objectForKey:@"visits"] intValue];
+    [self createPage];
     [self createTitle];
-    [self createCalendar];
-    [self createButton];
-    [self createActivityView];
+    [self createCollectionView];
+//    [self createContainer];
+//    [self createCalendar];
+//    [self createInfoView];
+//    [self createButton];
+//    [self createActivityView];
+}
+
+- (void)createPage
+{
+    _page = [[UIPageControl alloc] init];
+    _page.center = CGPointMake(self.view.center.x, 500);
+    _page.numberOfPages = _visits;
+    _page.currentPage = 0;
+    _page.hidesForSinglePage = YES;
+    _page.backgroundColor = [UIColor clearColor];
+    _page.tintColor = [UIColor whiteColor];
+    _page.currentPageIndicatorTintColor = [UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
+    [self.view addSubview:_page];
 }
 
 - (void)createTitle
@@ -50,22 +74,62 @@
     shimmeringView.shimmering = YES;
 }
 
-- (void)createCalendar
+- (void)createCollectionView
 {
-    _calendar = [[CKCalendarView alloc] init];
-    _calendar.onlyShowCurrentMonth = YES;
-    _calendar.center = CGPointMake(self.view.center.x, self.view.center.y+25);
-    [self.view addSubview:_calendar];
+    UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
+    flow.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0,
+                                                                         80,
+                                                                         self.view.frame.size.width,
+                                                                         self.view.frame.size.height-80)
+                                         collectionViewLayout:flow];
+    _collectionView.dataSource = self;
+    _collectionView.delegate = self;
+
+    if (flow.scrollDirection == UICollectionViewScrollDirectionHorizontal)
+    {
+        _collectionView.center = self.view.center;
+        flow.minimumLineSpacing = 0;
+    }
+    _collectionView.pagingEnabled = (flow.scrollDirection == UICollectionViewScrollDirectionHorizontal);
+    _page.hidden = (flow.scrollDirection != UICollectionViewScrollDirectionHorizontal);
+    _collectionView.backgroundColor = [UIColor clearColor];
+    [_collectionView registerClass:[SBCollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    [self.view addSubview:_collectionView];
 }
 
-- (void)calendar:(CKCalendarView *)calendar didSelectDate:(NSDate *)date
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    _clean.enabled = YES;
+    return 1;
 }
 
-- (void)calendar:(CKCalendarView *)calendar didDeselectDate:(NSDate *)date
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    _clean.enabled = NO;
+    return _visits;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    SBCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    _page.currentPage = indexPath.item;
+    [cell setTitleLabelText:indexPath.item+1];
+    if (indexPath.item < 5)
+    {
+        [cell setContactImage:[NSString stringWithFormat:@"headshot%i",indexPath.item+1]];
+    }
+    return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(self.view.frame.size.width, self.view.frame.size.width);
+}
+
+- (void)createContainer
+{
+    _containerView = [[UIView alloc] initWithFrame:self.view.bounds];
+    _containerView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:_containerView];
 }
 
 - (void)createActivityView
@@ -85,49 +149,12 @@
                                                 image:nil];
     [self.clean addTarget:self action:@selector(clean:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.clean];
-    self.clean.enabled = NO;
+//    self.clean.enabled = NO;
 }
 
 - (void)clean:(JSQFlatButton *)sender
 {
-    _clean.enabled = NO;
-    [_activity startAnimating];
-    [self createCharge];
-}
 
-- (void)createCharge
-{
-    NSString *customerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
-    NSString *amount = [[NSUserDefaults standardUserDefaults] objectForKey:@"amount"];
-    [PFCloud callFunctionInBackground:@"createCharge"
-                    withParameters:@{@"amount":amount, @"customer":customerId}
-                             block:^(id chargeId, NSError *error)
-    {
-        [_activity stopAnimating];
-        if (!error)
-        {
-            NSString *message = [NSString stringWithFormat:@"Cleaner will come on %@",[self getDate]];
-            [[[UIAlertView alloc] initWithTitle:@"Awesome!"
-                                      message:message
-                                     delegate:self
-                            cancelButtonTitle:@"OK"
-                            otherButtonTitles:nil, nil] show];
-            [self recordTransaction:chargeId];
-        }
-        else
-        {
-            [[[UIAlertView alloc] initWithTitle:@"Error creating charge"
-                                      message:@"Please check your network connection and try again"
-                                     delegate:self
-                            cancelButtonTitle:@"OK"
-                            otherButtonTitles:nil, nil] show];
-        }
-    }];
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    _clean.enabled = YES;
 }
 
 - (void)recordTransaction:(NSString *)chargeId
@@ -135,18 +162,10 @@
     PFObject *transaction = [PFObject objectWithClassName:@"Transaction"];
     transaction[@"phoneNumber"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
     transaction[@"address"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"address"];
-    transaction[@"date"] = [self getDate];
+//    transaction[@"date"] = [self getDate:_selectedDate];
     transaction[@"customerId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
     transaction[@"chargeId"] = chargeId;
     [transaction saveInBackground];
-}
-
-- (NSString *)getDate
-{
-    NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    NSDate *pickerDate = [_datePicker date];
-    NSString *selectionString = [[NSString alloc] initWithFormat:@"%@", [pickerDate descriptionWithLocale:usLocale]];
-    return selectionString;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle

@@ -113,6 +113,15 @@
 {
     [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:@"verifiedPhoneNumber"];
     [PFInstallation currentInstallation][@"phoneNumber"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
+
+//    PFQuery *query = [PFQuery queryWithClassName:@"User"];
+//    [query whereKey:@"phoneNumber" equalTo:[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"]];
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        for (PFObject *object in objects) {
+//            [object deleteInBackground];
+//        }
+//    }];
+#warning duplicates problem in parse and stripe, instead check after verifying phoneNum to see if user already exists, save defaults and jmp
     [self presentViewController:[GetAddressViewController new] animated:NO completion:nil];
 }
 

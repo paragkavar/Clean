@@ -228,7 +228,6 @@
             NSLog(@"Error in creating customer: %@",error);
             [self handleStripeError:error];
             [self presentViewController:self animated:NO completion:nil];
-#warning figure out
         }
         else
         {

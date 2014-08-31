@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		8E02E2DF19B1761C0008CFE1 /* SubscribeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E02E2DE19B1761C0008CFE1 /* SubscribeViewController.m */; };
+		8E02E2E819B2C4FF0008CFE1 /* SBCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E02E2E719B2C4FF0008CFE1 /* SBCollectionViewCell.m */; };
+		8E02E2EC19B2D00E0008CFE1 /* original.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8E02E2E919B2D00E0008CFE1 /* original.jpg */; };
+		8E02E2EE19B2D00E0008CFE1 /* headshot1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E02E2EB19B2D00E0008CFE1 /* headshot1.png */; };
+		8E02E2F019B2D6060008CFE1 /* headshot2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E02E2EF19B2D6060008CFE1 /* headshot2.png */; };
+		8E02E2F419B2D7170008CFE1 /* headshot3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E02E2F119B2D7170008CFE1 /* headshot3.png */; };
+		8E02E2F519B2D7170008CFE1 /* headshot4.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E02E2F219B2D7170008CFE1 /* headshot4.png */; };
+		8E02E2F619B2D7170008CFE1 /* headshot5.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E02E2F319B2D7170008CFE1 /* headshot5.png */; };
 		8E23CE8819AFE842007A5319 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E23CE8719AFE842007A5319 /* Foundation.framework */; };
 		8E23CE8A19AFE842007A5319 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E23CE8919AFE842007A5319 /* CoreGraphics.framework */; };
 		8E23CE8C19AFE842007A5319 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E23CE8B19AFE842007A5319 /* UIKit.framework */; };
@@ -48,6 +55,14 @@
 		8BEA0FB23BB84A43B7D3B9B3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		8E02E2DD19B1761C0008CFE1 /* SubscribeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscribeViewController.h; sourceTree = "<group>"; };
 		8E02E2DE19B1761C0008CFE1 /* SubscribeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscribeViewController.m; sourceTree = "<group>"; };
+		8E02E2E619B2C4FF0008CFE1 /* SBCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBCollectionViewCell.h; sourceTree = "<group>"; };
+		8E02E2E719B2C4FF0008CFE1 /* SBCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBCollectionViewCell.m; sourceTree = "<group>"; };
+		8E02E2E919B2D00E0008CFE1 /* original.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = original.jpg; sourceTree = "<group>"; };
+		8E02E2EB19B2D00E0008CFE1 /* headshot1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headshot1.png; sourceTree = "<group>"; };
+		8E02E2EF19B2D6060008CFE1 /* headshot2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headshot2.png; sourceTree = "<group>"; };
+		8E02E2F119B2D7170008CFE1 /* headshot3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headshot3.png; sourceTree = "<group>"; };
+		8E02E2F219B2D7170008CFE1 /* headshot4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headshot4.png; sourceTree = "<group>"; };
+		8E02E2F319B2D7170008CFE1 /* headshot5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headshot5.png; sourceTree = "<group>"; };
 		8E23CE8419AFE842007A5319 /* Clean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clean.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E23CE8719AFE842007A5319 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8E23CE8919AFE842007A5319 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -116,6 +131,12 @@
 				8EB9A86519AFE8DF0013849E /* camera-old.png */,
 				8EB9A86619AFE8DF0013849E /* camera.png */,
 				8EB9A86719AFE8DF0013849E /* location.png */,
+				8E02E2E919B2D00E0008CFE1 /* original.jpg */,
+				8E02E2EB19B2D00E0008CFE1 /* headshot1.png */,
+				8E02E2EF19B2D6060008CFE1 /* headshot2.png */,
+				8E02E2F119B2D7170008CFE1 /* headshot3.png */,
+				8E02E2F219B2D7170008CFE1 /* headshot4.png */,
+				8E02E2F319B2D7170008CFE1 /* headshot5.png */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -159,6 +180,8 @@
 				8EB9A86E19AFE9030013849E /* AppDelegate.m */,
 				8EB9A85F19AFE8D00013849E /* RootViewController.h */,
 				8EB9A86019AFE8D00013849E /* RootViewController.m */,
+				8E02E2E619B2C4FF0008CFE1 /* SBCollectionViewCell.h */,
+				8E02E2E719B2C4FF0008CFE1 /* SBCollectionViewCell.m */,
 				8E07DB5D19B1473C00C5058F /* Assets */,
 				8EB9A85E19AFE8B30013849E /* Onboard */,
 				8EB9A87019AFE9180013849E /* Podfile */,
@@ -296,11 +319,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EB9A87119AFE9180013849E /* Podfile in Resources */,
+				8E02E2F619B2D7170008CFE1 /* headshot5.png in Resources */,
 				8EB9A86819AFE8DF0013849E /* camera-old.png in Resources */,
+				8E02E2F519B2D7170008CFE1 /* headshot4.png in Resources */,
+				8E02E2EC19B2D00E0008CFE1 /* original.jpg in Resources */,
+				8E02E2EE19B2D00E0008CFE1 /* headshot1.png in Resources */,
 				8E23CE9219AFE842007A5319 /* InfoPlist.strings in Resources */,
 				8EB9A86A19AFE8DF0013849E /* location.png in Resources */,
 				8EB9A86919AFE8DF0013849E /* camera.png in Resources */,
 				8E23CE9A19AFE842007A5319 /* Images.xcassets in Resources */,
+				8E02E2F019B2D6060008CFE1 /* headshot2.png in Resources */,
+				8E02E2F419B2D7170008CFE1 /* headshot3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,6 +382,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EB9A85B19AFE8AD0013849E /* GetPaymentCardViewController.m in Sources */,
+				8E02E2E819B2C4FF0008CFE1 /* SBCollectionViewCell.m in Sources */,
 				8EB9A87419B0E7AE0013849E /* GetHomeInfoViewController.m in Sources */,
 				8EB9A86419AFE8D00013849E /* VerifyPhoneNumberViewController.m in Sources */,
 				8EB9A86319AFE8D00013849E /* RootViewController.m in Sources */,
