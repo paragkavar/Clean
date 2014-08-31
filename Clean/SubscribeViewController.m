@@ -13,6 +13,7 @@
 #import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
 #import <Parse/Parse.h>
+#import "VCFlow.h"
 
 @interface SubscribeViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
 @property JSQFlatButton *subscribe;
@@ -20,7 +21,6 @@
 @property NSArray *planButtons;
 @property UIPickerView *planPicker;
 @property int selectedPlan;
-@property int cost;
 @property int bedrooms;
 @property int bathrooms;
 @property UILabel *costLabel;
@@ -87,7 +87,6 @@
 
 - (void)createButton
 {
-//    CGRect frame = CGRectMake(self.view.frame.size.width/2+.25,  self.view.frame.size.height-54, self.view.frame.size.width/2-.25, 54);
     CGRect frame = CGRectMake(0, self.view.frame.size.height-54, self.view.frame.size.width, 54);
 
     _subscribe = [[JSQFlatButton alloc] initWithFrame:frame
@@ -100,17 +99,6 @@
     [_subscribe addTarget:self action:@selector(subscribe:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_subscribe];
     _subscribe.enabled = NO;
-
-//    _later = [[JSQFlatButton alloc] initWithFrame:CGRectMake(0,
-//                                                             self.view.frame.size.height-54,
-//                                                             self.view.frame.size.width/2-.25,
-//                                                             54)
-//                                  backgroundColor:[UIColor whiteColor]
-//                                  foregroundColor:[UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f]
-//                                            title:@"later"
-//                                            image:nil];
-//    [_later addTarget:self action:@selector(later:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:_later];
 }
 
 - (void)createPlans
@@ -128,7 +116,7 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return 10;
+    return 8;
 }
 
 - (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
@@ -142,62 +130,48 @@
 {
     _subscribe.enabled = row > 0;
     _selectedPlan = row;
-    _cost = [self calcCost];
-    _costLabel.text = [NSString stringWithFormat:@"Cost: $%i/month",_cost];
+    [self calcCost];
 }
 
-- (int)calcCost
+- (void)calcCost
 {
-    return (_bedrooms + _bathrooms)*10*_selectedPlan;
+    [PFCloud callFunctionInBackground:@"costCalc"
+                       withParameters:@{@"visits":@(_selectedPlan), @"bedrooms":@(_bedrooms), @"bathrooms":@(_bathrooms)}
+                                block:^(NSNumber *cost, NSError *error)
+     {
+        _costLabel.text = [NSString stringWithFormat:@"Cost: $%@/month",cost];
+     }];
 }
 
 - (void)subscribe:(JSQFlatButton *)sender
 {
-    [[NSUserDefaults standardUserDefaults] setObject:@"test" forKey:@"subscriptionId"];
-    [self nextVC];
-
-#warning setup
-    /*
-     _subscribe.enabled = NO;
-    [PFCloud callFunctionInBackground:@"createSubscription"
-                       withParameters:@{@"bedrooms":[[NSUserDefaults standardUserDefaults] objectForKey:@"bedrooms"],
-                                        @"bathrooms":[[NSUserDefaults standardUserDefaults] objectForKey:@"bathrooms"]}
-                                block:^(NSString *subscriptionId, NSError *error)
-    {
-        if (error)
-        {
-            _subscribe.enabled = YES;
-            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Please check network connection and try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
-        }
-        else
-        {
-            [[NSUserDefaults standardUserDefaults] setObject:subscriptionId forKey:@"subscriptionId"];
-            [self addUserToDataBase];
-            [self nextVC];
-        }
-    }];
-    */
-}
-
-- (void)nextVC
-{
+    _subscribe.enabled = NO;
     [[NSUserDefaults standardUserDefaults] setObject:@(_selectedPlan) forKey:@"visits"];
-    [[NSUserDefaults standardUserDefaults] setObject:@(_cost).description forKey:@"amount"];
-    [self presentViewController:[RootViewController new] animated:NO completion:nil];
-}
 
-- (void)addUserToDataBase
-{
-    PFObject *user = [PFObject objectWithClassName:@"User"];
-    user[@"phoneNumber"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
-    user[@"address"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"address"];
-    user[@"customerId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
-    user[@"subscriptionId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"subscriptionId"];
-    user[@"bedrooms"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"bedrooms"];
-    user[@"bathrooms"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"bathrooms"];
-    user[@"visits"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"visits"];
-    user[@"amount"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"amount"];
-    [user saveInBackground];
+    NSString *customer = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
+
+    [PFCloud callFunctionInBackground:@"costCalc"
+                       withParameters:@{@"visits":@(_selectedPlan), @"bedrooms":@(_bedrooms), @"bathrooms":@(_bathrooms)}
+                                block:^(NSNumber *cost, NSError *error)
+    {
+        [PFCloud callFunctionInBackground:@"createSubscription"
+                           withParameters:@{@"customer":customer,
+                                            @"plan":[NSString stringWithFormat:@"%@",cost]}
+                                    block:^(NSString *subscriptionId, NSError *error)
+         {
+             if (error)
+             {
+                 _subscribe.enabled = YES;
+                 [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Please check network connection and try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+             }
+             else
+             {
+                 [[NSUserDefaults standardUserDefaults] setObject:subscriptionId forKey:@"subscriptionId"];
+                 [VCFlow addUserToDataBase];
+                 [self presentViewController:[RootViewController new] animated:NO completion:nil];
+             }
+         }];
+    }];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle

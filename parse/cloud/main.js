@@ -1,16 +1,16 @@
+var twilio = require('twilio')('ACc0acdf522b4fed35aa8cf13c5848f2d9', 'c7d84a16cb070112709ee315eef29c4d');
 Parse.Cloud.define("verifyNum", function(request, response) {
-  var twilio = require('twilio')('ACc0acdf522b4fed35aa8cf13c5848f2d9', 'c7d84a16cb070112709ee315eef29c4d');
 	twilio.sendSms({
-    	to: request.params.number, 
-    	from: '+16149074531',
-    	body: request.params.message
+  	to: request.params.number, 
+  	from: '+16149074531',
+  	body: request.params.message
   },{
-      success: function(httpResponse) {
-        response.success(httpResponse.message);
-      },
-      error: function(httpResponse) {
-        response.error(httpResponse.message);
-      }
+    success: function(httpResponse) {
+      response.success(httpResponse.message);
+    },
+    error: function(httpResponse) {
+      response.error(httpResponse.message);
+    }
   });
 });
 
@@ -32,11 +32,9 @@ Parse.Cloud.define("createCustomer", function(request, response) {
   });
 });
 
-Parse.Cloud.define("createCharge", function(request, response) {
-  Stripe.Charges.create({
-    amount: 100*request.params.amount,
-    currency: "usd",
-    customer: request.params.customer
+Parse.Cloud.define("createSubscription", function(request, response) {
+  Stripe.Subscriptions.create(request.params.customer, {
+    plan: request.params.plan
   }, {
     success: function(httpResponse) {
       response.success(httpResponse.id);
@@ -45,4 +43,13 @@ Parse.Cloud.define("createCharge", function(request, response) {
       response.error(httpResponse.message);
     }
   });
+});
+
+Parse.Cloud.define("costCalc", function(request, response) {
+  var bedrooms = request.params.bedrooms;
+  var bathrooms = request.params.bathrooms;
+  var visits = request.params.visits;
+  var cost = (bedrooms + bathrooms)*10*visits;
+  response.success(cost);
+  // response.error('error costCalc');
 });

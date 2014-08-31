@@ -7,14 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "IntroViewController.h"
-#import "GetPhoneNumberViewController.h"
-#import "GetAddressViewController.h"
-#import "GetHomeInfoViewController.h"
-#import "GetPaymentCardViewController.h"
-#import "SubscribeViewController.h"
-#import "RootViewController.h"
 #import <Parse/Parse.h>
+#import "VCFlow.h"
 
 @implementation AppDelegate
 
@@ -25,43 +19,10 @@
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = [AppDelegate nextVC];
+    self.window.rootViewController = [VCFlow nextVC];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
-}
-
-+ (UIViewController *)nextVC
-{
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"started"])
-    {
-        return [IntroViewController new];
-    }
-    else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"verifiedPhoneNumber"])
-    {
-        return [GetPhoneNumberViewController new];
-    }
-    else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"address"])
-    {
-        return [GetAddressViewController new];
-    }
-    else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"bedrooms"] &&
-             ![[NSUserDefaults standardUserDefaults] objectForKey:@"bathrooms"])
-    {
-        return [GetHomeInfoViewController new];
-    }
-    else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"])
-    {
-        return [GetPaymentCardViewController new];
-    }
-    else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"subscriptionId"])
-    {
-        return [SubscribeViewController new];
-    }
-    else
-    {
-        return [RootViewController new];
-    }
 }
 
 @end

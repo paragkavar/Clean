@@ -10,7 +10,9 @@
 #import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
 #import <Parse/Parse.h>
+#import "VCFlow.h"
 #import "GetAddressViewController.h"
+#import "RootViewController.h"
 
 @interface VerifyPhoneNumberViewController ()
 @property UITextField *codeEntry;
@@ -113,16 +115,14 @@
 {
     [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:@"verifiedPhoneNumber"];
     [PFInstallation currentInstallation][@"phoneNumber"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
-
-//    PFQuery *query = [PFQuery queryWithClassName:@"User"];
-//    [query whereKey:@"phoneNumber" equalTo:[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"]];
-//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-//        for (PFObject *object in objects) {
-//            [object deleteInBackground];
-//        }
-//    }];
-#warning duplicates problem in parse and stripe, instead check after verifying phoneNum to see if user already exists, save defaults and jmp
-    [self presentViewController:[GetAddressViewController new] animated:NO completion:nil];
+    
+    [VCFlow checkForExistingUserWithCompletionHandler:^(bool exists) {
+        if (exists) {
+            [self presentViewController:[RootViewController new] animated:NO completion:nil];
+        } else {
+            [self presentViewController:[GetAddressViewController new] animated:NO completion:nil];
+        }
+    }];
 }
 
 - (BOOL)codeIsValid
