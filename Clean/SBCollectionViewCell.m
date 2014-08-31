@@ -20,9 +20,10 @@
 @property UIView *front;
 @property BOOL flipped;
 @property BOOL turned;
-@property JSQFlatButton *button1;
-@property JSQFlatButton *button2;
-@property JSQFlatButton *button3;
+@property JSQFlatButton *etaButton;
+@property JSQFlatButton *etaBackButton;
+@property JSQFlatButton *dateButton;
+@property JSQFlatButton *addonButton;
 @property UIImageView *imageView;
 @property UILabel *nameLabel;
 @property UILabel *dateLabel;
@@ -60,7 +61,7 @@
     _map.delegate = self;
     [_mapContainer addSubview:_map];
     _flipped = NO;
-    _button2 = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x+.25,
+    _etaBackButton = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x+.25,
                                                                self.contentView.bounds.size.height-54,
                                                                self.contentView.bounds.size.width-.5,
                                                                54)
@@ -68,9 +69,9 @@
                                    foregroundColor:[UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f]
                                              title:@"back"
                                              image:nil];
-    _button2.alpha = .8;
-    [_button2 addTarget:self action:@selector(flip) forControlEvents:UIControlEventTouchUpInside];
-    [_mapContainer addSubview:_button2];
+    _etaBackButton.alpha = .8;
+    [_etaBackButton addTarget:self action:@selector(flip) forControlEvents:UIControlEventTouchUpInside];
+    [_mapContainer addSubview:_etaBackButton];
 }
 
 - (void)createFront
@@ -81,7 +82,7 @@
 //    _front.layer.cornerRadius = 3;
 //    _front.layer.borderColor = [UIColor whiteColor].CGColor;
     [self.contentView addSubview:_front];
-    _button1 = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x+.25,
+    _etaButton = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x+.25,
                                                               self.contentView.bounds.size.height-54,
                                                               self.contentView.bounds.size.width-.5,
                                                               54)
@@ -89,8 +90,8 @@
                                    foregroundColor:[UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f]
                                              title:@"ETA"
                                              image:nil];
-    [_button1 addTarget:self action:@selector(flip) forControlEvents:UIControlEventTouchUpInside];
-    [_front addSubview:_button1];
+    [_etaButton addTarget:self action:@selector(flip) forControlEvents:UIControlEventTouchUpInside];
+    [_front addSubview:_etaButton];
 }
 
 - (void)createTitle
@@ -165,7 +166,7 @@
     _selectedDate = date;
     _dateLabel.text = [self getDate:date];
     _dateLabel.hidden = NO;
-    _button3.hidden = YES;
+    _dateButton.hidden = YES;
 }
 
 - (void)calendar:(CKCalendarView *)calendar didDeselectDate:(NSDate *)date
@@ -173,7 +174,7 @@
     _selectedDate = nil;
     _dateLabel.text = nil;
     _dateLabel.hidden = YES;
-    _button3.hidden = NO;
+    _dateButton.hidden = NO;
 }
 
 - (void)createWhen
@@ -186,17 +187,17 @@
     when.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:30];
     [_front addSubview:when];
 
-    _button3 = [[JSQFlatButton alloc] initWithFrame:CGRectMake(138, 80, 320-148, 40)
+    _dateButton = [[JSQFlatButton alloc] initWithFrame:CGRectMake(138, 80, 320-148, 40)
                                     backgroundColor:[UIColor clearColor]
                                     foregroundColor:[UIColor whiteColor]
                                               title:@"Set a date"
                                               image:nil];
-    _button3.normalBorderColor = [UIColor whiteColor];
-    _button3.borderWidth = 1;
-    _button3.highlightedBorderColor = [UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
-    _button3.highlightedForegroundColor = [UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f];
-    [_button3 addTarget:self action:@selector(turn) forControlEvents:UIControlEventTouchUpInside];             //turn
-    [_front addSubview:_button3];
+    _dateButton.normalBorderColor = [UIColor whiteColor];
+    _dateButton.borderWidth = 1;
+    _dateButton.highlightedBorderColor = [UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
+    _dateButton.highlightedForegroundColor = [UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f];
+    [_dateButton addTarget:self action:@selector(turn) forControlEvents:UIControlEventTouchUpInside];             //turn
+    [_front addSubview:_dateButton];
 
     _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(138, 80, 320-148, 40)];
     _dateLabel.textColor = [UIColor whiteColor];
@@ -218,7 +219,7 @@
     _selectedDate = aDate;
     _dateLabel.text = [self getDate:aDate];
     _dateLabel.hidden = NO;
-    _button3.hidden = YES;
+    _dateButton.hidden = YES;
 }
 
 - (void)dateSelectionViewControllerDidCancel:(RMDateSelectionViewController *)vc
@@ -226,7 +227,7 @@
     _selectedDate = nil;
     _dateLabel.text = nil;
     _dateLabel.hidden = YES;
-    _button3.hidden = NO;
+    _dateButton.hidden = NO;
 }
 
 - (void)createWho
