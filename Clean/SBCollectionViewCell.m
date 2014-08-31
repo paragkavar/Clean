@@ -11,8 +11,9 @@
 #import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
 #import <MapKit/MapKit.h>
+#import "RMDateSelectionViewController.h"
 
-@interface SBCollectionViewCell () <CKCalendarDelegate, MKMapViewDelegate>
+@interface SBCollectionViewCell () <CKCalendarDelegate, MKMapViewDelegate, RMDateSelectionViewControllerDelegate>
 @property CKCalendarView *calendar;
 @property UIView *mapContainer;
 @property MKMapView *map;
@@ -59,9 +60,9 @@
     _map.delegate = self;
     [_mapContainer addSubview:_map];
     _flipped = NO;
-    _button2 = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x,
+    _button2 = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x+.25,
                                                                self.contentView.bounds.size.height-54,
-                                                               self.contentView.bounds.size.width,
+                                                               self.contentView.bounds.size.width-.5,
                                                                54)
                                    backgroundColor:[UIColor whiteColor]
                                    foregroundColor:[UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f]
@@ -75,14 +76,14 @@
 - (void)createFront
 {
     _front = [[UIView alloc] initWithFrame:self.contentView.bounds];
-    _front.backgroundColor = [UIColor midnightBlueColor];
-    _front.layer.borderWidth = 1;
-    _front.layer.cornerRadius = 3;
-    _front.layer.borderColor = [UIColor whiteColor].CGColor;
+    _front.backgroundColor = [UIColor wetAsphaltColor];
+//    _front.layer.borderWidth = 1;
+//    _front.layer.cornerRadius = 3;
+//    _front.layer.borderColor = [UIColor whiteColor].CGColor;
     [self.contentView addSubview:_front];
-    _button1 = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x,
+    _button1 = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x+.25,
                                                               self.contentView.bounds.size.height-54,
-                                                              self.contentView.bounds.size.width,
+                                                              self.contentView.bounds.size.width-.5,
                                                               54)
                                    backgroundColor:[UIColor whiteColor]
                                    foregroundColor:[UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f]
@@ -94,13 +95,13 @@
 
 - (void)createTitle
 {
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(_front.bounds.origin.x+40,
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(_front.bounds.origin.x+20,
                                                            _front.bounds.origin.y+10,
-                                                           _front.bounds.size.width-40*2,
+                                                           _front.bounds.size.width-20*2,
                                                            30)];
     _titleLabel.text = @"Visit #1";
     _titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:30];
-    _titleLabel.textAlignment = NSTextAlignmentCenter;
+    _titleLabel.textAlignment = NSTextAlignmentLeft;
     _titleLabel.textColor = [UIColor whiteColor];
     [_front addSubview:_titleLabel];
 }
@@ -185,7 +186,7 @@
     when.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:30];
     [_front addSubview:when];
 
-    _button3 = [[JSQFlatButton alloc] initWithFrame:CGRectMake(20, 80, 320-40, 40)
+    _button3 = [[JSQFlatButton alloc] initWithFrame:CGRectMake(138, 80, 320-148, 40)
                                     backgroundColor:[UIColor clearColor]
                                     foregroundColor:[UIColor whiteColor]
                                               title:@"Set a date"
@@ -194,15 +195,38 @@
     _button3.borderWidth = 1;
     _button3.highlightedBorderColor = [UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
     _button3.highlightedForegroundColor = [UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f];
-    [_button3 addTarget:self action:@selector(turn) forControlEvents:UIControlEventTouchUpInside];
+    [_button3 addTarget:self action:@selector(turn) forControlEvents:UIControlEventTouchUpInside];             //turn
     [_front addSubview:_button3];
 
-    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 80, 320-40, 40)];
+    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(138, 80, 320-148, 40)];
     _dateLabel.textColor = [UIColor whiteColor];
     _dateLabel.textAlignment = NSTextAlignmentLeft;
     _dateLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
     [_front addSubview:_dateLabel];
     _dateLabel.hidden = YES;
+}
+
+- (void)popup
+{
+    RMDateSelectionViewController *dateSelectionVC = [RMDateSelectionViewController dateSelectionController];
+    dateSelectionVC.delegate = self;
+    [dateSelectionVC show];
+}
+
+- (void)dateSelectionViewController:(RMDateSelectionViewController *)vc didSelectDate:(NSDate *)aDate
+{
+    _selectedDate = aDate;
+    _dateLabel.text = [self getDate:aDate];
+    _dateLabel.hidden = NO;
+    _button3.hidden = YES;
+}
+
+- (void)dateSelectionViewControllerDidCancel:(RMDateSelectionViewController *)vc
+{
+    _selectedDate = nil;
+    _dateLabel.text = nil;
+    _dateLabel.hidden = YES;
+    _button3.hidden = NO;
 }
 
 - (void)createWho

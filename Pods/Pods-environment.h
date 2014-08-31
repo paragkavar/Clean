@@ -60,6 +60,12 @@
 #define COCOAPODS_VERSION_MINOR_PaymentKit 0
 #define COCOAPODS_VERSION_PATCH_PaymentKit 5
 
+// RMDateSelectionViewController
+#define COCOAPODS_POD_AVAILABLE_RMDateSelectionViewController
+#define COCOAPODS_VERSION_MAJOR_RMDateSelectionViewController 1
+#define COCOAPODS_VERSION_MINOR_RMDateSelectionViewController 3
+#define COCOAPODS_VERSION_PATCH_RMDateSelectionViewController 0
+
 // Shimmer
 #define COCOAPODS_POD_AVAILABLE_Shimmer
 #define COCOAPODS_VERSION_MAJOR_Shimmer 1

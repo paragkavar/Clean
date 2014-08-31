@@ -10,6 +10,7 @@ PODS:
   - Parse (1.2.21):
     - Facebook-iOS-SDK (~> 3.17)
   - PaymentKit (1.0.5)
+  - RMDateSelectionViewController (1.3.0)
   - Shimmer (1.0.1)
   - Stripe (1.1.4):
     - PaymentKit (~> 1.0.4)
@@ -21,6 +22,7 @@ DEPENDENCIES:
   - INTULocationManager
   - JSQFlatButton
   - Parse
+  - RMDateSelectionViewController (~> 1.3.0)
   - Shimmer
   - Stripe
 
@@ -34,6 +36,7 @@ SPEC CHECKSUMS:
   JSQFlatButton: e8a11ba46496e7db757ddc24469774c254365ece
   Parse: 4be4e9fe2ee6dae16010e7622a5641a7c89154b7
   PaymentKit: 14b54835f57ae9e2bf5628140fcd67001740cba2
+  RMDateSelectionViewController: b6e6724739c80c17af0fbb722793eb7f3b6eb4df
   Shimmer: 35aa2a57b8fbc17f9e16706021665966fd93dbd1
   Stripe: a0ed1c0675a3c36f6e8d575820cfec1dc9335f53
 

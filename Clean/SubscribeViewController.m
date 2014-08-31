@@ -96,6 +96,7 @@
                                                 title:@"subscribe"
                                                 image:nil];
     _subscribe.disabledBackgroundColor = [UIColor lightGrayColor];
+    _subscribe.highlightedBackgroundColor = [UIColor clearColor];
     [_subscribe addTarget:self action:@selector(subscribe:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_subscribe];
     _subscribe.enabled = NO;
