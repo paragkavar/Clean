@@ -29,8 +29,8 @@
 - (void)createPage
 {
     UIPageControl *page = [[UIPageControl alloc] init];
-    page.center = CGPointMake(self.view.center.x, 100);
-    page.numberOfPages = 7;
+    page.center = CGPointMake(self.view.center.x, self.view.frame.size.height-84);
+    page.numberOfPages = 5;
     page.currentPage = 0;
     page.backgroundColor = [UIColor clearColor];
     page.tintColor = [UIColor whiteColor];
@@ -41,7 +41,7 @@
 - (void)createTitle
 {
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, self.view.frame.size.width-2*10, 50)];
-    title.text = @"Welcome!";
+    title.text = @"Clean";
     title.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:50];
     title.textColor = [UIColor whiteColor];
     title.adjustsFontSizeToFitWidth = YES;
@@ -54,15 +54,17 @@
     _start = [[JSQFlatButton alloc] initWithFrame:CGRectMake(0,self.view.frame.size.height-54,self.view.frame.size.width,54)
                                       backgroundColor:[UIColor colorWithRed:1.00f green:1.00f blue:1.00f alpha:1.0f]
                                       foregroundColor:[UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f]
-                                                title:@"start"
+                                                title:@"register now"
                                                 image:nil];
     [_start addTarget:self action:@selector(start:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_start];
+//    _start.hidden = YES;
 }
 
 - (void)start:(JSQFlatButton *)sender
 {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"started"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [self presentViewController:[GetPhoneNumberViewController new] animated:NO completion:nil];
 }
 

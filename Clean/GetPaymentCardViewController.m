@@ -16,13 +16,13 @@
 #import "UIColor+FlatUI.h"
 #import "CardIO.h"
 #import <Parse/Parse.h>
-#import "SubscribeViewController.h"
 #import "RootViewController.h"
+#import "VCFlow.h"
 
 @interface GetPaymentCardViewController () <STPViewDelegate, CardIOPaymentViewControllerDelegate>
 @property STPView *stripeView;
 @property STPCard *stripeCard;
-@property JSQFlatButton *save;
+@property JSQFlatButton *subscribe;
 @property JSQFlatButton *camera;
 @property UIButton *cameraIcon;
 @end
@@ -44,8 +44,8 @@
 {
     UIPageControl *page = [[UIPageControl alloc] init];
     page.center = CGPointMake(self.view.center.x, 100);
-    page.numberOfPages = 7;
-    page.currentPage = 5;
+    page.numberOfPages = 5;
+    page.currentPage = 4;
     page.backgroundColor = [UIColor clearColor];
     page.tintColor = [UIColor whiteColor];
     page.currentPageIndicatorTintColor = [UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
@@ -65,22 +65,22 @@
 
 - (void)createSaveButton
 {
-    _save = [[JSQFlatButton alloc] initWithFrame:CGRectMake(0,
+    _subscribe = [[JSQFlatButton alloc] initWithFrame:CGRectMake(0,
                                                             self.view.frame.size.height-216-54,
                                                             self.view.frame.size.width,
                                                             54)
                                  backgroundColor:[UIColor colorWithRed:1.00f green:1.00f blue:1.00f alpha:1.0f]
                                  foregroundColor:[UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f]
-                                           title:@"save"
+                                           title:@"subscribe"
                                            image:nil];
-    [_save addTarget:self action:@selector(save:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_save];
-    _save.enabled = NO;
+    [_subscribe addTarget:self action:@selector(subscribe:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_subscribe];
+    _subscribe.enabled = NO;
 }
 
-- (void)save:(UIButton *)sender
+- (void)subscribe:(UIButton *)sender
 {
-    _save.enabled = NO;
+    _subscribe.enabled = NO;
 
     if (_stripeCard && [_stripeCard validateCardReturningError:nil])
     {
@@ -98,12 +98,12 @@
     else
     {
         [UIView animateWithDuration:.3 animations:^{
-            _save.transform = CGAffineTransformMakeTranslation(0, _save.transform.ty+216);
+            _subscribe.transform = CGAffineTransformMakeTranslation(0, _subscribe.transform.ty+216);
         }];
         [self.stripeView createToken:^(STPToken *token, NSError *error) {
              if (error)
              {
-                 _save.enabled = YES;
+                 _subscribe.enabled = YES;
                  [self handleStripeError:error];
              }
              else
@@ -117,13 +117,13 @@
 - (void)handleStripeError:(NSError *)error
 {
     [UIView animateWithDuration:.3 animations:^{
-        _save.transform = CGAffineTransformMakeTranslation(0, _save.transform.ty-216);
+        _subscribe.transform = CGAffineTransformMakeTranslation(0, _subscribe.transform.ty-216);
     }];
-    _save.enabled = YES;
+    _subscribe.enabled = YES;
     _stripeView.hidden = NO;
     _cameraIcon.hidden = ![UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera];
     [_stripeView.paymentView becomeFirstResponder];
-    [[[UIAlertView alloc] initWithTitle:@"Error trying to save card" message:@"Please try again with a good network connection and a working card" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+    [[[UIAlertView alloc] initWithTitle:@"Error trying to subscribe" message:@"Please try again with a good network connection and a working card" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
 }
 
 - (void)createCameraButton
@@ -142,7 +142,7 @@
     _stripeView.hidden = YES;
     _cameraIcon.hidden = YES;
     [UIView animateWithDuration:.3 animations:^{
-        _save.transform = CGAffineTransformMakeTranslation(0, _save.transform.ty+216);
+        _subscribe.transform = CGAffineTransformMakeTranslation(0, _subscribe.transform.ty+216);
     }];
     [self scanCard];
 }
@@ -169,7 +169,7 @@
     _cameraIcon.hidden = NO;
     [_stripeView.paymentView becomeFirstResponder];
     [UIView animateWithDuration:.3 animations:^{
-        _save.transform = CGAffineTransformMakeTranslation(0, _save.transform.ty-216);
+        _subscribe.transform = CGAffineTransformMakeTranslation(0, _subscribe.transform.ty-216);
     }];
 }
 
@@ -186,7 +186,7 @@
 
     if ([_stripeCard validateCardReturningError:nil])
     {
-        _save.enabled = YES;
+        _subscribe.enabled = YES;
     }
 }
 
@@ -213,7 +213,7 @@
 
 - (void)stripeView:(STPView *)view withCard:(PKCard *)card isValid:(BOOL)valid
 {
-    _save.enabled = valid;
+    _subscribe.enabled = valid;
 }
 
 - (void)createCustomer:(STPToken *)token
@@ -225,19 +225,48 @@
     {
         if (error)
         {
-            NSLog(@"Error in creating customer: %@",error);
             [self handleStripeError:error];
-            [self presentViewController:self animated:NO completion:nil];
         }
         else
         {
-            NSLog(@"Customer created successfully with id: %@", customer);
             [[NSUserDefaults standardUserDefaults] setObject:customer[@"id"] forKey:@"customerId"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            [self presentViewController:[SubscribeViewController new] animated:NO completion:nil];
+
+            NSNumber *bedrooms = [[NSUserDefaults standardUserDefaults] objectForKey:@"bedrooms"];
+            NSNumber *bathrooms = [[NSUserDefaults standardUserDefaults] objectForKey:@"bathrooms"];
+            NSNumber *visits = [[NSUserDefaults standardUserDefaults] objectForKey:@"visits"];
+
+            [PFCloud callFunctionInBackground:@"costCalc"
+                               withParameters:@{@"visits":visits, @"bedrooms":bedrooms, @"bathrooms":bathrooms}
+                                        block:^(NSNumber *cost, NSError *error)
+             {
+                 if (error)
+                 {
+                     [self handleStripeError:error];
+                 }
+                 else
+                 {
+                     [PFCloud callFunctionInBackground:@"createSubscription"
+                                        withParameters:@{@"customer":customer[@"id"],
+                                                         @"plan":[NSString stringWithFormat:@"%@",cost]}
+                                                 block:^(NSString *subscriptionId, NSError *error)
+                      {
+                          if (error)
+                          {
+                              [self handleStripeError:error];
+                          }
+                          else
+                          {
+                              [[NSUserDefaults standardUserDefaults] setObject:subscriptionId forKey:@"subscriptionId"];
+                              [[NSUserDefaults standardUserDefaults] synchronize];
+                              [VCFlow addUserToDataBase];
+                              [self presentViewController:[RootViewController new] animated:NO completion:nil];
+                          }
+                      }];
+                 }
+             }];
         }
     }];
 }
 
 @end
-

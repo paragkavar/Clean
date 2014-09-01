@@ -1,5 +1,5 @@
 //
-//  SubscribeViewController.h
+//  GetHomeInfoViewController.h
 //  Clean
 //
 //  Created by Sapan Bhuta on 8/29/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SubscribeViewController : UIViewController
+@interface GetPriceViewController : UIViewController
 
 @end

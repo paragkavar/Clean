@@ -6,18 +6,21 @@
 //  Copyright (c) 2014 SapanBhuta. All rights reserved.
 //
 
-#import "GetHomeInfoViewController.h"
+#import "GetPriceViewController.h"
 #import "GetPaymentCardViewController.h"
 #import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
+#import <Parse/Parse.h>
 
-@interface GetHomeInfoViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
+@interface GetPriceViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
 @property UIPickerView *bedroomPicker;
 @property UIPickerView *bathroomPicker;
+@property UIPickerView *visitsPicker;
 @property JSQFlatButton *save;
+@property UILabel *costLabel;
 @end
 
-@implementation GetHomeInfoViewController
+@implementation GetPriceViewController
 
 - (void)viewDidLoad
 {
@@ -33,8 +36,8 @@
 {
     UIPageControl *page = [[UIPageControl alloc] init];
     page.center = CGPointMake(self.view.center.x, 100);
-    page.numberOfPages = 7;
-    page.currentPage = 4;
+    page.numberOfPages = 5;
+    page.currentPage = 3;
     page.backgroundColor = [UIColor clearColor];
     page.tintColor = [UIColor whiteColor];
     page.currentPageIndicatorTintColor = [UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
@@ -44,7 +47,7 @@
 - (void)createTitle
 {
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, self.view.frame.size.width-2*10, 50)];
-    title.text = @"About";
+    title.text = @"Price";
     title.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:50];
     title.textColor = [UIColor whiteColor];
     title.adjustsFontSizeToFitWidth = YES;
@@ -60,7 +63,7 @@
                                                             54)
                                  backgroundColor:[UIColor colorWithRed:1.00f green:1.00f blue:1.00f alpha:1.0f]
                                  foregroundColor:[UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f]
-                                           title:@"save"
+                                           title:@"pick"
                                            image:nil];
     [_save addTarget:self action:@selector(save:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_save];
@@ -76,7 +79,7 @@
     bedroom.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:bedroom];
 
-    UILabel *bathroom = [[UILabel alloc] initWithFrame:CGRectMake(170, 100, 140, 50)];
+    UILabel *bathroom = [[UILabel alloc] initWithFrame:CGRectMake(10, 200, 140, 50)];
     bathroom.text = @"# of bathrooms";
     bathroom.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:50];
     bathroom.textColor = [UIColor whiteColor];
@@ -84,17 +87,42 @@
     bathroom.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:bathroom];
 
+    UILabel *visits = [[UILabel alloc] initWithFrame:CGRectMake(10, 300, 140, 50)];
+    visits.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:50];
+    visits.textColor = [UIColor whiteColor];
+    visits.text = @"# of visits/month:";
+    visits.adjustsFontSizeToFitWidth = YES;
+    visits.textAlignment = NSTextAlignmentLeft;
+    [self.view addSubview:visits];
+
     _bedroomPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(100, 100, 40, 60)];
-    _bedroomPicker.center = CGPointMake(bedroom.center.x, 175);
+    _bedroomPicker.center = CGPointMake(200, bedroom.center.y+10);
     _bedroomPicker.delegate = self;
     _bedroomPicker.dataSource = self;
     [self.view addSubview:_bedroomPicker];
+    _bedroomPicker.tag = 1;
 
-    _bathroomPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(220, 100, 40, 60)];
-    _bathroomPicker.center = CGPointMake(bathroom.center.x, 175);
+    _bathroomPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(150, 100, 40, 60)];
+    _bathroomPicker.center = CGPointMake(200, bathroom.center.y+10);
     _bathroomPicker.delegate = self;
     _bathroomPicker.dataSource = self;
     [self.view addSubview:_bathroomPicker];
+    _bedroomPicker.tag = 1;
+
+    _visitsPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(200, 100, 40, 60)];
+    _visitsPicker.center = CGPointMake(200, visits.center.y);
+    _visitsPicker.delegate = self;
+    _visitsPicker.dataSource = self;
+    [self.view addSubview:_visitsPicker];
+    _visitsPicker.tag = 0;
+
+    _costLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 400, self.view.frame.size.width-2*10, 50)];
+    _costLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:50];
+    _costLabel.textColor = [UIColor whiteColor];
+    _costLabel.text = @"Cost: $20/month";
+    _costLabel.adjustsFontSizeToFitWidth = YES;
+    _costLabel.textAlignment = NSTextAlignmentLeft;
+    [self.view addSubview:_costLabel];
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -114,10 +142,29 @@
     return title;
 }
 
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    [self calcCost];
+}
+
+- (void)calcCost
+{
+    [PFCloud callFunctionInBackground:@"costCalc"
+                       withParameters:@{@"visits":@([_visitsPicker selectedRowInComponent:0]+1),
+                                        @"bedrooms":@([_bedroomPicker selectedRowInComponent:0]+1),
+                                        @"bathrooms":@([_bedroomPicker selectedRowInComponent:0]+1)}
+                                block:^(NSNumber *cost, NSError *error)
+     {
+         _costLabel.text = [NSString stringWithFormat:@"Cost: $%@/month",cost];
+     }];
+}
+
 - (void)save:(JSQFlatButton *)sender
 {
-    [[NSUserDefaults standardUserDefaults] setObject:@([_bedroomPicker selectedRowInComponent:0]+1).description forKey:@"bedrooms"];
-    [[NSUserDefaults standardUserDefaults] setObject:@([_bathroomPicker selectedRowInComponent:0]+1).description forKey:@"bathrooms"];
+    [[NSUserDefaults standardUserDefaults] setObject:@([_bedroomPicker selectedRowInComponent:0]+1) forKey:@"bedrooms"];
+    [[NSUserDefaults standardUserDefaults] setObject:@([_bathroomPicker selectedRowInComponent:0]+1) forKey:@"bathrooms"];
+    [[NSUserDefaults standardUserDefaults] setObject:@([_visitsPicker selectedRowInComponent:0]+1) forKey:@"visits"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [self presentViewController:[GetPaymentCardViewController new] animated:NO completion:nil];
 }
 

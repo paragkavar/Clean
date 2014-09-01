@@ -24,9 +24,7 @@
 @property JSQFlatButton *etaBackButton;
 @property JSQFlatButton *dateButton;
 @property JSQFlatButton *addonButton;
-@property UIImageView *imageView;
-@property UILabel *nameLabel;
-@property UILabel *dateLabel;
+@property NSDate *selectedDate;
 @end
 
 @implementation SBCollectionViewCell
@@ -36,7 +34,7 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        [self createCalendar];
+//        [self createCalendar];
         [self createMap];
         [self createFront];
         [self createTitle];
@@ -198,13 +196,14 @@
     _dateButton.highlightedForegroundColor = [UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f];
     [_dateButton addTarget:self action:@selector(turn) forControlEvents:UIControlEventTouchUpInside];             //turn
     [_front addSubview:_dateButton];
+    _dateButton.hidden = YES;
 
-    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(138, 80, 320-148, 40)];
+    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 80, 320-40, 40)];
     _dateLabel.textColor = [UIColor whiteColor];
-    _dateLabel.textAlignment = NSTextAlignmentLeft;
+    _dateLabel.textAlignment = NSTextAlignmentRight;
     _dateLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
     [_front addSubview:_dateLabel];
-    _dateLabel.hidden = YES;
+//    _dateLabel.hidden = YES;
 }
 
 - (void)popup
@@ -248,7 +247,6 @@
 
     _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(138, 194, 320-148, 40)];
     _nameLabel.center = CGPointMake(_nameLabel.center.x, _imageView.center.y);
-    _nameLabel.text = @"Michelle Borromeo";
     _nameLabel.textColor = [UIColor whiteColor];
     _nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
     [_front addSubview:_nameLabel];
@@ -256,12 +254,6 @@
 
 - (void)setContactImage:(NSString *)imageName
 {
-    _imageView.image = [UIImage imageNamed:imageName];
-}
-
-- (void)setTitleLabelText:(int)num
-{
-    _titleLabel.text = [NSString stringWithFormat:@"Visit #%i",num];
 }
 
 - (NSString *)getDate:(NSDate *)date

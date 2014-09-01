@@ -11,9 +11,8 @@
 #import "IntroViewController.h"
 #import "GetPhoneNumberViewController.h"
 #import "GetAddressViewController.h"
-#import "GetHomeInfoViewController.h"
+#import "GetPriceViewController.h"
 #import "GetPaymentCardViewController.h"
-#import "SubscribeViewController.h"
 #import "RootViewController.h"
 
 @implementation VCFlow
@@ -24,7 +23,7 @@
     {
         return [IntroViewController new];
     }
-    else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"verifiedPhoneNumber"])
+    else if (![[NSUserDefaults standardUserDefaults] boolForKey:@"verifiedPhoneNumber"])
     {
         return [GetPhoneNumberViewController new];
     }
@@ -35,15 +34,11 @@
     else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"bedrooms"] &&
              ![[NSUserDefaults standardUserDefaults] objectForKey:@"bathrooms"])
     {
-        return [GetHomeInfoViewController new];
-    }
-    else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"])
-    {
-        return [GetPaymentCardViewController new];
+        return [GetPriceViewController new];
     }
     else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"subscriptionId"])
     {
-        return [SubscribeViewController new];
+        return [GetPaymentCardViewController new];
     }
     else
     {
@@ -64,9 +59,10 @@
             [[NSUserDefaults standardUserDefaults] setObject:user[@"address"] forKey:@"address"];
             [[NSUserDefaults standardUserDefaults] setObject:user[@"bedrooms"] forKey:@"bedrooms"];
             [[NSUserDefaults standardUserDefaults] setObject:user[@"bathrooms"] forKey:@"bathrooms"];
+            [[NSUserDefaults standardUserDefaults] setObject:user[@"visits"] forKey:@"visits"];
             [[NSUserDefaults standardUserDefaults] setObject:user[@"customerId"] forKey:@"customerId"];
             [[NSUserDefaults standardUserDefaults] setObject:user[@"subscriptionId"] forKey:@"subscriptionId"];
-            [[NSUserDefaults standardUserDefaults] setObject:user[@"visits"] forKey:@"visits"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             handler(YES);
         }
     }];
@@ -79,9 +75,9 @@
     user[@"address"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"address"];
     user[@"bedrooms"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"bedrooms"];
     user[@"bathrooms"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"bathrooms"];
+    user[@"visits"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"visits"];
     user[@"customerId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
     user[@"subscriptionId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"subscriptionId"];
-    user[@"visits"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"visits"];
     [user saveInBackground];
 }
 

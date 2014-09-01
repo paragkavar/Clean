@@ -38,8 +38,8 @@
 {
     UIPageControl *page = [[UIPageControl alloc] init];
     page.center = CGPointMake(self.view.center.x, 100);
-    page.numberOfPages = 7;
-    page.currentPage = 2;
+    page.numberOfPages = 5;
+    page.currentPage = 1;
     page.backgroundColor = [UIColor clearColor];
     page.tintColor = [UIColor whiteColor];
     page.currentPageIndicatorTintColor = [UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
@@ -113,7 +113,8 @@
 
 - (void)enter:(JSQFlatButton *)sender
 {
-    [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:@"verifiedPhoneNumber"];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"verifiedPhoneNumber"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [PFInstallation currentInstallation][@"phoneNumber"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
     
     [VCFlow checkForExistingUserWithCompletionHandler:^(bool exists) {

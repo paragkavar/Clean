@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface SBCollectionViewCell : UICollectionViewCell
-@property NSDate *selectedDate;
+@property UIImageView *imageView;
 @property UILabel *titleLabel;
-- (void)setContactImage:(NSString *)imageName;
-- (void)setTitleLabelText:(int)num;
+@property UILabel *nameLabel;
+@property UILabel *dateLabel;
 @end

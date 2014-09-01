@@ -112,10 +112,12 @@
 {
     SBCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     _page.currentPage = indexPath.item;
-    [cell setTitleLabelText:indexPath.item+1];
+    cell.titleLabel.text = [NSString stringWithFormat:@"Visit #%i",indexPath.item+1];
+    cell.nameLabel.text = @"Michelle Borromeo";
+    cell.dateLabel.text = @"12:00pm on 8/30/2014";
     if (indexPath.item < 5)
     {
-        [cell setContactImage:[NSString stringWithFormat:@"headshot%i",indexPath.item+1]];
+        cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"headshot%i",indexPath.item+1]];
     }
     return cell;
 }
