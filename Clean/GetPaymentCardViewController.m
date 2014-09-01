@@ -221,7 +221,7 @@
     NSString *phoneNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
     [PFCloud callFunctionInBackground:@"createCustomer"
                        withParameters:@{@"token":token.tokenId, @"phoneNumber":phoneNumber}
-                                block:^(id customer, NSError *error)
+                                block:^(NSString *customerId, NSError *error)
     {
         if (error)
         {
@@ -229,13 +229,14 @@
         }
         else
         {
-            [[NSUserDefaults standardUserDefaults] setObject:customer[@"id"] forKey:@"customerId"];
+            NSLog(@"CustomerId: %@",customerId);
+            [[NSUserDefaults standardUserDefaults] setObject:customerId forKey:@"customerId"];
             [[NSUserDefaults standardUserDefaults] synchronize];
 
             NSString *plan = [[NSUserDefaults standardUserDefaults] objectForKey:@"plan"];
 
             [PFCloud callFunctionInBackground:@"createSubscription"
-                               withParameters:@{@"customer":customer[@"id"],
+                               withParameters:@{@"customer":customerId,
                                                 @"plan":plan}
                                         block:^(NSString *subscriptionId, NSError *error)
              {
@@ -245,6 +246,7 @@
                   }
                   else
                   {
+                      NSLog(@"subscriptionId: %@",subscriptionId);
                       [[NSUserDefaults standardUserDefaults] setObject:subscriptionId forKey:@"subscriptionId"];
                       [[NSUserDefaults standardUserDefaults] synchronize];
                       [VCFlow addUserToDataBase];

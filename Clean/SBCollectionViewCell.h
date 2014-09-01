@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JSQFlatButton.h"
 
 @interface SBCollectionViewCell : UICollectionViewCell
 @property UIImageView *imageView;
 @property UILabel *titleLabel;
 @property UILabel *nameLabel;
 @property UILabel *dateLabel;
+@property JSQFlatButton *etaButton;
 @end

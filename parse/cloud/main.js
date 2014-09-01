@@ -24,7 +24,7 @@ Parse.Cloud.define("createCustomer", function(request, response) {
     card: request.params.token
   }, {
     success: function(httpResponse) {
-      response.success(httpResponse);
+      response.success(httpResponse.id);
     },
     error: function(httpResponse) {
       response.error(httpResponse.message);

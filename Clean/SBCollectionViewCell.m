@@ -8,7 +8,6 @@
 
 #import "SBCollectionViewCell.h"
 #import "CKCalendarView.h"
-#import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
 #import <MapKit/MapKit.h>
 #import "RMDateSelectionViewController.h"
@@ -20,7 +19,6 @@
 @property UIView *front;
 @property BOOL flipped;
 @property BOOL turned;
-@property JSQFlatButton *etaButton;
 @property JSQFlatButton *etaBackButton;
 @property JSQFlatButton *dateButton;
 @property JSQFlatButton *addonButton;

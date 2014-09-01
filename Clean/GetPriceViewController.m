@@ -282,9 +282,9 @@
 - (void)save:(JSQFlatButton *)sender
 {
     [[NSUserDefaults standardUserDefaults] setObject:@(_selectedIndex).description forKey:@"plan"];
-    [[NSUserDefaults standardUserDefaults] setObject:@(_bedrooms) forKey:@"bedrooms"];
-    [[NSUserDefaults standardUserDefaults] setObject:@(_bathrooms) forKey:@"bathrooms"];
-    [[NSUserDefaults standardUserDefaults] setObject:@(_visits) forKey:@"visits"];
+//    [[NSUserDefaults standardUserDefaults] setObject:@(_bedrooms) forKey:@"bedrooms"];
+//    [[NSUserDefaults standardUserDefaults] setObject:@(_bathrooms) forKey:@"bathrooms"];
+//    [[NSUserDefaults standardUserDefaults] setObject:@(_visits) forKey:@"visits"];
     [[NSUserDefaults standardUserDefaults] setObject:_days[[_dayPicker selectedRowInComponent:0]] forKey:@"day"];
     [[NSUserDefaults standardUserDefaults] setInteger:[_timePicker selectedRowInComponent:0]+1 forKey:@"hour"];
     [[NSUserDefaults standardUserDefaults] setInteger:[_timePicker selectedRowInComponent:1] forKey:@"minute"];

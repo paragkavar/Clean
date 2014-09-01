@@ -37,7 +37,7 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor midnightBlueColor];
-    _visits = [[[NSUserDefaults standardUserDefaults] objectForKey:@"visits"] intValue];
+    _visits = 4;
     [self createPage];
     [self createTitle];
     [self createCollectionView];
@@ -112,7 +112,8 @@
 {
     SBCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     _page.currentPage = indexPath.item;
-    cell.titleLabel.text = [NSString stringWithFormat:@"Visit #%i",indexPath.item+1];
+    [cell.etaButton setFlatTitle:@"map"];
+    cell.titleLabel.text = [NSString stringWithFormat:@"visit #%i",indexPath.item+1];
     cell.nameLabel.text = @"Michelle Borromeo";
     cell.dateLabel.text = @"12:00pm on 8/30/2014";
     if (indexPath.item < 5)
