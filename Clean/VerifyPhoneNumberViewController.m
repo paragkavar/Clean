@@ -78,8 +78,8 @@
                                                               self.view.frame.size.width/2-.25,
                                                               54)
                                    backgroundColor:[UIColor colorWithRed:0.18f green:0.67f blue:0.84f alpha:1.0f]
-                                   foregroundColor:[UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f]
-                                             title:@"resend"
+                                   foregroundColor:[UIColor colorWithRed:1.00f green:1.00f blue:1.00f alpha:1.0f]
+                                             title:@"back"//@"resend"
                                              image:nil];
     [_resend addTarget:self action:@selector(resend:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_resend];
@@ -107,8 +107,9 @@
 
 - (void)resend:(JSQFlatButton *)sender
 {
-    _codeEntry.text = @"";
-    [self sendSMSToNumber:[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"]];
+    [self dismissViewControllerAnimated:NO completion:nil];
+//    _codeEntry.text = @"";
+//    [self sendSMSToNumber:[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"]];
 }
 
 - (void)enter:(JSQFlatButton *)sender
