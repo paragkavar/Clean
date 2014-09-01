@@ -119,7 +119,7 @@
     
     [VCFlow checkForExistingUserWithCompletionHandler:^(bool exists) {
         if (exists) {
-            [self presentViewController:[RootViewController new] animated:NO completion:nil];
+            [self presentViewController:[VCFlow nextVC] animated:NO completion:nil];
         } else {
             [self presentViewController:[GetAddressViewController new] animated:NO completion:nil];
         }

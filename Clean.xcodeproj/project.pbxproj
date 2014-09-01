@@ -39,6 +39,11 @@
 		8EB9A87419B0E7AE0013849E /* GetPriceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A87319B0E7AE0013849E /* GetPriceViewController.m */; };
 		8EE7A0A519B3BBF3002C0CD3 /* VCFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE7A0A419B3BBF3002C0CD3 /* VCFlow.m */; };
 		8EE7A0A819B4156A002C0CD3 /* PRCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE7A0A719B4156A002C0CD3 /* PRCollectionViewCell.m */; };
+		8EE7A0AB19B42C61002C0CD3 /* INCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE7A0AA19B42C61002C0CD3 /* INCollectionViewCell.m */; };
+		8EE7A0AD19B42E8B002C0CD3 /* arrow-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EE7A0AC19B42E8B002C0CD3 /* arrow-right.png */; };
+		8EE7A0AF19B42FAB002C0CD3 /* arrow-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EE7A0AE19B42FAB002C0CD3 /* arrow-down.png */; };
+		8EE7A0B119B4324C002C0CD3 /* arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EE7A0B019B4324C002C0CD3 /* arrow-left.png */; };
+		8EE7A0B319B43365002C0CD3 /* arrow-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EE7A0B219B43365002C0CD3 /* arrow-up.png */; };
 		FA4BA2F8D8D14E50BB713358 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5C194B615694DD88512E74F /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +105,12 @@
 		8EE7A0A419B3BBF3002C0CD3 /* VCFlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCFlow.m; sourceTree = "<group>"; };
 		8EE7A0A619B4156A002C0CD3 /* PRCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRCollectionViewCell.h; sourceTree = "<group>"; };
 		8EE7A0A719B4156A002C0CD3 /* PRCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRCollectionViewCell.m; sourceTree = "<group>"; };
+		8EE7A0A919B42C61002C0CD3 /* INCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INCollectionViewCell.h; sourceTree = "<group>"; };
+		8EE7A0AA19B42C61002C0CD3 /* INCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INCollectionViewCell.m; sourceTree = "<group>"; };
+		8EE7A0AC19B42E8B002C0CD3 /* arrow-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-right.png"; sourceTree = "<group>"; };
+		8EE7A0AE19B42FAB002C0CD3 /* arrow-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-down.png"; sourceTree = "<group>"; };
+		8EE7A0B019B4324C002C0CD3 /* arrow-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-left.png"; sourceTree = "<group>"; };
+		8EE7A0B219B43365002C0CD3 /* arrow-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-up.png"; sourceTree = "<group>"; };
 		A5C194B615694DD88512E74F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -140,6 +151,10 @@
 				8E02E2F119B2D7170008CFE1 /* headshot3.png */,
 				8E02E2F219B2D7170008CFE1 /* headshot4.png */,
 				8E02E2F319B2D7170008CFE1 /* headshot5.png */,
+				8EE7A0AC19B42E8B002C0CD3 /* arrow-right.png */,
+				8EE7A0B019B4324C002C0CD3 /* arrow-left.png */,
+				8EE7A0AE19B42FAB002C0CD3 /* arrow-down.png */,
+				8EE7A0B219B43365002C0CD3 /* arrow-up.png */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -230,6 +245,8 @@
 			children = (
 				8EB9A85819AFE8AD0013849E /* IntroViewController.h */,
 				8EB9A85919AFE8AD0013849E /* IntroViewController.m */,
+				8EE7A0A919B42C61002C0CD3 /* INCollectionViewCell.h */,
+				8EE7A0AA19B42C61002C0CD3 /* INCollectionViewCell.m */,
 				8EB9A85619AFE8AD0013849E /* GetPhoneNumberViewController.h */,
 				8EB9A85719AFE8AD0013849E /* GetPhoneNumberViewController.m */,
 				8EB9A86119AFE8D00013849E /* VerifyPhoneNumberViewController.h */,
@@ -325,11 +342,15 @@
 			files = (
 				8EB9A87119AFE9180013849E /* Podfile in Resources */,
 				8E02E2F619B2D7170008CFE1 /* headshot5.png in Resources */,
+				8EE7A0AF19B42FAB002C0CD3 /* arrow-down.png in Resources */,
 				8EB9A86819AFE8DF0013849E /* camera-old.png in Resources */,
 				8E02E2F519B2D7170008CFE1 /* headshot4.png in Resources */,
+				8EE7A0B319B43365002C0CD3 /* arrow-up.png in Resources */,
 				8E02E2EC19B2D00E0008CFE1 /* original.jpg in Resources */,
+				8EE7A0AD19B42E8B002C0CD3 /* arrow-right.png in Resources */,
 				8E02E2EE19B2D00E0008CFE1 /* headshot1.png in Resources */,
 				8E23CE9219AFE842007A5319 /* InfoPlist.strings in Resources */,
+				8EE7A0B119B4324C002C0CD3 /* arrow-left.png in Resources */,
 				8EB9A86A19AFE8DF0013849E /* location.png in Resources */,
 				8EB9A86919AFE8DF0013849E /* camera.png in Resources */,
 				8E23CE9A19AFE842007A5319 /* Images.xcassets in Resources */,
@@ -390,6 +411,7 @@
 				8EB9A85B19AFE8AD0013849E /* GetPaymentCardViewController.m in Sources */,
 				8E02E2E819B2C4FF0008CFE1 /* SBCollectionViewCell.m in Sources */,
 				8EB9A87419B0E7AE0013849E /* GetPriceViewController.m in Sources */,
+				8EE7A0AB19B42C61002C0CD3 /* INCollectionViewCell.m in Sources */,
 				8EB9A86419AFE8D00013849E /* VerifyPhoneNumberViewController.m in Sources */,
 				8EB9A86319AFE8D00013849E /* RootViewController.m in Sources */,
 				8EE7A0A819B4156A002C0CD3 /* PRCollectionViewCell.m in Sources */,

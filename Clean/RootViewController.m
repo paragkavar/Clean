@@ -21,7 +21,6 @@
 @property UICollectionView *collectionView;
 @property int visits;
 @property UIPageControl *page;
-@property JSQFlatButton *clean;
 @property JSQFlatButton *subscribe;
 @property UIDatePicker *datePicker;
 @property UIActivityIndicatorView *activity;
@@ -41,11 +40,6 @@
     [self createPage];
     [self createTitle];
     [self createCollectionView];
-//    [self createContainer];
-//    [self createCalendar];
-//    [self createInfoView];
-//    [self createButton];
-//    [self createActivityView];
 }
 
 - (void)createPage
@@ -113,7 +107,7 @@
     SBCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     _page.currentPage = indexPath.item;
     [cell.etaButton setFlatTitle:@"map"];
-    cell.titleLabel.text = [NSString stringWithFormat:@"visit #%i",indexPath.item+1];
+    cell.titleLabel.text = [NSString stringWithFormat:@"visit %i",indexPath.item+1];
     cell.nameLabel.text = @"Michelle Borromeo";
     cell.dateLabel.text = @"12:00pm on 8/30/2014";
     if (indexPath.item < 5)
@@ -123,52 +117,11 @@
     return cell;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return CGSizeMake(self.view.frame.size.width, self.view.frame.size.width);
-}
-
-- (void)createContainer
-{
-    _containerView = [[UIView alloc] initWithFrame:self.view.bounds];
-    _containerView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:_containerView];
-}
-
-- (void)createActivityView
-{
-    _activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    _activity.center = self.view.center;
-    [_activity hidesWhenStopped];
-    [self.view addSubview:_activity];
-}
-
-- (void)createButton
-{
-    self.clean = [[JSQFlatButton alloc] initWithFrame:buttonFrame
-                                      backgroundColor:[UIColor colorWithRed:1.00f green:1.00f blue:1.00f alpha:1.0f]
-                                      foregroundColor:[UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f]
-                                                title:@"Clean"
-                                                image:nil];
-    [self.clean addTarget:self action:@selector(clean:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.clean];
-//    self.clean.enabled = NO;
-}
-
-- (void)clean:(JSQFlatButton *)sender
-{
-
-}
-
-- (void)recordTransaction:(NSString *)chargeId
-{
-    PFObject *transaction = [PFObject objectWithClassName:@"Transaction"];
-    transaction[@"phoneNumber"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
-    transaction[@"address"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"address"];
-//    transaction[@"date"] = [self getDate:_selectedDate];
-    transaction[@"customerId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
-    transaction[@"chargeId"] = chargeId;
-    [transaction saveInBackground];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
