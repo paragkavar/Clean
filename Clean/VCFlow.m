@@ -56,9 +56,8 @@
             PFObject *user = objects.firstObject;
             [[NSUserDefaults standardUserDefaults] setObject:user[@"phoneNumber"] forKey:@"phoneNumber"];
             [[NSUserDefaults standardUserDefaults] setObject:user[@"address"] forKey:@"address"];
-//            [[NSUserDefaults standardUserDefaults] setObject:user[@"bedrooms"] forKey:@"bedrooms"];
-//            [[NSUserDefaults standardUserDefaults] setObject:user[@"bathrooms"] forKey:@"bathrooms"];
-//            [[NSUserDefaults standardUserDefaults] setObject:user[@"visits"] forKey:@"visits"];
+            [[NSUserDefaults standardUserDefaults] setFloat:[user[@"latitude"] floatValue] forKey:@"latitude"];
+            [[NSUserDefaults standardUserDefaults] setFloat:[user[@"longitude"] floatValue] forKey:@"longitude"];
             [[NSUserDefaults standardUserDefaults] setObject:user[@"day"] forKey:@"hour"];
             [[NSUserDefaults standardUserDefaults] setInteger:[user[@"hour"] intValue] forKey:@"visits"];
             [[NSUserDefaults standardUserDefaults] setInteger:[user[@"minute"] intValue] forKey:@"minute"];
@@ -77,9 +76,8 @@
     PFObject *user = [PFObject objectWithClassName:@"User"];
     user[@"phoneNumber"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
     user[@"address"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"address"];
-//    user[@"bedrooms"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"bedrooms"];
-//    user[@"bathrooms"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"bathrooms"];
-//    user[@"visits"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"visits"];
+    user[@"latitude"] = @([[NSUserDefaults standardUserDefaults] floatForKey:@"latitude"]);
+    user[@"longitude"] = @([[NSUserDefaults standardUserDefaults] floatForKey:@"longitude"]);
     user[@"day"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"day"];
     user[@"hour"] = @([[NSUserDefaults standardUserDefaults] integerForKey:@"hour"]);
     user[@"minute"] = @([[NSUserDefaults standardUserDefaults] integerForKey:@"minute"]);
@@ -91,10 +89,3 @@
 }
 
 @end
-
-/*
- [[NSUserDefaults standardUserDefaults] setObject:_days[[_dayPicker selectedRowInComponent:0]] forKey:@"day"];
- [[NSUserDefaults standardUserDefaults] setInteger:[_timePicker selectedRowInComponent:0]+1 forKey:@"hour"];
- [[NSUserDefaults standardUserDefaults] setInteger:[_timePicker selectedRowInComponent:1] forKey:@"minute"];
- [[NSUserDefaults standardUserDefaults] setBool:[_timePicker selectedRowInComponent:2] == 0 forKey:@"AM"];;
-*/

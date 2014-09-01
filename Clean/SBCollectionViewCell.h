@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JSQFlatButton.h"
+#import <MapKit/MapKit.h>
 
 @interface SBCollectionViewCell : UICollectionViewCell
 @property UIImageView *imageView;
@@ -15,4 +16,5 @@
 @property UILabel *nameLabel;
 @property UILabel *dateLabel;
 @property JSQFlatButton *etaButton;
+@property MKMapView *map;
 @end

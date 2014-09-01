@@ -69,6 +69,7 @@
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
     _collectionView.pagingEnabled = YES;
+    _collectionView.showsHorizontalScrollIndicator = NO;
     _collectionView.backgroundColor = [UIColor clearColor];
     [_collectionView registerClass:[INCollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
     [self.view addSubview:_collectionView];

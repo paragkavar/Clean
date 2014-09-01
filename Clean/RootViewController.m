@@ -84,6 +84,7 @@
     {
         _collectionView.center = self.view.center;
         flow.minimumLineSpacing = 0;
+        _collectionView.showsHorizontalScrollIndicator = NO;
     }
     _collectionView.pagingEnabled = (flow.scrollDirection == UICollectionViewScrollDirectionHorizontal);
     _page.hidden = (flow.scrollDirection != UICollectionViewScrollDirectionHorizontal);

@@ -12,7 +12,7 @@
 #import "UIColor+FlatUI.h"
 #import "INTULocationManager.h"
 
-@interface GetAddressViewController ()
+@interface GetAddressViewController () <UIAlertViewDelegate>
 @property JSQFlatButton *save;
 @property UITextField *addressField;
 @property UITextView *addressLabel;
@@ -24,6 +24,7 @@
 @property NSString *addressString;
 @property UIActivityIndicatorView *activity;
 @property NSTimer *buttonCheckTimer;
+@property BOOL saving;
 @end
 
 @implementation GetAddressViewController
@@ -40,12 +41,13 @@
     [self createLocationButton];
     [self createActivityView];
     _gettingLocation = NO;
+    _saving = NO;
     self.buttonCheckTimer = [NSTimer scheduledTimerWithTimeInterval:1/10 target:self selector:@selector(buttonCheck) userInfo:nil repeats:YES];
 }
 
 - (void)buttonCheck
 {
-    if (_formattedAddress || _addressField.text.length > 0)
+    if (!_saving && (_formattedAddress || _addressField.text.length > 0))
     {
         _save.enabled = YES;
     }
@@ -220,19 +222,68 @@
 
 - (void)save:(JSQFlatButton *)sender
 {
-    NSString *location;
+    _saving = YES;
     if (_addressString && _gettingLocation)
     {
-        location = _addressString;
+        CGFloat latitude = _location.coordinate.latitude;
+        CGFloat longitude = _location.coordinate.longitude;
+        [[NSUserDefaults standardUserDefaults] setFloat:latitude forKey:@"latitude"];
+        [[NSUserDefaults standardUserDefaults] setFloat:longitude forKey:@"longitude"];
+        [[NSUserDefaults standardUserDefaults] setObject:_addressString forKey:@"address"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self presentViewController:[GetPriceViewController new] animated:NO completion:nil];
     }
     else
     {
-        location = _addressField.text;
+        [[CLGeocoder new] geocodeAddressString:_addressField.text completionHandler:^(NSArray *placemarks, NSError *error)
+        {
+            if (error || placemarks.count != 1)
+            {
+                UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Error Locating Address" message:@"Are you sure you entered the address correctly?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+                errorAlert.delegate = self;
+                errorAlert.tag = 0;
+                [errorAlert show];
+            }
+            else
+            {
+                CLPlacemark *placemark = placemarks.firstObject;
+                _location = placemark.location;
+                _formattedAddress = [placemark addressDictionary][@"FormattedAddressLines"];
+                _addressString = [NSString stringWithFormat:@"%@\n%@",_formattedAddress[0],_formattedAddress[1]];
+                UIAlertView *checkAlert = [[UIAlertView alloc] initWithTitle:@"Is this the correct address?" message:_addressString delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+                checkAlert.delegate = self;
+                checkAlert.tag = 1;
+                [checkAlert show];
+            }
+        }];
     }
-    NSLog(@"LOCATION: %@",location);
-    [[NSUserDefaults standardUserDefaults] setObject:location forKey:@"address"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    [self presentViewController:[GetPriceViewController new] animated:NO completion:nil];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag ==0 && buttonIndex == 0)
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:_addressField.text forKey:@"address"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self presentViewController:[GetPriceViewController new] animated:NO completion:nil];
+    }
+    else if (alertView.tag == 1 && buttonIndex == 0)
+    {
+        CGFloat latitude = _location.coordinate.latitude;
+        CGFloat longitude = _location.coordinate.longitude;
+        [[NSUserDefaults standardUserDefaults] setFloat:latitude forKey:@"latitude"];
+        [[NSUserDefaults standardUserDefaults] setFloat:longitude forKey:@"longitude"];
+        [[NSUserDefaults standardUserDefaults] setObject:_addressField.text forKey:@"address"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self presentViewController:[GetPriceViewController new] animated:NO completion:nil];
+    }
+    else
+    {
+        _saving = NO;
+        _location = nil;
+        _formattedAddress = nil;
+        _addressString = nil;
+    }
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle

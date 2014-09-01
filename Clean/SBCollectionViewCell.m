@@ -9,13 +9,11 @@
 #import "SBCollectionViewCell.h"
 #import "CKCalendarView.h"
 #import "UIColor+FlatUI.h"
-#import <MapKit/MapKit.h>
 #import "RMDateSelectionViewController.h"
 
 @interface SBCollectionViewCell () <CKCalendarDelegate, MKMapViewDelegate, RMDateSelectionViewControllerDelegate>
 @property CKCalendarView *calendar;
 @property UIView *mapContainer;
-@property MKMapView *map;
 @property UIView *front;
 @property BOOL flipped;
 @property BOOL turned;
@@ -23,6 +21,7 @@
 @property JSQFlatButton *dateButton;
 @property JSQFlatButton *addonButton;
 @property NSDate *selectedDate;
+@property int padding;
 @end
 
 @implementation SBCollectionViewCell
@@ -33,6 +32,7 @@
     if (self)
     {
 //        [self createCalendar];
+        _padding = 5;
         [self createMap];
         [self createFront];
         [self createTitle];
@@ -53,14 +53,17 @@
 - (void)createMap
 {
     _mapContainer = [[UIView alloc] initWithFrame:self.contentView.bounds];
-    _map = [[MKMapView alloc] initWithFrame:self.contentView.bounds];
+    _map = [[MKMapView alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x+_padding,
+                                                       self.contentView.bounds.origin.y+_padding,
+                                                       self.contentView.bounds.size.width-2*_padding,
+                                                       self.contentView.bounds.size.height-2*_padding)];
     _map.delegate = self;
     [_mapContainer addSubview:_map];
     _flipped = NO;
-    _etaBackButton = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x+.25,
-                                                               self.contentView.bounds.size.height-54,
-                                                               self.contentView.bounds.size.width-.5,
-                                                               54)
+    _etaBackButton = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x+_padding,
+                                                                     self.contentView.bounds.size.height-54,
+                                                                     self.contentView.bounds.size.width-2*_padding,
+                                                                     54-_padding)
                                    backgroundColor:[UIColor whiteColor]
                                    foregroundColor:[UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f]
                                              title:@"back"
@@ -73,15 +76,19 @@
 - (void)createFront
 {
     _front = [[UIView alloc] initWithFrame:self.contentView.bounds];
-    _front.backgroundColor = [UIColor wetAsphaltColor];
-//    _front.layer.borderWidth = 1;
-//    _front.layer.cornerRadius = 3;
-//    _front.layer.borderColor = [UIColor whiteColor].CGColor;
     [self.contentView addSubview:_front];
-    _etaButton = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x+.25,
-                                                              self.contentView.bounds.size.height-54,
-                                                              self.contentView.bounds.size.width-.5,
-                                                              54)
+
+    UIView *background = [[UIView alloc] initWithFrame:CGRectMake(_front.bounds.origin.x+_padding,
+                                                                  _front.bounds.origin.y+_padding,
+                                                                  _front.bounds.size.width-2*_padding,
+                                                                  _front.bounds.size.height-2*_padding)];
+    background.backgroundColor = [UIColor wetAsphaltColor];
+    [_front addSubview:background];
+
+    _etaButton = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x+_padding,
+                                                                 self.contentView.bounds.size.height-54,
+                                                                 self.contentView.bounds.size.width-2*_padding,
+                                                                 54-_padding)
                                    backgroundColor:[UIColor whiteColor]
                                    foregroundColor:[UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f]
                                              title:@"ETA"
@@ -93,11 +100,11 @@
 - (void)createTitle
 {
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(_front.bounds.origin.x+20,
-                                                           _front.bounds.origin.y+10,
+                                                           _front.bounds.origin.y+10+_padding,
                                                            _front.bounds.size.width-20*2,
                                                            30)];
-    _titleLabel.text = @"Visit #1";
-    _titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:30];
+    _titleLabel.text = @"Visit";
+    _titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:40];
     _titleLabel.textAlignment = NSTextAlignmentLeft;
     _titleLabel.textColor = [UIColor whiteColor];
     [_front addSubview:_titleLabel];
@@ -119,6 +126,12 @@
                            options:UIViewAnimationOptionTransitionFlipFromTop
                         completion:^(BOOL finished) {
                             _flipped = !_flipped;
+                            MKCoordinateRegion mapRegion;
+                            mapRegion.center.latitude = [[NSUserDefaults standardUserDefaults] floatForKey:@"latitude"];
+                            mapRegion.center.longitude = [[NSUserDefaults standardUserDefaults] floatForKey:@"longitude"];;
+                            mapRegion.span.latitudeDelta = 0.05;
+                            mapRegion.span.longitudeDelta = 0.05;
+                            [_map setRegion:mapRegion animated:YES];
                         }];
     }
     else
