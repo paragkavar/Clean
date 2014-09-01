@@ -232,38 +232,24 @@
             [[NSUserDefaults standardUserDefaults] setObject:customer[@"id"] forKey:@"customerId"];
             [[NSUserDefaults standardUserDefaults] synchronize];
 
-            NSNumber *bedrooms = [[NSUserDefaults standardUserDefaults] objectForKey:@"bedrooms"];
-            NSNumber *bathrooms = [[NSUserDefaults standardUserDefaults] objectForKey:@"bathrooms"];
-            NSNumber *visits = [[NSUserDefaults standardUserDefaults] objectForKey:@"visits"];
+            NSString *plan = [[NSUserDefaults standardUserDefaults] objectForKey:@"plan"];
 
-            [PFCloud callFunctionInBackground:@"costCalc"
-                               withParameters:@{@"visits":visits, @"bedrooms":bedrooms, @"bathrooms":bathrooms}
-                                        block:^(NSNumber *cost, NSError *error)
+            [PFCloud callFunctionInBackground:@"createSubscription"
+                               withParameters:@{@"customer":customer[@"id"],
+                                                @"plan":plan}
+                                        block:^(NSString *subscriptionId, NSError *error)
              {
-                 if (error)
-                 {
-                     [self handleStripeError:error];
-                 }
-                 else
-                 {
-                     [PFCloud callFunctionInBackground:@"createSubscription"
-                                        withParameters:@{@"customer":customer[@"id"],
-                                                         @"plan":[NSString stringWithFormat:@"%@",cost]}
-                                                 block:^(NSString *subscriptionId, NSError *error)
-                      {
-                          if (error)
-                          {
-                              [self handleStripeError:error];
-                          }
-                          else
-                          {
-                              [[NSUserDefaults standardUserDefaults] setObject:subscriptionId forKey:@"subscriptionId"];
-                              [[NSUserDefaults standardUserDefaults] synchronize];
-                              [VCFlow addUserToDataBase];
-                              [self presentViewController:[RootViewController new] animated:NO completion:nil];
-                          }
-                      }];
-                 }
+                  if (error)
+                  {
+                      [self handleStripeError:error];
+                  }
+                  else
+                  {
+                      [[NSUserDefaults standardUserDefaults] setObject:subscriptionId forKey:@"subscriptionId"];
+                      [[NSUserDefaults standardUserDefaults] synchronize];
+                      [VCFlow addUserToDataBase];
+                      [self presentViewController:[RootViewController new] animated:NO completion:nil];
+                  }
              }];
         }
     }];

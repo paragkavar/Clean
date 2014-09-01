@@ -60,6 +60,10 @@
             [[NSUserDefaults standardUserDefaults] setObject:user[@"bedrooms"] forKey:@"bedrooms"];
             [[NSUserDefaults standardUserDefaults] setObject:user[@"bathrooms"] forKey:@"bathrooms"];
             [[NSUserDefaults standardUserDefaults] setObject:user[@"visits"] forKey:@"visits"];
+            [[NSUserDefaults standardUserDefaults] setObject:user[@"day"] forKey:@"hour"];
+            [[NSUserDefaults standardUserDefaults] setInteger:[user[@"hour"] intValue] forKey:@"visits"];
+            [[NSUserDefaults standardUserDefaults] setInteger:[user[@"minute"] intValue] forKey:@"minute"];
+            [[NSUserDefaults standardUserDefaults] setBool:[user[@"AM"] boolValue] forKey:@"AM"];
             [[NSUserDefaults standardUserDefaults] setObject:user[@"customerId"] forKey:@"customerId"];
             [[NSUserDefaults standardUserDefaults] setObject:user[@"subscriptionId"] forKey:@"subscriptionId"];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -76,9 +80,20 @@
     user[@"bedrooms"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"bedrooms"];
     user[@"bathrooms"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"bathrooms"];
     user[@"visits"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"visits"];
+    user[@"day"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"day"];
+    user[@"hour"] = @([[NSUserDefaults standardUserDefaults] integerForKey:@"hour"]);
+    user[@"minute"] = @([[NSUserDefaults standardUserDefaults] integerForKey:@"minute"]);
+    user[@"AM"] = @([[NSUserDefaults standardUserDefaults] boolForKey:@"AM"]);
     user[@"customerId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
     user[@"subscriptionId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"subscriptionId"];
     [user saveInBackground];
 }
 
 @end
+
+/*
+ [[NSUserDefaults standardUserDefaults] setObject:_days[[_dayPicker selectedRowInComponent:0]] forKey:@"day"];
+ [[NSUserDefaults standardUserDefaults] setInteger:[_timePicker selectedRowInComponent:0]+1 forKey:@"hour"];
+ [[NSUserDefaults standardUserDefaults] setInteger:[_timePicker selectedRowInComponent:1] forKey:@"minute"];
+ [[NSUserDefaults standardUserDefaults] setBool:[_timePicker selectedRowInComponent:2] == 0 forKey:@"AM"];;
+*/

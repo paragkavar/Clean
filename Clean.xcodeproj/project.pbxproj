@@ -38,6 +38,7 @@
 		8EB9A87119AFE9180013849E /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 8EB9A87019AFE9180013849E /* Podfile */; };
 		8EB9A87419B0E7AE0013849E /* GetPriceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A87319B0E7AE0013849E /* GetPriceViewController.m */; };
 		8EE7A0A519B3BBF3002C0CD3 /* VCFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE7A0A419B3BBF3002C0CD3 /* VCFlow.m */; };
+		8EE7A0A819B4156A002C0CD3 /* PRCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE7A0A719B4156A002C0CD3 /* PRCollectionViewCell.m */; };
 		FA4BA2F8D8D14E50BB713358 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5C194B615694DD88512E74F /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -97,6 +98,8 @@
 		8EB9A87319B0E7AE0013849E /* GetPriceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPriceViewController.m; sourceTree = "<group>"; };
 		8EE7A0A319B3BBF3002C0CD3 /* VCFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCFlow.h; sourceTree = "<group>"; };
 		8EE7A0A419B3BBF3002C0CD3 /* VCFlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCFlow.m; sourceTree = "<group>"; };
+		8EE7A0A619B4156A002C0CD3 /* PRCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRCollectionViewCell.h; sourceTree = "<group>"; };
+		8EE7A0A719B4156A002C0CD3 /* PRCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRCollectionViewCell.m; sourceTree = "<group>"; };
 		A5C194B615694DD88512E74F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -235,6 +238,8 @@
 				8EB9A85319AFE8AD0013849E /* GetAddressViewController.m */,
 				8EB9A87219B0E7AE0013849E /* GetPriceViewController.h */,
 				8EB9A87319B0E7AE0013849E /* GetPriceViewController.m */,
+				8EE7A0A619B4156A002C0CD3 /* PRCollectionViewCell.h */,
+				8EE7A0A719B4156A002C0CD3 /* PRCollectionViewCell.m */,
 				8EB9A85419AFE8AD0013849E /* GetPaymentCardViewController.h */,
 				8EB9A85519AFE8AD0013849E /* GetPaymentCardViewController.m */,
 			);
@@ -387,6 +392,7 @@
 				8EB9A87419B0E7AE0013849E /* GetPriceViewController.m in Sources */,
 				8EB9A86419AFE8D00013849E /* VerifyPhoneNumberViewController.m in Sources */,
 				8EB9A86319AFE8D00013849E /* RootViewController.m in Sources */,
+				8EE7A0A819B4156A002C0CD3 /* PRCollectionViewCell.m in Sources */,
 				8EB9A85D19AFE8AD0013849E /* IntroViewController.m in Sources */,
 				8EB9A86F19AFE9030013849E /* AppDelegate.m in Sources */,
 				8EB9A85A19AFE8AD0013849E /* GetAddressViewController.m in Sources */,

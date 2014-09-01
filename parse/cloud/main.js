@@ -45,11 +45,10 @@ Parse.Cloud.define("createSubscription", function(request, response) {
   });
 });
 
-Parse.Cloud.define("costCalc", function(request, response) {
-  var bedrooms = request.params.bedrooms;
-  var bathrooms = request.params.bathrooms;
-  var visits = request.params.visits;
-  var cost = (bedrooms + bathrooms)*10*visits;
-  response.success(cost);
-  // response.error('error costCalc');
-});
+// Parse.Cloud.define("costCalc", function(request, response) {
+//   var bedrooms = request.params.bedrooms;
+//   var bathrooms = request.params.bathrooms;
+//   var visits = request.params.visits;
+//   var cost = (bedrooms + bathrooms)*10*visits;
+//   response.success(cost);
+// });
