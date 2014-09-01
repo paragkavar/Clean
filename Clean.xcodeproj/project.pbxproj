@@ -24,6 +24,20 @@
 		8E23CEA319AFE842007A5319 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E23CE8B19AFE842007A5319 /* UIKit.framework */; };
 		8E23CEAB19AFE842007A5319 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E23CEA919AFE842007A5319 /* InfoPlist.strings */; };
 		8E23CEAD19AFE842007A5319 /* CleanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E23CEAC19AFE842007A5319 /* CleanTests.m */; };
+		8E51481E19B4D5EB002CFCD1 /* dishes.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E51481C19B4D5EB002CFCD1 /* dishes.png */; };
+		8E51481F19B4D5EB002CFCD1 /* laundry.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E51481D19B4D5EB002CFCD1 /* laundry.png */; };
+		8E51482119B4F7F8002CFCD1 /* gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E51482019B4F7F8002CFCD1 /* gear.png */; };
+		8E51482419B4F908002CFCD1 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E51482319B4F908002CFCD1 /* SettingsViewController.m */; };
+		8E51482619B4F981002CFCD1 /* cog.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E51482519B4F981002CFCD1 /* cog.png */; };
+		8E51482819B50235002CFCD1 /* telephone.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E51482719B50234002CFCD1 /* telephone.png */; };
+		8E51482A19B50311002CFCD1 /* navigate.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E51482919B50311002CFCD1 /* navigate.png */; };
+		8E51482E19B504F7002CFCD1 /* SetPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E51482D19B504F7002CFCD1 /* SetPhoneViewController.m */; };
+		8E51483119B50501002CFCD1 /* SetVerifyPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E51483019B50501002CFCD1 /* SetVerifyPhoneViewController.m */; };
+		8E51483419B5050C002CFCD1 /* SetAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E51483319B5050C002CFCD1 /* SetAddressViewController.m */; };
+		8E51483719B50514002CFCD1 /* SetPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E51483619B50514002CFCD1 /* SetPlanViewController.m */; };
+		8E51483A19B5052F002CFCD1 /* SetPayCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E51483919B5052F002CFCD1 /* SetPayCardViewController.m */; };
+		8E51483C19B5073F002CFCD1 /* calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E51483B19B5073F002CFCD1 /* calendar.png */; };
+		8E51483E19B507BF002CFCD1 /* credit-card.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E51483D19B507BF002CFCD1 /* credit-card.png */; };
 		8EB9A85A19AFE8AD0013849E /* GetAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A85319AFE8AD0013849E /* GetAddressViewController.m */; };
 		8EB9A85B19AFE8AD0013849E /* GetPaymentCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A85519AFE8AD0013849E /* GetPaymentCardViewController.m */; };
 		8EB9A85C19AFE8AD0013849E /* GetPhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A85719AFE8AD0013849E /* GetPhoneNumberViewController.m */; };
@@ -80,6 +94,26 @@
 		8E23CEA819AFE842007A5319 /* CleanTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CleanTests-Info.plist"; sourceTree = "<group>"; };
 		8E23CEAA19AFE842007A5319 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8E23CEAC19AFE842007A5319 /* CleanTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CleanTests.m; sourceTree = "<group>"; };
+		8E51481C19B4D5EB002CFCD1 /* dishes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dishes.png; sourceTree = "<group>"; };
+		8E51481D19B4D5EB002CFCD1 /* laundry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = laundry.png; sourceTree = "<group>"; };
+		8E51482019B4F7F8002CFCD1 /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gear.png; sourceTree = "<group>"; };
+		8E51482219B4F908002CFCD1 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		8E51482319B4F908002CFCD1 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		8E51482519B4F981002CFCD1 /* cog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cog.png; sourceTree = "<group>"; };
+		8E51482719B50234002CFCD1 /* telephone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = telephone.png; sourceTree = "<group>"; };
+		8E51482919B50311002CFCD1 /* navigate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigate.png; sourceTree = "<group>"; };
+		8E51482C19B504F7002CFCD1 /* SetPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPhoneViewController.h; sourceTree = "<group>"; };
+		8E51482D19B504F7002CFCD1 /* SetPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPhoneViewController.m; sourceTree = "<group>"; };
+		8E51482F19B50501002CFCD1 /* SetVerifyPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetVerifyPhoneViewController.h; sourceTree = "<group>"; };
+		8E51483019B50501002CFCD1 /* SetVerifyPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetVerifyPhoneViewController.m; sourceTree = "<group>"; };
+		8E51483219B5050C002CFCD1 /* SetAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetAddressViewController.h; sourceTree = "<group>"; };
+		8E51483319B5050C002CFCD1 /* SetAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetAddressViewController.m; sourceTree = "<group>"; };
+		8E51483519B50514002CFCD1 /* SetPlanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPlanViewController.h; sourceTree = "<group>"; };
+		8E51483619B50514002CFCD1 /* SetPlanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPlanViewController.m; sourceTree = "<group>"; };
+		8E51483819B5052F002CFCD1 /* SetPayCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPayCardViewController.h; sourceTree = "<group>"; };
+		8E51483919B5052F002CFCD1 /* SetPayCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPayCardViewController.m; sourceTree = "<group>"; };
+		8E51483B19B5073F002CFCD1 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
+		8E51483D19B507BF002CFCD1 /* credit-card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "credit-card.png"; sourceTree = "<group>"; };
 		8EB9A85219AFE8AD0013849E /* GetAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetAddressViewController.h; sourceTree = "<group>"; };
 		8EB9A85319AFE8AD0013849E /* GetAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetAddressViewController.m; sourceTree = "<group>"; };
 		8EB9A85419AFE8AD0013849E /* GetPaymentCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetPaymentCardViewController.h; sourceTree = "<group>"; };
@@ -142,6 +176,10 @@
 		8E07DB5D19B1473C00C5058F /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				8E51482719B50234002CFCD1 /* telephone.png */,
+				8E51482919B50311002CFCD1 /* navigate.png */,
+				8E51483B19B5073F002CFCD1 /* calendar.png */,
+				8E51483D19B507BF002CFCD1 /* credit-card.png */,
 				8EB9A86519AFE8DF0013849E /* camera-old.png */,
 				8EB9A86619AFE8DF0013849E /* camera.png */,
 				8EB9A86719AFE8DF0013849E /* location.png */,
@@ -155,6 +193,10 @@
 				8EE7A0B019B4324C002C0CD3 /* arrow-left.png */,
 				8EE7A0AE19B42FAB002C0CD3 /* arrow-down.png */,
 				8EE7A0B219B43365002C0CD3 /* arrow-up.png */,
+				8E51481C19B4D5EB002CFCD1 /* dishes.png */,
+				8E51481D19B4D5EB002CFCD1 /* laundry.png */,
+				8E51482519B4F981002CFCD1 /* cog.png */,
+				8E51482019B4F7F8002CFCD1 /* gear.png */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -196,14 +238,12 @@
 			children = (
 				8EB9A86D19AFE9030013849E /* AppDelegate.h */,
 				8EB9A86E19AFE9030013849E /* AppDelegate.m */,
-				8EB9A85F19AFE8D00013849E /* RootViewController.h */,
-				8EB9A86019AFE8D00013849E /* RootViewController.m */,
-				8E02E2E619B2C4FF0008CFE1 /* SBCollectionViewCell.h */,
-				8E02E2E719B2C4FF0008CFE1 /* SBCollectionViewCell.m */,
 				8EE7A0A319B3BBF3002C0CD3 /* VCFlow.h */,
 				8EE7A0A419B3BBF3002C0CD3 /* VCFlow.m */,
-				8E07DB5D19B1473C00C5058F /* Assets */,
+				8EBCC0EF19B4CED7004F367E /* Home */,
+				8E51482B19B50353002CFCD1 /* Settings */,
 				8EB9A85E19AFE8B30013849E /* Onboard */,
+				8E07DB5D19B1473C00C5058F /* Assets */,
 				8EB9A87019AFE9180013849E /* Podfile */,
 				8E23CE9919AFE842007A5319 /* Images.xcassets */,
 				8E23CE8E19AFE842007A5319 /* Supporting Files */,
@@ -240,6 +280,25 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		8E51482B19B50353002CFCD1 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8E51482219B4F908002CFCD1 /* SettingsViewController.h */,
+				8E51482319B4F908002CFCD1 /* SettingsViewController.m */,
+				8E51482C19B504F7002CFCD1 /* SetPhoneViewController.h */,
+				8E51482D19B504F7002CFCD1 /* SetPhoneViewController.m */,
+				8E51482F19B50501002CFCD1 /* SetVerifyPhoneViewController.h */,
+				8E51483019B50501002CFCD1 /* SetVerifyPhoneViewController.m */,
+				8E51483219B5050C002CFCD1 /* SetAddressViewController.h */,
+				8E51483319B5050C002CFCD1 /* SetAddressViewController.m */,
+				8E51483519B50514002CFCD1 /* SetPlanViewController.h */,
+				8E51483619B50514002CFCD1 /* SetPlanViewController.m */,
+				8E51483819B5052F002CFCD1 /* SetPayCardViewController.h */,
+				8E51483919B5052F002CFCD1 /* SetPayCardViewController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		8EB9A85E19AFE8B30013849E /* Onboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -261,6 +320,17 @@
 				8EB9A85519AFE8AD0013849E /* GetPaymentCardViewController.m */,
 			);
 			name = Onboard;
+			sourceTree = "<group>";
+		};
+		8EBCC0EF19B4CED7004F367E /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				8EB9A85F19AFE8D00013849E /* RootViewController.h */,
+				8EB9A86019AFE8D00013849E /* RootViewController.m */,
+				8E02E2E619B2C4FF0008CFE1 /* SBCollectionViewCell.h */,
+				8E02E2E719B2C4FF0008CFE1 /* SBCollectionViewCell.m */,
+			);
+			name = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -341,8 +411,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EB9A87119AFE9180013849E /* Podfile in Resources */,
+				8E51483C19B5073F002CFCD1 /* calendar.png in Resources */,
 				8E02E2F619B2D7170008CFE1 /* headshot5.png in Resources */,
 				8EE7A0AF19B42FAB002C0CD3 /* arrow-down.png in Resources */,
+				8E51483E19B507BF002CFCD1 /* credit-card.png in Resources */,
 				8EB9A86819AFE8DF0013849E /* camera-old.png in Resources */,
 				8E02E2F519B2D7170008CFE1 /* headshot4.png in Resources */,
 				8EE7A0B319B43365002C0CD3 /* arrow-up.png in Resources */,
@@ -351,10 +423,16 @@
 				8E02E2EE19B2D00E0008CFE1 /* headshot1.png in Resources */,
 				8E23CE9219AFE842007A5319 /* InfoPlist.strings in Resources */,
 				8EE7A0B119B4324C002C0CD3 /* arrow-left.png in Resources */,
+				8E51482619B4F981002CFCD1 /* cog.png in Resources */,
 				8EB9A86A19AFE8DF0013849E /* location.png in Resources */,
 				8EB9A86919AFE8DF0013849E /* camera.png in Resources */,
+				8E51481F19B4D5EB002CFCD1 /* laundry.png in Resources */,
+				8E51482119B4F7F8002CFCD1 /* gear.png in Resources */,
+				8E51482A19B50311002CFCD1 /* navigate.png in Resources */,
 				8E23CE9A19AFE842007A5319 /* Images.xcassets in Resources */,
 				8E02E2F019B2D6060008CFE1 /* headshot2.png in Resources */,
+				8E51482819B50235002CFCD1 /* telephone.png in Resources */,
+				8E51481E19B4D5EB002CFCD1 /* dishes.png in Resources */,
 				8E02E2F419B2D7170008CFE1 /* headshot3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -407,12 +485,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E51483719B50514002CFCD1 /* SetPlanViewController.m in Sources */,
 				8EE7A0A519B3BBF3002C0CD3 /* VCFlow.m in Sources */,
 				8EB9A85B19AFE8AD0013849E /* GetPaymentCardViewController.m in Sources */,
 				8E02E2E819B2C4FF0008CFE1 /* SBCollectionViewCell.m in Sources */,
+				8E51483419B5050C002CFCD1 /* SetAddressViewController.m in Sources */,
+				8E51483A19B5052F002CFCD1 /* SetPayCardViewController.m in Sources */,
+				8E51483119B50501002CFCD1 /* SetVerifyPhoneViewController.m in Sources */,
 				8EB9A87419B0E7AE0013849E /* GetPriceViewController.m in Sources */,
 				8EE7A0AB19B42C61002C0CD3 /* INCollectionViewCell.m in Sources */,
 				8EB9A86419AFE8D00013849E /* VerifyPhoneNumberViewController.m in Sources */,
+				8E51482E19B504F7002CFCD1 /* SetPhoneViewController.m in Sources */,
 				8EB9A86319AFE8D00013849E /* RootViewController.m in Sources */,
 				8EE7A0A819B4156A002C0CD3 /* PRCollectionViewCell.m in Sources */,
 				8EB9A85D19AFE8AD0013849E /* IntroViewController.m in Sources */,
@@ -420,6 +503,7 @@
 				8EB9A85A19AFE8AD0013849E /* GetAddressViewController.m in Sources */,
 				8EB9A86C19AFE8F50013849E /* main.m in Sources */,
 				8EB9A85C19AFE8AD0013849E /* GetPhoneNumberViewController.m in Sources */,
+				8E51482419B4F908002CFCD1 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

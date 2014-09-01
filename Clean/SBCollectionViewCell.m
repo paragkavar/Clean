@@ -15,11 +15,14 @@
 @property CKCalendarView *calendar;
 @property UIView *mapContainer;
 @property UIView *front;
-@property BOOL flipped;
+@property UIView *addons;
 @property BOOL turned;
 @property JSQFlatButton *etaBackButton;
 @property JSQFlatButton *dateButton;
 @property JSQFlatButton *addonButton;
+@property JSQFlatButton *addonBackButton;
+@property UIButton *dishesButton;
+@property UIButton *laundryButton;
 @property NSDate *selectedDate;
 @property int padding;
 @end
@@ -32,9 +35,10 @@
     if (self)
     {
 //        [self createCalendar];
-        _padding = 5;
+        _padding = 10;
         [self createMap];
         [self createFront];
+        [self createAddons];
         [self createTitle];
         [self createWhen];
         [self createWho];
@@ -59,7 +63,6 @@
                                                        self.contentView.bounds.size.height-2*_padding)];
     _map.delegate = self;
     [_mapContainer addSubview:_map];
-    _flipped = NO;
     _etaBackButton = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x+_padding,
                                                                      self.contentView.bounds.size.height-54,
                                                                      self.contentView.bounds.size.width-2*_padding,
@@ -69,7 +72,7 @@
                                              title:@"back"
                                              image:nil];
     _etaBackButton.alpha = .8;
-    [_etaBackButton addTarget:self action:@selector(flip) forControlEvents:UIControlEventTouchUpInside];
+    [_etaBackButton addTarget:self action:@selector(flipDown) forControlEvents:UIControlEventTouchUpInside];
     [_mapContainer addSubview:_etaBackButton];
 }
 
@@ -85,16 +88,161 @@
     background.backgroundColor = [UIColor wetAsphaltColor];
     [_front addSubview:background];
 
-    _etaButton = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x+_padding,
+    _etaButton = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.contentView.bounds.size.width/2+.25,
                                                                  self.contentView.bounds.size.height-54,
-                                                                 self.contentView.bounds.size.width-2*_padding,
+                                                                 self.contentView.bounds.size.width/2-_padding-.25,
                                                                  54-_padding)
                                    backgroundColor:[UIColor whiteColor]
                                    foregroundColor:[UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f]
-                                             title:@"ETA"
+                                             title:@"map"
                                              image:nil];
-    [_etaButton addTarget:self action:@selector(flip) forControlEvents:UIControlEventTouchUpInside];
+    [_etaButton addTarget:self action:@selector(flipUp) forControlEvents:UIControlEventTouchUpInside];
     [_front addSubview:_etaButton];
+
+    _addonButton = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x+_padding,
+                                                                   self.contentView.bounds.size.height-54,
+                                                                   self.contentView.bounds.size.width/2-_padding-.25,
+                                                                   54-_padding)
+                                        backgroundColor:[UIColor whiteColor]
+                                        foregroundColor:[UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f]
+                                                  title:@"extras"
+                                                  image:nil];
+    [_addonButton addTarget:self action:@selector(turnLeft) forControlEvents:UIControlEventTouchUpInside];
+    [_front addSubview:_addonButton];
+}
+
+- (void)createAddons
+{
+    _addons = [[UIView alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x+_padding,
+                                                       self.contentView.bounds.origin.y+_padding,
+                                                       self.contentView.bounds.size.width-2*_padding,
+                                                       self.contentView.bounds.size.height-2*_padding)];
+    _addons.backgroundColor = [UIColor wetAsphaltColor];
+
+    _addonBackButton = [[JSQFlatButton alloc] initWithFrame:CGRectMake(_addons.bounds.origin.x,
+                                                                       _addons.bounds.size.height-54+_padding,
+                                                                       _addons.bounds.size.width,
+                                                                       54-_padding)
+                                          backgroundColor:[UIColor whiteColor]
+                                          foregroundColor:[UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f]
+                                                    title:@"back"
+                                                    image:nil];
+    [_addonBackButton addTarget:self action:@selector(turnRight) forControlEvents:UIControlEventTouchUpInside];
+    [_addons addSubview:_addonBackButton];
+
+    _laundryButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    _laundryButton.frame = CGRectMake(0, 30, 120, 120);
+    _laundryButton.tintColor = [UIColor lightGrayColor];
+    _laundryButton.center = CGPointMake(_addons.bounds.size.width*.25, _addons.bounds.size.height*.4);
+    _laundryButton.tag = 0;
+    [_laundryButton setImage:[UIImage imageNamed:@"laundry"] forState:UIControlStateNormal];
+    [_laundryButton addTarget:self action:@selector(laundry:) forControlEvents:UIControlEventTouchUpInside];
+    [_addons addSubview:_laundryButton];
+
+    _dishesButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    _dishesButton.frame = CGRectMake(60, 30, 120, 120);
+    _dishesButton.tintColor = [UIColor lightGrayColor];
+    _dishesButton.center = CGPointMake(_addons.bounds.size.width*.75, _addons.bounds.size.height*.4);
+    _dishesButton.tag = 0;
+    [_dishesButton setImage:[UIImage imageNamed:@"dishes"] forState:UIControlStateNormal];
+    [_dishesButton addTarget:self action:@selector(dishes:) forControlEvents:UIControlEventTouchUpInside];
+    [_addons addSubview:_dishesButton];
+
+    UILabel *laundryLabel = [[UILabel alloc] initWithFrame:CGRectMake(_laundryButton.frame.origin.x,
+                                                                      _laundryButton.frame.origin.y - 40,
+                                                                      _laundryButton.frame.size.width,
+                                                                      30)];
+    laundryLabel.text = @"laundry";
+    laundryLabel.textColor = [UIColor whiteColor];
+    laundryLabel.textAlignment = NSTextAlignmentCenter;
+    laundryLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:30];
+    [_addons addSubview:laundryLabel];
+
+    UILabel *dishesLabel = [[UILabel alloc] initWithFrame:CGRectMake(_dishesButton.frame.origin.x,
+                                                                     _dishesButton.frame.origin.y - 40,
+                                                                     _dishesButton.frame.size.width,
+                                                                     30)];
+    dishesLabel.text = @"dishes";
+    dishesLabel.textColor = [UIColor whiteColor];
+    dishesLabel.textAlignment = NSTextAlignmentCenter;
+    dishesLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:30];
+    [_addons addSubview:dishesLabel];
+
+    UILabel *laundryCostLabel = [[UILabel alloc] initWithFrame:CGRectMake(_laundryButton.frame.origin.x,
+                                                                          190,
+                                                                          _laundryButton.frame.size.width,
+                                                                          30)];
+    laundryCostLabel.text = @"$10/load";
+    laundryCostLabel.textColor = [UIColor whiteColor];
+    laundryCostLabel.textAlignment = NSTextAlignmentCenter;
+    laundryCostLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
+    [_addons addSubview:laundryCostLabel];
+
+    UILabel *dishesCostLabel = [[UILabel alloc] initWithFrame:CGRectMake(_dishesButton.frame.origin.x,
+                                                                         190,
+                                                                         _dishesButton.frame.size.width,
+                                                                         30)];
+    dishesCostLabel.text = @"$10/load";
+    dishesCostLabel.textColor = [UIColor whiteColor];
+    dishesCostLabel.textAlignment = NSTextAlignmentCenter;
+    dishesCostLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
+    [_addons addSubview:dishesCostLabel];
+}
+
+- (void)dishes:(UIButton *)sender
+{
+    if (sender.tag == 0)
+    {
+        sender.tag = 1;
+        sender.tintColor = [UIColor whiteColor];//[UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
+        //ask how many loads & charge stripe
+        //tell parse to do dishes
+    }
+    else
+    {
+        sender.tag = 0;
+        sender.tintColor  = [UIColor lightGrayColor];
+        //remove/refund stripe charges
+        //tell parse to not do dishes
+    }
+}
+
+- (void)laundry:(UIButton *)sender
+{
+    if (sender.tag == 0)
+    {
+        sender.tag = 1;
+        sender.tintColor = [UIColor whiteColor];//[UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
+        //ask how many loads & charge stripe
+        //tell parse to do dishes
+    }
+    else
+    {
+        sender.tag = 0;
+        sender.tintColor  = [UIColor lightGrayColor];
+        //remove/refund stripe charges
+        //tell parse to not do dishes
+    }
+}
+
+- (void)turnLeft
+{
+    [UIView transitionFromView:_front//viewToReplace
+                        toView:_addons//replacementView
+                      duration:1
+                       options:UIViewAnimationOptionTransitionFlipFromLeft
+                    completion:^(BOOL finished) {
+                    }];
+}
+
+- (void)turnRight
+{
+    [UIView transitionFromView:_addons//viewToReplace
+                        toView:_front//replacementView
+                      duration:1
+                       options:UIViewAnimationOptionTransitionFlipFromRight
+                    completion:^(BOOL finished) {
+                    }];
 }
 
 - (void)createTitle
@@ -116,34 +264,39 @@
     return NO;
 }
 
-- (void)flip
+- (void)flipUp
 {
-    if (!_flipped)
-    {
         [UIView transitionFromView:_front//viewToReplace
                             toView:_mapContainer//replacementView
                           duration:1
                            options:UIViewAnimationOptionTransitionFlipFromTop
                         completion:^(BOOL finished) {
-                            _flipped = !_flipped;
+                            CLLocationCoordinate2D location;
+                            location.latitude = [[NSUserDefaults standardUserDefaults] floatForKey:@"latitude"];
+                            location.longitude = [[NSUserDefaults standardUserDefaults] floatForKey:@"longitude"];
+
                             MKCoordinateRegion mapRegion;
-                            mapRegion.center.latitude = [[NSUserDefaults standardUserDefaults] floatForKey:@"latitude"];
-                            mapRegion.center.longitude = [[NSUserDefaults standardUserDefaults] floatForKey:@"longitude"];;
+                            mapRegion.center = location;
                             mapRegion.span.latitudeDelta = 0.05;
                             mapRegion.span.longitudeDelta = 0.05;
                             [_map setRegion:mapRegion animated:YES];
+
+                            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+                            [annotation setCoordinate:location];
+                            [annotation setTitle:@"Me"];
+                            [annotation setSubtitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"address"]];
+                            [_map addAnnotation:annotation];
                         }];
-    }
-    else
-    {
-        [UIView transitionFromView:_mapContainer//viewToReplace
+}
+
+- (void)flipDown
+{
+    [UIView transitionFromView:_mapContainer//viewToReplace
                             toView:_front//replacementView
                           duration:1
                            options:UIViewAnimationOptionTransitionFlipFromBottom
                         completion:^(BOOL finished) {
-                            _flipped = !_flipped;
                         }];
-    }
 }
 
 - (void)turn

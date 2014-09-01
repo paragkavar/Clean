@@ -16,6 +16,7 @@
 #import "UIColor+FlatUI.h"
 #import "FBShimmeringView.h"
 #import "SBCollectionViewCell.h"
+#import "SettingsViewController.h"
 
 @interface RootViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 @property UICollectionView *collectionView;
@@ -28,6 +29,9 @@
 @property BOOL showingBack;
 @property UIView *containerView;
 @property NSDate *selectedDate;
+@property BOOL popupOn;
+@property UIView *darken;
+@property UIButton *settings;
 @end
 
 @implementation RootViewController
@@ -39,7 +43,9 @@
     _visits = 4;
     [self createPage];
     [self createTitle];
+    [self createSettings];
     [self createCollectionView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(spin) name:@"spin" object:nil];
 }
 
 - (void)createPage
@@ -68,6 +74,35 @@
     shimmeringView.shimmering = YES;
 }
 
+- (void)createSettings
+{
+    _settings = [UIButton buttonWithType:UIButtonTypeSystem];
+    _settings.frame = CGRectMake(20, 20, 36, 36);
+    _settings.center = CGPointMake(270, 52);
+    _settings.tintColor = [UIColor lightGrayColor];
+    [_settings setImage:[UIImage imageNamed:@"gear"] forState:UIControlStateNormal];
+    [_settings addTarget:self action:@selector(spin) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_settings];
+}
+
+- (void)spin
+{
+    [UIView animateWithDuration:.8 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:2 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        if (CGAffineTransformIsIdentity(_settings.transform))
+        {
+            _settings.transform = CGAffineTransformMakeRotation(M_PI);
+        }
+        else
+        {
+            _settings.transform = CGAffineTransformIdentity;
+        }
+    } completion:^(BOOL finished) {
+
+    }];
+
+    [self presentViewController:[SettingsViewController new] animated:YES completion:nil];
+}
+
 - (void)createCollectionView
 {
     UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
@@ -75,7 +110,7 @@
     _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0,
                                                                          80,
                                                                          self.view.frame.size.width,
-                                                                         self.view.frame.size.height-80)
+                                                                         self.view.frame.size.width)
                                          collectionViewLayout:flow];
     _collectionView.dataSource = self;
     _collectionView.delegate = self;

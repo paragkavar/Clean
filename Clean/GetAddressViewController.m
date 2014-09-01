@@ -132,7 +132,7 @@
     _locationButton = [UIButton buttonWithType:UIButtonTypeSystem];
     _locationButton.tintColor = [UIColor whiteColor];
     [_locationButton addTarget:self action:@selector(location:) forControlEvents:UIControlEventTouchUpInside];
-    [_locationButton setImage:[UIImage imageNamed:@"location"] forState:UIControlStateNormal];
+    [_locationButton setImage:[UIImage imageNamed:@"navigate"] forState:UIControlStateNormal];
     _locationButton.frame = CGRectMake(self.view.frame.size.width - 53, 121.5, 48, 48);
     _locationButton.center = CGPointMake(self.view.frame.size.width/2, 140);
     [self.view addSubview:_locationButton];
