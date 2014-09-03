@@ -80,6 +80,14 @@
 
 - (void)createButton
 {
+    _back = [[JSQFlatButton alloc] initWithFrame:CGRectZero
+                                      backgroundColor:[UIColor colorWithRed:0.18f green:0.67f blue:0.84f alpha:1.0f]
+                                      foregroundColor:[UIColor colorWithRed:1.00f green:1.00f blue:1.00f alpha:1.0f]
+                                                title:@"back"
+                                                image:nil];
+    [_back addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_back];
+
     _save = [[JSQFlatButton alloc] initWithFrame:CGRectMake(0,self.view.frame.size.height-216-54,self.view.frame.size.width,54)
                                  backgroundColor:[UIColor colorWithRed:1.00f green:1.00f blue:1.00f alpha:1.0f]
                                  foregroundColor:[UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f]
@@ -88,6 +96,11 @@
     [_save addTarget:self action:@selector(save:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_save];
     _save.enabled = NO;
+}
+
+- (void)back:(JSQFlatButton *)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)createEntryField
@@ -202,6 +215,7 @@
     [UIView animateWithDuration:.3 animations:^{
         _locationButton.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2+100);
         _save.transform = CGAffineTransformMakeTranslation(0, 216);
+        _back.transform = CGAffineTransformMakeTranslation(0, 216);
     }];
 }
 
@@ -215,6 +229,7 @@
     [UIView animateWithDuration:.3 animations:^{
         _locationButton.center = CGPointMake(self.view.frame.size.width/2, 140);
         _save.transform = CGAffineTransformMakeTranslation(0, 0);
+        _back.transform = CGAffineTransformMakeTranslation(0, 0);
     } completion:^(BOOL finished) {
         _addressField.hidden = NO;
         _locationButton.enabled = YES;

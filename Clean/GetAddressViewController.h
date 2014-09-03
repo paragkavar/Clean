@@ -10,6 +10,7 @@
 #import "JSQFlatButton.h"
 
 @interface GetAddressViewController : UIViewController
+@property JSQFlatButton *back;
 @property JSQFlatButton *save;
 @property UIButton *locationButton;
 @property UIPageControl *page;

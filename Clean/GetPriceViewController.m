@@ -8,29 +8,11 @@
 
 #import "GetPriceViewController.h"
 #import "GetPaymentCardViewController.h"
-#import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
 #import <Parse/Parse.h>
 #import "PRCollectionViewCell.h"
 
 @interface GetPriceViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
-@property JSQFlatButton *save;
-@property UIStepper *bedroomStepper;
-@property UIStepper *bathroomStepper;
-@property UIStepper *visitsStepper;
-@property UILabel *bedroomLabel;
-@property UILabel *bathroomLabel;
-@property UILabel *visitLabel;
-@property UILabel *costLabel;
-@property int bedrooms;
-@property int bathrooms;
-@property int visits;
-@property NSArray *days;
-@property UIPickerView *dayPicker;
-@property UIPickerView *timePicker;
-@property UICollectionView *collectionView;
-@property NSInteger selectedIndex;
-@property NSTimer *buttonCheckTimer;
 @end
 
 @implementation GetPriceViewController
@@ -39,14 +21,10 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor midnightBlueColor];
-    _bedrooms = 0;
-    _bathrooms = 0;
-    _visits = 0;
     _days = @[@"Sunday",@"Monday",@"Tuesday",@"Wednesday",@"Thursday",@"Friday",@"Saturday"];
     [self createPage];
     [self createTitle];
     [self createButton];
-//    [self createSteppers];
     [self createCollectionView];
     [self createPickers];
 }
@@ -76,6 +54,14 @@
 
 - (void)createButton
 {
+    _back = [[JSQFlatButton alloc] initWithFrame:CGRectZero
+                                 backgroundColor:[UIColor colorWithRed:0.18f green:0.67f blue:0.84f alpha:1.0f]
+                                 foregroundColor:[UIColor colorWithRed:1.00f green:1.00f blue:1.00f alpha:1.0f]
+                                           title:@"back"
+                                           image:nil];
+    [_back addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_back];
+
     _save = [[JSQFlatButton alloc] initWithFrame:CGRectMake(0,
                                                             self.view.frame.size.height-54,
                                                             self.view.frame.size.width,
@@ -87,6 +73,11 @@
     [_save addTarget:self action:@selector(save:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_save];
     _save.enabled = NO;
+}
+
+- (void)back:(JSQFlatButton *)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)createPickers
@@ -184,112 +175,19 @@
     }
 }
 
-- (void)createSteppers
-{
-    _bedroomLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 100, 140, 50)];
-    _bedroomLabel.text = @"0 bedrooms";
-    _bedroomLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:25];
-    _bedroomLabel.textColor = [UIColor whiteColor];
-    _bedroomLabel.textAlignment = NSTextAlignmentLeft;
-    [self.view addSubview:_bedroomLabel];
-
-    _bathroomLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 150, 140, 50)];
-    _bathroomLabel.text = @"0 bathrooms";
-    _bathroomLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:25];
-    _bathroomLabel.textColor = [UIColor whiteColor];
-    _bathroomLabel.textAlignment = NSTextAlignmentLeft;
-    [self.view addSubview:_bathroomLabel];
-
-    _visitLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 200, 140, 50)];
-    _visitLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:25];
-    _visitLabel.textColor = [UIColor whiteColor];
-    _visitLabel.text = @"0 visits/month";
-    _visitLabel.textAlignment = NSTextAlignmentLeft;
-    [self.view addSubview:_visitLabel];
-
-    _bedroomStepper = [[UIStepper alloc] init];
-    _bedroomStepper.center = CGPointMake(250, _bedroomLabel.center.y);
-    _bedroomStepper.tintColor = [UIColor whiteColor];
-    _bedroomStepper.stepValue = 1;
-    _bedroomStepper.minimumValue = 0;
-    _bedroomStepper.maximumValue = 10;
-    _bedroomStepper.value = 0;
-    [_bedroomStepper addTarget:self action:@selector(bedStep:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_bedroomStepper];
-
-    _bathroomStepper = [[UIStepper alloc] init];
-    _bathroomStepper.center = CGPointMake(250, _bathroomLabel.center.y);
-    _bathroomStepper.tintColor = [UIColor whiteColor];
-    _bathroomStepper.stepValue = 1;
-    _bathroomStepper.minimumValue = 0;
-    _bathroomStepper.maximumValue = 10;
-    _bathroomStepper.value = 0;
-    [_bathroomStepper addTarget:self action:@selector(bathStep:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_bathroomStepper];
-
-    _visitsStepper = [[UIStepper alloc] init];
-    _visitsStepper.center = CGPointMake(250, _visitLabel.center.y);
-    _visitsStepper.tintColor = [UIColor whiteColor];
-    _visitsStepper.stepValue = 1;
-    _visitsStepper.minimumValue = 0;
-    _visitsStepper.maximumValue = 4;
-    _visitsStepper.value = 0;
-    [_visitsStepper addTarget:self action:@selector(visitStep:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_visitsStepper];
-
-    _costLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 450, self.view.frame.size.width-2*10, 50)];
-    _costLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:50];
-    _costLabel.textColor = [UIColor whiteColor];
-    _costLabel.text = @"Cost: $0/month";
-    _costLabel.adjustsFontSizeToFitWidth = YES;
-    _costLabel.textAlignment = NSTextAlignmentLeft;
-    [self.view addSubview:_costLabel];
-}
-
-- (void)bedStep:(UIStepper *)sender
-{
-    _bedrooms = sender.value;
-    _bedroomLabel.text = [NSString stringWithFormat:@"%i bedrooms",_bedrooms];
-    [self calcCost];
-}
-
-- (void)bathStep:(UIStepper *)sender
-{
-    _bathrooms = sender.value;
-    _bathroomLabel.text = [NSString stringWithFormat:@"%i bathrooms",_bathrooms];
-    [self calcCost];
-}
-
-- (void)visitStep:(UIStepper *)sender
-{
-    _visits = sender.value;
-    _visitLabel.text = [NSString stringWithFormat:@"%i visits/month",_visits];
-    [self calcCost];
-}
-
-- (void)calcCost
-{
-    [PFCloud callFunctionInBackground:@"costCalc"
-                       withParameters:@{@"visits":@(_visits),
-                                        @"bedrooms":@(_bathrooms),
-                                        @"bathrooms":@(_bedrooms)}
-                                block:^(NSNumber *cost, NSError *error)
-     {
-         _costLabel.text = [NSString stringWithFormat:@"Cost: $%@/month",cost];
-     }];
-}
-
 - (void)save:(JSQFlatButton *)sender
 {
     [[NSUserDefaults standardUserDefaults] setObject:@(_selectedIndex).description forKey:@"plan"];
-//    [[NSUserDefaults standardUserDefaults] setObject:@(_bedrooms) forKey:@"bedrooms"];
-//    [[NSUserDefaults standardUserDefaults] setObject:@(_bathrooms) forKey:@"bathrooms"];
-//    [[NSUserDefaults standardUserDefaults] setObject:@(_visits) forKey:@"visits"];
     [[NSUserDefaults standardUserDefaults] setObject:_days[[_dayPicker selectedRowInComponent:0]] forKey:@"day"];
     [[NSUserDefaults standardUserDefaults] setInteger:[_timePicker selectedRowInComponent:0]+1 forKey:@"hour"];
     [[NSUserDefaults standardUserDefaults] setInteger:[_timePicker selectedRowInComponent:1] forKey:@"minute"];
     [[NSUserDefaults standardUserDefaults] setBool:[_timePicker selectedRowInComponent:2] == 0 forKey:@"AM"];;
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [self nextVC];
+}
+
+- (void)nextVC
+{
     [self presentViewController:[GetPaymentCardViewController new] animated:NO completion:nil];
 }
 
@@ -351,7 +249,7 @@
     else if (indexPath.item == 2)
     {
         cell.backgroundColor = [UIColor colorWithRed:0.765 green:0.600 blue:0.325 alpha:1.0];
-        cell.planNameLabel.text = @"Frat House";
+        cell.planNameLabel.text = @"Large Home";
         cell.bedNbathLabel.text = @"5-6 bedrooms";
         cell.costLabel.text = @"$450/month";
     }
@@ -372,8 +270,25 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    _save.enabled = YES;
-
+    if (![[NSUserDefaults standardUserDefaults] integerForKey:@"plan"])
+    {
+        _save.enabled = YES;
+    }
+    else
+    {
+        if ([[NSUserDefaults standardUserDefaults] integerForKey:@"plan"] != indexPath.item)
+        {
+            _save.enabled = YES;
+        }
+        else if ([self dateChanged])
+        {
+            _save.enabled = YES;
+        }
+        else
+        {
+            _save.enabled = NO;
+        }
+    }
     for (UICollectionViewCell *cell in collectionView.visibleCells)
     {
         cell.contentView.layer.borderColor = [UIColor clearColor].CGColor;
@@ -383,6 +298,16 @@
     cell.contentView.layer.borderWidth = 1;
     cell.contentView.layer.borderColor = [UIColor whiteColor].CGColor;
     _selectedIndex = indexPath.item;
+}
+
+- (BOOL)dateChanged
+{
+    BOOL day = [[[NSUserDefaults standardUserDefaults] objectForKey:@"day"] isEqualToString:_days[[_dayPicker selectedRowInComponent:0]]];
+    BOOL hour = [[NSUserDefaults standardUserDefaults] integerForKey:@"hour"] == [_timePicker selectedRowInComponent:0]-1;
+    BOOL minute = [[NSUserDefaults standardUserDefaults] integerForKey:@"minute"] == [_timePicker selectedRowInComponent:1];
+    BOOL am = [[NSUserDefaults standardUserDefaults] boolForKey:@"AM"] == [_timePicker selectedRowInComponent:2];
+
+    return day || hour || minute || am;
 }
 
 @end

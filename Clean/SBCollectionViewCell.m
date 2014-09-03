@@ -180,6 +180,7 @@
     [_notesButtons addTarget:self action:@selector(showNotes) forControlEvents:UIControlEventTouchUpInside];
     [_front addSubview:_notesButtons];
 }
+#warning slight offset on right edge of notes button, all three buttons not properly placed
 
 - (void)createAddons
 {
