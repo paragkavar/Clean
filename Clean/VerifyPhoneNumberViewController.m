@@ -7,8 +7,8 @@
 //
 
 #import "VerifyPhoneNumberViewController.h"
-#import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
+#import "JSQFlatButton.h"
 #import <Parse/Parse.h>
 #import "VCFlow.h"
 #import "GetAddressViewController.h"
@@ -36,14 +36,14 @@
 
 - (void)createPage
 {
-    UIPageControl *page = [[UIPageControl alloc] init];
-    page.center = CGPointMake(self.view.center.x, 100);
-    page.numberOfPages = 5;
-    page.currentPage = 1;
-    page.backgroundColor = [UIColor clearColor];
-    page.tintColor = [UIColor whiteColor];
-    page.currentPageIndicatorTintColor = [UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
-    [self.view addSubview:page];
+    _page = [[UIPageControl alloc] init];
+    _page.center = CGPointMake(self.view.center.x, 100);
+    _page.numberOfPages = 5;
+    _page.currentPage = 1;
+    _page.backgroundColor = [UIColor clearColor];
+    _page.tintColor = [UIColor whiteColor];
+    _page.currentPageIndicatorTintColor = [UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
+    [self.view addSubview:_page];
 }
 
 - (void)createTitle
@@ -116,8 +116,7 @@
 {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"verifiedPhoneNumber"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    [PFInstallation currentInstallation][@"phoneNumber"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
-    
+
     [VCFlow checkForExistingUserWithCompletionHandler:^(bool exists) {
         if (exists) {
             [self presentViewController:[VCFlow nextVC] animated:NO completion:nil];

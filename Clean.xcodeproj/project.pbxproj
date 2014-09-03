@@ -24,6 +24,7 @@
 		8E23CEA319AFE842007A5319 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E23CE8B19AFE842007A5319 /* UIKit.framework */; };
 		8E23CEAB19AFE842007A5319 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E23CEA919AFE842007A5319 /* InfoPlist.strings */; };
 		8E23CEAD19AFE842007A5319 /* CleanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E23CEAC19AFE842007A5319 /* CleanTests.m */; };
+		8E37254C19B6861800BA3208 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E37254B19B6861800BA3208 /* User.m */; };
 		8E51481E19B4D5EB002CFCD1 /* dishes.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E51481C19B4D5EB002CFCD1 /* dishes.png */; };
 		8E51481F19B4D5EB002CFCD1 /* laundry.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E51481D19B4D5EB002CFCD1 /* laundry.png */; };
 		8E51482119B4F7F8002CFCD1 /* gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E51482019B4F7F8002CFCD1 /* gear.png */; };
@@ -94,6 +95,8 @@
 		8E23CEA819AFE842007A5319 /* CleanTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CleanTests-Info.plist"; sourceTree = "<group>"; };
 		8E23CEAA19AFE842007A5319 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8E23CEAC19AFE842007A5319 /* CleanTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CleanTests.m; sourceTree = "<group>"; };
+		8E37254A19B6861800BA3208 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		8E37254B19B6861800BA3208 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		8E51481C19B4D5EB002CFCD1 /* dishes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dishes.png; sourceTree = "<group>"; };
 		8E51481D19B4D5EB002CFCD1 /* laundry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = laundry.png; sourceTree = "<group>"; };
 		8E51482019B4F7F8002CFCD1 /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gear.png; sourceTree = "<group>"; };
@@ -240,6 +243,8 @@
 				8EB9A86E19AFE9030013849E /* AppDelegate.m */,
 				8EE7A0A319B3BBF3002C0CD3 /* VCFlow.h */,
 				8EE7A0A419B3BBF3002C0CD3 /* VCFlow.m */,
+				8E37254A19B6861800BA3208 /* User.h */,
+				8E37254B19B6861800BA3208 /* User.m */,
 				8EBCC0EF19B4CED7004F367E /* Home */,
 				8E51482B19B50353002CFCD1 /* Settings */,
 				8EB9A85E19AFE8B30013849E /* Onboard */,
@@ -485,6 +490,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E37254C19B6861800BA3208 /* User.m in Sources */,
 				8E51483719B50514002CFCD1 /* SetPlanViewController.m in Sources */,
 				8EE7A0A519B3BBF3002C0CD3 /* VCFlow.m in Sources */,
 				8EB9A85B19AFE8AD0013849E /* GetPaymentCardViewController.m in Sources */,

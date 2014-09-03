@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GetPhoneNumberViewController.h"
 
-@interface SetPhoneViewController : UIViewController
+@interface SetPhoneViewController : GetPhoneNumberViewController
 
 @end

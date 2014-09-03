@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JSQFlatButton.h"
 
 @interface GetAddressViewController : UIViewController
-
+@property JSQFlatButton *save;
+- (void)nextVC;
 @end

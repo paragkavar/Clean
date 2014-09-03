@@ -13,7 +13,6 @@
 #import "INTULocationManager.h"
 
 @interface GetAddressViewController () <UIAlertViewDelegate>
-@property JSQFlatButton *save;
 @property UITextField *addressField;
 @property UITextView *addressLabel;
 @property UIButton *locationButton;
@@ -231,7 +230,7 @@
         [[NSUserDefaults standardUserDefaults] setFloat:longitude forKey:@"longitude"];
         [[NSUserDefaults standardUserDefaults] setObject:_addressString forKey:@"address"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [self presentViewController:[GetPriceViewController new] animated:NO completion:nil];
+        [self nextVC];
     }
     else
     {
@@ -265,7 +264,7 @@
     {
         [[NSUserDefaults standardUserDefaults] setObject:_addressField.text forKey:@"address"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [self presentViewController:[GetPriceViewController new] animated:NO completion:nil];
+        [self nextVC];
     }
     else if (alertView.tag == 1 && buttonIndex == 0)
     {
@@ -275,7 +274,7 @@
         [[NSUserDefaults standardUserDefaults] setFloat:longitude forKey:@"longitude"];
         [[NSUserDefaults standardUserDefaults] setObject:_addressField.text forKey:@"address"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [self presentViewController:[GetPriceViewController new] animated:NO completion:nil];
+        [self nextVC];
     }
     else
     {
@@ -284,6 +283,11 @@
         _formattedAddress = nil;
         _addressString = nil;
     }
+}
+
+- (void)nextVC
+{
+    [self presentViewController:[GetPriceViewController new] animated:NO completion:nil];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle

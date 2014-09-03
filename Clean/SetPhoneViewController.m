@@ -12,10 +12,7 @@
 #import "JSQFlatButton.h"
 
 @interface SetPhoneViewController () <UITextFieldDelegate>
-@property UITextField *phoneEntry;
-@property NSTimer *buttonCheckTimer;
 @property JSQFlatButton *cancel;
-@property JSQFlatButton *verify;
 @end
 
 @implementation SetPhoneViewController
@@ -23,51 +20,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor midnightBlueColor];
-    [self createTitle];
-    [self createEntryField];
-    [self createButton];
+    [self createNewButtons];
+    super.page.numberOfPages = 2;
 }
 
-- (void)createPage
-{
-    UIPageControl *page = [[UIPageControl alloc] init];
-    page.center = CGPointMake(self.view.center.x, 100);
-    page.numberOfPages = 2;
-    page.currentPage = 0;
-    page.backgroundColor = [UIColor clearColor];
-    page.tintColor = [UIColor whiteColor];
-    page.currentPageIndicatorTintColor = [UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
-    [self.view addSubview:page];
-}
-
-- (void)createTitle
-{
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, self.view.frame.size.width-2*10, 50)];
-    title.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:50];
-    title.textColor = [UIColor whiteColor];
-    title.text = @"Phone Number";
-    title.adjustsFontSizeToFitWidth = YES;
-    title.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:title];
-}
-
-- (void)createEntryField
-{
-    _phoneEntry = [[UITextField alloc] initWithFrame:CGRectMake(20, 100, self.view.frame.size.width-2*20, 100)];
-    _phoneEntry.delegate = self;
-    _phoneEntry.placeholder = @"enter phone number";
-    _phoneEntry.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:40];
-    _phoneEntry.textColor = [UIColor whiteColor];
-    _phoneEntry.adjustsFontSizeToFitWidth = YES;
-    _phoneEntry.keyboardAppearance = UIKeyboardAppearanceDark;
-    _phoneEntry.keyboardType = UIKeyboardTypePhonePad;
-    _phoneEntry.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:_phoneEntry];
-    [_phoneEntry becomeFirstResponder];
-}
-
-- (void)createButton
+- (void)createNewButtons
 {
     _cancel = [[JSQFlatButton alloc] initWithFrame:CGRectMake(0,
                                                               self.view.frame.size.height-216-54,
@@ -80,118 +37,26 @@
     [_cancel addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_cancel];
 
-    _verify = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2+.25,
-                                                              self.view.frame.size.height-216-54,
-                                                              self.view.frame.size.width/2-.25,
-                                                              54)
-                                   backgroundColor:[UIColor colorWithRed:1.00f green:1.00f blue:1.00f alpha:1.0f]
-                                   foregroundColor:[UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f]
-                                             title:@"verify via sms"
-                                             image:nil];
-    [_verify addTarget:self action:@selector(verify:) forControlEvents:UIControlEventTouchUpInside];
-    _verify.enabled = NO;
-    [self.view addSubview:_verify];
+    super.verify.frame = CGRectMake(self.view.frame.size.width/2+.25,
+                                    self.view.frame.size.height-216-54,
+                                    self.view.frame.size.width/2-.25,
+                                    54);
+}
 
-    _buttonCheckTimer = [NSTimer scheduledTimerWithTimeInterval:.1 target:self selector:@selector(buttonCheck) userInfo:nil repeats:YES];
+- (void)saveTempPhoneNumber:(NSString *)number
+{
+    [[NSUserDefaults standardUserDefaults] setObject:number forKey:@"setPhoneNumber"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)cancel:(JSQFlatButton *)sender
 {
-    [self dismissViewControllerAnimated:NO completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)verify:(UIButton *)sender
+- (void)nextVC
 {
-    [[NSUserDefaults standardUserDefaults] setObject:[self clean:_phoneEntry.text] forKey:@"setPhoneNumber"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     [self presentViewController:[SetVerifyPhoneViewController new] animated:NO completion:nil];
-}
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    if (textField == self.phoneEntry) {
-        int length = [self getLength:textField.text];
-
-        if(length == 10) {
-            if(range.length == 0)
-                return NO;
-        }
-
-        if(length == 3) {
-            NSString *num = [self formatNumber:textField.text];
-            textField.text = [NSString stringWithFormat:@"(%@) ",num];
-            if(range.length > 0)
-                textField.text = [NSString stringWithFormat:@"%@",[num substringToIndex:3]];
-        }
-        else if(length == 6) {
-            NSString *num = [self formatNumber:textField.text];
-            textField.text = [NSString stringWithFormat:@"(%@) %@-",[num  substringToIndex:3],[num substringFromIndex:3]];
-            if(range.length > 0)
-                textField.text = [NSString stringWithFormat:@"(%@) %@",[num substringToIndex:3],[num substringFromIndex:3]];
-        }
-    }
-    return YES;
-}
-
-- (NSString*)formatNumber:(NSString*)mobileNumber
-{
-    mobileNumber = [mobileNumber stringByReplacingOccurrencesOfString:@"(" withString:@""];
-    mobileNumber = [mobileNumber stringByReplacingOccurrencesOfString:@")" withString:@""];
-    mobileNumber = [mobileNumber stringByReplacingOccurrencesOfString:@" " withString:@""];
-    mobileNumber = [mobileNumber stringByReplacingOccurrencesOfString:@"-" withString:@""];
-    mobileNumber = [mobileNumber stringByReplacingOccurrencesOfString:@"+" withString:@""];
-
-    int length = [mobileNumber length];
-    if(length > 10) {
-        mobileNumber = [mobileNumber substringFromIndex: length-10];
-    }
-    return mobileNumber;
-}
-
-
-- (int)getLength:(NSString*)mobileNumber
-{
-    mobileNumber = [mobileNumber stringByReplacingOccurrencesOfString:@"(" withString:@""];
-    mobileNumber = [mobileNumber stringByReplacingOccurrencesOfString:@")" withString:@""];
-    mobileNumber = [mobileNumber stringByReplacingOccurrencesOfString:@" " withString:@""];
-    mobileNumber = [mobileNumber stringByReplacingOccurrencesOfString:@"-" withString:@""];
-    mobileNumber = [mobileNumber stringByReplacingOccurrencesOfString:@"+" withString:@""];
-
-    int length = [mobileNumber length];
-    return length;
-}
-
-- (void)buttonCheck
-{
-    if (_phoneEntry.text.length == 14)
-    {
-        _phoneEntry.textColor = [UIColor greenColor];
-        _verify.enabled = YES;
-    }
-    else
-    {
-        _phoneEntry.textColor = [UIColor whiteColor];
-        _verify.enabled = NO;
-    }
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
-}
-
-- (NSString *)clean:(NSString *)phoneNumber
-{
-    NSArray *symbols = @[@"+", @"(",@")", @" ", @"-", @"*", @"#", @",", @";",@" "];
-    for (NSString *symbol in symbols)
-    {
-        phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:symbol withString:@""];
-    }
-    if (phoneNumber.length == 10)
-    {
-        phoneNumber = [@"1" stringByAppendingString:phoneNumber];
-    }
-    return phoneNumber;
 }
 
 @end

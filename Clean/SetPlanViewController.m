@@ -7,6 +7,7 @@
 //
 
 #import "SetPlanViewController.h"
+#import "UIColor+FlatUI.h"
 
 @interface SetPlanViewController ()
 
@@ -17,7 +18,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+#warning hide pagecontrol
 }
 
 @end

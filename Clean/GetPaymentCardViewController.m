@@ -5,7 +5,7 @@
 //  Created by Sapan Bhuta on 7/30/14.
 //  Copyright (c) 2014 SapanBhuta. All rights reserved.
 //
-
+#warning save last 4 digits
 #define kStripePublishableKey @"pk_test_fO6i0Qb9j3ohWjPyxdTxXrft"
 #define kCardioToken @"87d236fddee4492c930cad66875ff1ab"
 
@@ -92,6 +92,7 @@
              else
              {
                  [self createCustomer:token];
+                 [[NSUserDefaults standardUserDefaults] setObject:_stripeCard.last4 forKey:@"last4"];
              }
         }];
     }
@@ -109,6 +110,7 @@
              else
              {
                  [self createCustomer:token];
+                 [[NSUserDefaults standardUserDefaults] setObject:_stripeView.paymentView.cardNumber.last4 forKey:@"last4"];
              }
         }];
     }

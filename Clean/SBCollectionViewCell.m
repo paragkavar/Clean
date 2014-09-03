@@ -11,16 +11,20 @@
 #import "UIColor+FlatUI.h"
 #import "RMDateSelectionViewController.h"
 
-@interface SBCollectionViewCell () <CKCalendarDelegate, MKMapViewDelegate, RMDateSelectionViewControllerDelegate>
+@interface SBCollectionViewCell () <CKCalendarDelegate, MKMapViewDelegate, RMDateSelectionViewControllerDelegate, UITextViewDelegate>
 @property CKCalendarView *calendar;
 @property UIView *mapContainer;
 @property UIView *front;
 @property UIView *addons;
+@property UIView *notesContainer;
+@property UITextView *notes;
 @property BOOL turned;
 @property JSQFlatButton *etaBackButton;
 @property JSQFlatButton *dateButton;
 @property JSQFlatButton *addonButton;
 @property JSQFlatButton *addonBackButton;
+@property JSQFlatButton *notesButtons;
+@property JSQFlatButton *notesBackButton;
 @property UIButton *dishesButton;
 @property UIButton *laundryButton;
 @property NSDate *selectedDate;
@@ -39,6 +43,7 @@
         [self createMap];
         [self createFront];
         [self createAddons];
+        [self createNotes];
         [self createTitle];
         [self createWhen];
         [self createWho];
@@ -52,6 +57,55 @@
     _calendar.delegate = self;
     _calendar.center = self.contentView.center;
     _turned = NO;
+}
+
+- (void)createNotes
+{
+    _notesContainer = [[UIView alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x+_padding,
+                                                               self.contentView.bounds.origin.y+_padding,
+                                                               self.contentView.bounds.size.width-2*_padding,
+                                                               self.contentView.bounds.size.height-2*_padding)];
+    _notesContainer.backgroundColor = [UIColor wetAsphaltColor];
+
+    UILabel *notesLabel = [[UILabel alloc] initWithFrame:CGRectMake(_notesContainer.bounds.origin.x, _notesContainer.bounds.origin.y+10, _notesContainer.bounds.size.width, 40)];
+    notesLabel.text = @"leave a note";
+    notesLabel.textColor = [UIColor whiteColor];
+    notesLabel.textAlignment = NSTextAlignmentCenter;
+    notesLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:30];
+    [_notesContainer addSubview:notesLabel];
+
+    _notes = [[UITextView alloc] initWithFrame:CGRectMake(_notesContainer.bounds.origin.x+_padding,
+                                                           _notesContainer.bounds.origin.y+50,
+                                                           _notesContainer.bounds.size.width-_padding*2,
+                                                           _notesContainer.bounds.size.height-50)];
+    _notes.backgroundColor = [UIColor clearColor];
+    _notes.textColor = [UIColor whiteColor];
+    _notes.text = @"1) building code is 1234\n2) front door key is under mat";
+    _notes.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
+    _notes.keyboardAppearance = UIKeyboardAppearanceDark;
+    _notes.returnKeyType = UIReturnKeyDone;
+    _notes.delegate = self;
+    [_notesContainer addSubview:_notes];
+
+    _notesBackButton = [[JSQFlatButton alloc] initWithFrame:CGRectMake(_notesContainer.bounds.origin.x,
+                                                                       _notesContainer.bounds.size.height-54+_padding,
+                                                                       _notesContainer.bounds.size.width,
+                                                                       54-_padding)
+                                            backgroundColor:[UIColor whiteColor]
+                                            foregroundColor:[UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f]
+                                                      title:@"back"
+                                                      image:nil];
+    _notesBackButton.alpha = .8;
+    [_notesBackButton addTarget:self action:@selector(hideNotes) forControlEvents:UIControlEventTouchUpInside];
+    [_notesContainer addSubview:_notesBackButton];
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    if ([[textView.text substringWithRange:NSMakeRange(textView.text.length - 1, 1)] isEqualToString:@"\n"])
+    {
+        [textView resignFirstResponder];
+    }
 }
 
 - (void)createMap
@@ -72,7 +126,7 @@
                                              title:@"back"
                                              image:nil];
     _etaBackButton.alpha = .8;
-    [_etaBackButton addTarget:self action:@selector(flipDown) forControlEvents:UIControlEventTouchUpInside];
+    [_etaBackButton addTarget:self action:@selector(hideMap) forControlEvents:UIControlEventTouchUpInside];
     [_mapContainer addSubview:_etaBackButton];
 }
 
@@ -88,27 +142,43 @@
     background.backgroundColor = [UIColor wetAsphaltColor];
     [_front addSubview:background];
 
-    _etaButton = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.contentView.bounds.size.width/2+.25,
-                                                                 self.contentView.bounds.size.height-54,
-                                                                 self.contentView.bounds.size.width/2-_padding-.25,
-                                                                 54-_padding)
-                                   backgroundColor:[UIColor whiteColor]
-                                   foregroundColor:[UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f]
-                                             title:@"map"
-                                             image:nil];
-    [_etaButton addTarget:self action:@selector(flipUp) forControlEvents:UIControlEventTouchUpInside];
-    [_front addSubview:_etaButton];
+    int buttonX = background.frame.origin.x;
+    int buttonY = self.contentView.bounds.size.height-54;
+    int buttonWidth = (background.frame.size.width-1)/3;
+    int buttonHeight = 54-_padding;
 
-    _addonButton = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.contentView.bounds.origin.x+_padding,
-                                                                   self.contentView.bounds.size.height-54,
-                                                                   self.contentView.bounds.size.width/2-_padding-.25,
-                                                                   54-_padding)
+    _addonButton = [[JSQFlatButton alloc] initWithFrame:CGRectMake(buttonX,
+                                                                   buttonY,
+                                                                   buttonWidth,
+                                                                   buttonHeight)
                                         backgroundColor:[UIColor whiteColor]
                                         foregroundColor:[UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f]
                                                   title:@"extras"
                                                   image:nil];
-    [_addonButton addTarget:self action:@selector(turnLeft) forControlEvents:UIControlEventTouchUpInside];
+    [_addonButton addTarget:self action:@selector(showAddons) forControlEvents:UIControlEventTouchUpInside];
     [_front addSubview:_addonButton];
+
+    _etaButton = [[JSQFlatButton alloc] initWithFrame:CGRectMake(buttonX+(.5+buttonWidth),
+                                                                 buttonY,
+                                                                 buttonWidth,
+                                                                 buttonHeight)
+                                   backgroundColor:[UIColor whiteColor]
+                                   foregroundColor:[UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f]
+                                             title:@"map"
+                                             image:nil];
+    [_etaButton addTarget:self action:@selector(showMap) forControlEvents:UIControlEventTouchUpInside];
+    [_front addSubview:_etaButton];
+
+    _notesButtons = [[JSQFlatButton alloc] initWithFrame:CGRectMake(buttonX+2*(.5+buttonWidth),
+                                                                    buttonY,
+                                                                    buttonWidth,
+                                                                    buttonHeight)
+                                        backgroundColor:[UIColor whiteColor]
+                                        foregroundColor:[UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f]
+                                                  title:@"notes"
+                                                  image:nil];
+    [_notesButtons addTarget:self action:@selector(showNotes) forControlEvents:UIControlEventTouchUpInside];
+    [_front addSubview:_notesButtons];
 }
 
 - (void)createAddons
@@ -127,7 +197,7 @@
                                           foregroundColor:[UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f]
                                                     title:@"back"
                                                     image:nil];
-    [_addonBackButton addTarget:self action:@selector(turnRight) forControlEvents:UIControlEventTouchUpInside];
+    [_addonBackButton addTarget:self action:@selector(hideAddons) forControlEvents:UIControlEventTouchUpInside];
     [_addons addSubview:_addonBackButton];
 
     _laundryButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -225,7 +295,42 @@
     }
 }
 
-- (void)turnLeft
+- (void)showMap
+{
+    [UIView transitionFromView:_front//viewToReplace
+                        toView:_mapContainer//replacementView
+                      duration:1
+                       options:UIViewAnimationOptionTransitionFlipFromTop
+                    completion:^(BOOL finished) {
+                        CLLocationCoordinate2D location;
+                        location.latitude = [[NSUserDefaults standardUserDefaults] floatForKey:@"latitude"];
+                        location.longitude = [[NSUserDefaults standardUserDefaults] floatForKey:@"longitude"];
+
+                        MKCoordinateRegion mapRegion;
+                        mapRegion.center = location;
+                        mapRegion.span.latitudeDelta = 0.05;
+                        mapRegion.span.longitudeDelta = 0.05;
+                        [_map setRegion:mapRegion animated:YES];
+
+                        MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+                        [annotation setCoordinate:location];
+                        [annotation setTitle:@"Me"];
+                        [annotation setSubtitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"address"]];
+                        [_map addAnnotation:annotation];
+                    }];
+}
+
+- (void)hideMap
+{
+    [UIView transitionFromView:_mapContainer//viewToReplace
+                        toView:_front//replacementView
+                      duration:1
+                       options:UIViewAnimationOptionTransitionFlipFromBottom
+                    completion:^(BOOL finished) {
+                    }];
+}
+
+- (void)showAddons
 {
     [UIView transitionFromView:_front//viewToReplace
                         toView:_addons//replacementView
@@ -235,12 +340,33 @@
                     }];
 }
 
-- (void)turnRight
+- (void)hideAddons
 {
     [UIView transitionFromView:_addons//viewToReplace
                         toView:_front//replacementView
                       duration:1
                        options:UIViewAnimationOptionTransitionFlipFromRight
+                    completion:^(BOOL finished) {
+                    }];
+}
+
+- (void)showNotes
+{
+    [UIView transitionFromView:_front//viewToReplace
+                        toView:_notesContainer//replacementView
+                      duration:1
+                       options:UIViewAnimationOptionTransitionFlipFromRight
+                    completion:^(BOOL finished) {
+//                        [_notes becomeFirstResponder];
+                    }];
+}
+
+- (void)hideNotes
+{
+    [UIView transitionFromView:_notesContainer//viewToReplace
+                        toView:_front//replacementView
+                      duration:1
+                       options:UIViewAnimationOptionTransitionFlipFromLeft
                     completion:^(BOOL finished) {
                     }];
 }
@@ -256,71 +382,6 @@
     _titleLabel.textAlignment = NSTextAlignmentLeft;
     _titleLabel.textColor = [UIColor whiteColor];
     [_front addSubview:_titleLabel];
-}
-
-- (BOOL)calendar:(CKCalendarView *)calendar willChangeToMonth:(NSDate *)date
-{
-    [self turn];
-    return NO;
-}
-
-- (void)flipUp
-{
-        [UIView transitionFromView:_front//viewToReplace
-                            toView:_mapContainer//replacementView
-                          duration:1
-                           options:UIViewAnimationOptionTransitionFlipFromTop
-                        completion:^(BOOL finished) {
-                            CLLocationCoordinate2D location;
-                            location.latitude = [[NSUserDefaults standardUserDefaults] floatForKey:@"latitude"];
-                            location.longitude = [[NSUserDefaults standardUserDefaults] floatForKey:@"longitude"];
-
-                            MKCoordinateRegion mapRegion;
-                            mapRegion.center = location;
-                            mapRegion.span.latitudeDelta = 0.05;
-                            mapRegion.span.longitudeDelta = 0.05;
-                            [_map setRegion:mapRegion animated:YES];
-
-                            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-                            [annotation setCoordinate:location];
-                            [annotation setTitle:@"Me"];
-                            [annotation setSubtitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"address"]];
-                            [_map addAnnotation:annotation];
-                        }];
-}
-
-- (void)flipDown
-{
-    [UIView transitionFromView:_mapContainer//viewToReplace
-                            toView:_front//replacementView
-                          duration:1
-                           options:UIViewAnimationOptionTransitionFlipFromBottom
-                        completion:^(BOOL finished) {
-                        }];
-}
-
-- (void)turn
-{
-    if (!_turned)
-    {
-        [UIView transitionFromView:_front//viewToReplace
-                            toView:_calendar//replacementView
-                          duration:1
-                           options:UIViewAnimationOptionTransitionFlipFromRight
-                        completion:^(BOOL finished) {
-                            _turned = !_turned;
-                        }];
-    }
-    else
-    {
-        [UIView transitionFromView:_calendar//viewToReplace
-                            toView:_front//replacementView
-                          duration:1
-                           options:UIViewAnimationOptionTransitionFlipFromLeft
-                        completion:^(BOOL finished) {
-                            _turned = !_turned;
-                        }];
-    }
 }
 
 - (void)calendar:(CKCalendarView *)calendar didSelectDate:(NSDate *)date
@@ -358,7 +419,7 @@
     _dateButton.borderWidth = 1;
     _dateButton.highlightedBorderColor = [UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
     _dateButton.highlightedForegroundColor = [UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f];
-    [_dateButton addTarget:self action:@selector(turn) forControlEvents:UIControlEventTouchUpInside];             //turn
+    [_dateButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];             //turn
     [_front addSubview:_dateButton];
     _dateButton.hidden = YES;
 
@@ -414,10 +475,6 @@
     _nameLabel.textColor = [UIColor whiteColor];
     _nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
     [_front addSubview:_nameLabel];
-}
-
-- (void)setContactImage:(NSString *)imageName
-{
 }
 
 - (NSString *)getDate:(NSDate *)date

@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface VerifyPhoneNumberViewController : UIViewController
-
+@property UIPageControl *page;
+- (void)sendSMSToNumber:(NSString *)phoneNumber;
 @end

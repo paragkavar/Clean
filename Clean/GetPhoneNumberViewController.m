@@ -7,14 +7,12 @@
 //
 
 #import "GetPhoneNumberViewController.h"
-#import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
 #import "VerifyPhoneNumberViewController.h"
 
 @interface GetPhoneNumberViewController () <UITextFieldDelegate>
 @property UITextField *phoneEntry;
 @property NSTimer *buttonCheckTimer;
-@property JSQFlatButton *verify;
 @end
 
 @implementation GetPhoneNumberViewController
@@ -31,14 +29,14 @@
 
 - (void)createPage
 {
-    UIPageControl *page = [[UIPageControl alloc] init];
-    page.center = CGPointMake(self.view.center.x, 100);
-    page.numberOfPages = 5;
-    page.currentPage = 0;
-    page.backgroundColor = [UIColor clearColor];
-    page.tintColor = [UIColor whiteColor];
-    page.currentPageIndicatorTintColor = [UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
-    [self.view addSubview:page];
+    _page = [[UIPageControl alloc] init];
+    _page.center = CGPointMake(self.view.center.x, 100);
+    _page.numberOfPages = 5;
+    _page.currentPage = 0;
+    _page.backgroundColor = [UIColor clearColor];
+    _page.tintColor = [UIColor whiteColor];
+    _page.currentPageIndicatorTintColor = [UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];
+    [self.view addSubview:_page];
 }
 
 - (void)createTitle
@@ -86,9 +84,18 @@
 
 - (void)verify:(UIButton *)sender
 {
-    NSLog(@"Clean number: %@",[self clean:_phoneEntry.text]);
-    [[NSUserDefaults standardUserDefaults] setObject:[self clean:_phoneEntry.text] forKey:@"phoneNumber"];
+    [self saveTempPhoneNumber:[self clean:_phoneEntry.text]];
+    [self nextVC];
+}
+
+- (void)saveTempPhoneNumber:(NSString *)number
+{
+    [[NSUserDefaults standardUserDefaults] setObject:number forKey:@"phoneNumber"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)nextVC
+{
     [self presentViewController:[VerifyPhoneNumberViewController new] animated:NO completion:nil];
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "SetPayCardViewController.h"
+#import "UIColor+FlatUI.h"
 
 @interface SetPayCardViewController ()
 
@@ -17,7 +18,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+#warning hide pagecontrol
 }
 
 @end

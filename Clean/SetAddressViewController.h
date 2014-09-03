@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GetAddressViewController.h"
 
-@interface SetAddressViewController : UIViewController
+@interface SetAddressViewController : GetAddressViewController
 
 @end

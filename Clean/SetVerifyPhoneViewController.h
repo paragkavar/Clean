@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VerifyPhoneNumberViewController.h"
 
-@interface SetVerifyPhoneViewController : UIViewController
+@interface SetVerifyPhoneViewController : VerifyPhoneNumberViewController
 
 @end
