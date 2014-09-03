@@ -45,5 +45,5 @@
     [VCFlow updateUserInParse];
     [self.presentingViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
-
+#warning update customer description phone number in Stripe
 @end

@@ -45,6 +45,32 @@ Parse.Cloud.define("createSubscription", function(request, response) {
   });
 });
 
+Parse.Cloud.define("updateCustomer", function(request, response) {   
+  Stripe.Customers.update(request.params.customer, {
+    card: request.params.token
+  }, {
+    success: function(httpResponse) {
+      response.success(httpResponse.id);
+    },
+    error: function(httpResponse) {
+      response.error(httpResponse.message);
+    }
+  });
+});
+
+Parse.Cloud.define("updateSubscripton", function(request, response) {
+  Stripe.Subscriptions.update(request.params.customer, request.params.subscription, {
+    plan: request.params.plan
+  }, {
+    success: function(httpResponse) {
+      response.success(httpResponse.id);
+    },
+    error: function(httpResponse) {
+      response.error(httpResponse.message);
+    }
+  });
+});
+
 // Parse.Cloud.define("costCalc", function(request, response) {
 //   var bedrooms = request.params.bedrooms;
 //   var bathrooms = request.params.bathrooms;

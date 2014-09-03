@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JSQFlatButton.h"
+#import "STPView.h"
 
 @interface GetPaymentCardViewController : UIViewController
 @property UIPageControl *page;
+@property JSQFlatButton *back;
+@property JSQFlatButton *subscribe;
+@property NSString *last4;
+- (void)validateCard;
+- (void)handleStripeToken:(STPToken *)token;
+- (void)handleStripeError:(NSError *)error;
+- (void)displayErrorAlert;
 @end

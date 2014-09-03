@@ -10,9 +10,7 @@
 #define kCardioToken @"87d236fddee4492c930cad66875ff1ab"
 
 #import "GetPaymentCardViewController.h"
-#import "STPView.h"
 #import "PKTextField.h"
-#import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
 #import "CardIO.h"
 #import <Parse/Parse.h>
@@ -22,7 +20,6 @@
 @interface GetPaymentCardViewController () <STPViewDelegate, CardIOPaymentViewControllerDelegate>
 @property STPView *stripeView;
 @property STPCard *stripeCard;
-@property JSQFlatButton *subscribe;
 @property JSQFlatButton *camera;
 @property UIButton *cameraIcon;
 @end
@@ -65,6 +62,14 @@
 
 - (void)createSaveButton
 {
+    _back = [[JSQFlatButton alloc] initWithFrame:CGRectZero
+                                 backgroundColor:[UIColor colorWithRed:0.18f green:0.67f blue:0.84f alpha:1.0f]
+                                 foregroundColor:[UIColor colorWithRed:1.00f green:1.00f blue:1.00f alpha:1.0f]
+                                           title:@"back"
+                                           image:nil];
+    [_back addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_back];
+    
     _subscribe = [[JSQFlatButton alloc] initWithFrame:CGRectMake(0,
                                                             self.view.frame.size.height-216-54,
                                                             self.view.frame.size.width,
@@ -78,53 +83,74 @@
     _subscribe.enabled = NO;
 }
 
+- (void)back:(JSQFlatButton *)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)subscribe:(UIButton *)sender
 {
     _subscribe.enabled = NO;
+    [self validateCard];
+}
 
+- (void)validateCard
+{
     if (_stripeCard && [_stripeCard validateCardReturningError:nil])
     {
         [Stripe createTokenWithCard:_stripeCard publishableKey:kStripePublishableKey completion:^(STPToken *token, NSError *error) {
-             if (error)
-             {
-                 [self handleStripeError:error];
-             }
-             else
-             {
-                 [self createCustomer:token];
-                 [[NSUserDefaults standardUserDefaults] setObject:_stripeCard.last4 forKey:@"last4"];
-             }
+            if (error)
+            {
+                [self handleStripeError:error];
+            }
+            else
+            {
+                _last4 = _stripeCard.last4;
+                [self handleStripeToken:token];
+            }
         }];
     }
     else
     {
         [UIView animateWithDuration:.3 animations:^{
             _subscribe.transform = CGAffineTransformMakeTranslation(0, _subscribe.transform.ty+216);
+            _back.transform = CGAffineTransformMakeTranslation(0, _back.transform.ty+216);
         }];
         [self.stripeView createToken:^(STPToken *token, NSError *error) {
-             if (error)
-             {
-                 _subscribe.enabled = YES;
-                 [self handleStripeError:error];
-             }
-             else
-             {
-                 [self createCustomer:token];
-                 [[NSUserDefaults standardUserDefaults] setObject:_stripeView.paymentView.cardNumber.last4 forKey:@"last4"];
-             }
+            if (error)
+            {
+                _subscribe.enabled = YES;
+                [self handleStripeError:error];
+            }
+            else
+            {
+                _last4 = _stripeView.paymentView.cardNumber.last4;
+                [self handleStripeToken:token];
+            }
         }];
     }
+}
+
+- (void)handleStripeToken:(STPToken *)token
+{
+    [self createCustomer:token];
 }
 
 - (void)handleStripeError:(NSError *)error
 {
     [UIView animateWithDuration:.3 animations:^{
         _subscribe.transform = CGAffineTransformMakeTranslation(0, _subscribe.transform.ty-216);
+        _back.transform = CGAffineTransformMakeTranslation(0, _back.transform.ty-216);
     }];
     _subscribe.enabled = YES;
     _stripeView.hidden = NO;
     _cameraIcon.hidden = ![UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera];
     [_stripeView.paymentView becomeFirstResponder];
+    [self displayErrorAlert];
+}
+
+- (void)displayErrorAlert
+{
     [[[UIAlertView alloc] initWithTitle:@"Error trying to subscribe" message:@"Please try again with a good network connection and a working card" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
 }
 
@@ -145,6 +171,7 @@
     _cameraIcon.hidden = YES;
     [UIView animateWithDuration:.3 animations:^{
         _subscribe.transform = CGAffineTransformMakeTranslation(0, _subscribe.transform.ty+216);
+        _back.transform = CGAffineTransformMakeTranslation(0, _back.transform.ty+216);
     }];
     [self scanCard];
 }
@@ -172,6 +199,7 @@
     [_stripeView.paymentView becomeFirstResponder];
     [UIView animateWithDuration:.3 animations:^{
         _subscribe.transform = CGAffineTransformMakeTranslation(0, _subscribe.transform.ty-216);
+        _back.transform = CGAffineTransformMakeTranslation(0, _back.transform.ty-216);
     }];
 }
 
@@ -209,8 +237,6 @@
     [self.stripeView.paymentView.subviews[0] setHidden:YES];
     [self.stripeView.paymentView.innerView.subviews[1] setHidden:YES];
     [self.stripeView.paymentView.innerView.subviews[2] setHidden:YES];
-
-    NSLog(@"%@",self.stripeView.paymentView.innerView.subviews);
 }
 
 - (void)stripeView:(STPView *)view withCard:(PKCard *)card isValid:(BOOL)valid
@@ -231,7 +257,6 @@
         }
         else
         {
-            NSLog(@"CustomerId: %@",customerId);
             [[NSUserDefaults standardUserDefaults] setObject:customerId forKey:@"customerId"];
             [[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -248,8 +273,8 @@
                   }
                   else
                   {
-                      NSLog(@"subscriptionId: %@",subscriptionId);
                       [[NSUserDefaults standardUserDefaults] setObject:subscriptionId forKey:@"subscriptionId"];
+                      [[NSUserDefaults standardUserDefaults] setObject:_last4 forKey:@"last4"];
                       [[NSUserDefaults standardUserDefaults] synchronize];
                       [VCFlow addUserToDataBase];
                       [self presentViewController:[RootViewController new] animated:NO completion:nil];
