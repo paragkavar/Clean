@@ -12,7 +12,6 @@
 @interface GetPhoneNumberViewController : UIViewController
 @property JSQFlatButton *verify;
 @property UIPageControl *page;
-- (void)saveTempPhoneNumber;
 - (void)nextVC;
 - (void)saveTempPhoneNumber:(NSString *)number;
 @end

@@ -54,26 +54,52 @@
             handler(NO);
         } else {
             PFObject *user = objects.firstObject;
-            [[NSUserDefaults standardUserDefaults] setObject:user[@"phoneNumber"] forKey:@"phoneNumber"];
-            [[NSUserDefaults standardUserDefaults] setObject:user[@"address"] forKey:@"address"];
-            [[NSUserDefaults standardUserDefaults] setFloat:[user[@"latitude"] floatValue] forKey:@"latitude"];
-            [[NSUserDefaults standardUserDefaults] setFloat:[user[@"longitude"] floatValue] forKey:@"longitude"];
-            [[NSUserDefaults standardUserDefaults] setObject:user[@"day"] forKey:@"hour"];
-            [[NSUserDefaults standardUserDefaults] setInteger:[user[@"hour"] intValue] forKey:@"visits"];
-            [[NSUserDefaults standardUserDefaults] setInteger:[user[@"minute"] intValue] forKey:@"minute"];
-            [[NSUserDefaults standardUserDefaults] setBool:[user[@"AM"] boolValue] forKey:@"AM"];
-            [[NSUserDefaults standardUserDefaults] setObject:user[@"plan"] forKey:@"plan"];
-            [[NSUserDefaults standardUserDefaults] setObject:user[@"customerId"] forKey:@"customerId"];
-            [[NSUserDefaults standardUserDefaults] setObject:user[@"subscriptionId"] forKey:@"subscriptionId"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self getParseDataFromUser:user];
             handler(YES);
         }
     }];
 }
 
++ (void)getParseDataFromUser:(PFObject *)user
+{
+    [[NSUserDefaults standardUserDefaults] setObject:user[@"phoneNumber"] forKey:@"phoneNumber"];
+    [[NSUserDefaults standardUserDefaults] setObject:user[@"address"] forKey:@"address"];
+    [[NSUserDefaults standardUserDefaults] setFloat:[user[@"latitude"] floatValue] forKey:@"latitude"];
+    [[NSUserDefaults standardUserDefaults] setFloat:[user[@"longitude"] floatValue] forKey:@"longitude"];
+    [[NSUserDefaults standardUserDefaults] setObject:user[@"day"] forKey:@"hour"];
+    [[NSUserDefaults standardUserDefaults] setInteger:[user[@"hour"] intValue] forKey:@"visits"];
+    [[NSUserDefaults standardUserDefaults] setInteger:[user[@"minute"] intValue] forKey:@"minute"];
+    [[NSUserDefaults standardUserDefaults] setBool:[user[@"AM"] boolValue] forKey:@"AM"];
+    [[NSUserDefaults standardUserDefaults] setObject:user[@"plan"] forKey:@"plan"];
+    [[NSUserDefaults standardUserDefaults] setObject:user[@"customerId"] forKey:@"customerId"];
+    [[NSUserDefaults standardUserDefaults] setObject:user[@"subscriptionId"] forKey:@"subscriptionId"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 + (void)addUserToDataBase
 {
     PFObject *user = [PFObject objectWithClassName:@"User"];
+    [self saveUserToParse:user];
+}
+
++ (void)updateUserInParse
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"User"];
+    [query whereKey:@"phoneNumber" equalTo:[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (error || objects.count !=1)
+        {
+            //fatal problems in database
+        }
+        else
+        {
+            [self saveUserToParse:objects.firstObject];
+        }
+    }];
+}
+
++ (void)saveUserToParse:(PFObject *)user
+{
     user[@"phoneNumber"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
     user[@"address"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"address"];
     user[@"latitude"] = @([[NSUserDefaults standardUserDefaults] floatForKey:@"latitude"]);
@@ -86,11 +112,6 @@
     user[@"customerId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
     user[@"subscriptionId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"subscriptionId"];
     [user saveInBackground];
-}
-
-+ (void)updateUserInParse
-{
-#warning updateinParse/Stripe
 }
 
 @end
