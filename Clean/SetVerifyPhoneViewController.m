@@ -28,12 +28,10 @@
     super.page.numberOfPages = 2;
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (NSString *)testNumber
 {
-    [super viewDidAppear:animated];
-    [super sendSMSToNumber:[[NSUserDefaults standardUserDefaults] objectForKey:@"setPhoneNumber"]];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"setPhoneNumber"];
 }
-#warning sending text to wrong phone
 
 - (void)back:(JSQFlatButton *)sender
 {
@@ -44,7 +42,7 @@
 {
     NSString *newNum = [[NSUserDefaults standardUserDefaults] objectForKey:@"setPhoneNumber"];
     [[NSUserDefaults standardUserDefaults] setObject:newNum forKey:@"phoneNumber"];
-    [VCFlow updatePhoneNumWithNewNum:newNum];
+    [VCFlow updateUserInParse];
     [self.presentingViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 

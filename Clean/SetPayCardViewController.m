@@ -18,7 +18,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-#warning hide pagecontrol
+    super.page.hidden = YES;
 }
 
+//    [VCFlow updateUserInParse];
 @end

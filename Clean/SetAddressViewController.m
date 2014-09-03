@@ -8,6 +8,7 @@
 
 #import "SetAddressViewController.h"
 #import "GetPriceViewController.h"
+#import "VCFlow.h"
 #import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
 #import "INTULocationManager.h"
@@ -23,7 +24,7 @@
 {
     [super viewDidLoad];
     [self createNewButton];
-#warning hide pagecontrol
+    super.page.hidden = YES;
 }
 
 - (void)createNewButton
@@ -45,6 +46,15 @@
                              54);
 }
 
+- (void)animateHideKeyboard
+{
+    [UIView animateWithDuration:.3 animations:^{
+        super.locationButton.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2+100);
+        super.save.transform = CGAffineTransformMakeTranslation(0, 216);
+        self.back.transform = CGAffineTransformMakeTranslation(0, 216);
+    }];
+}
+
 - (void)back:(JSQFlatButton *)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -52,7 +62,8 @@
 
 - (void)nextVC
 {
+    [VCFlow updateUserInParse];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-#warning update Parse
+
 @end

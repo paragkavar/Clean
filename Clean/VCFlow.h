@@ -12,5 +12,5 @@
 + (UIViewController *)nextVC;
 + (void)checkForExistingUserWithCompletionHandler:(void (^)(bool exists))handler;
 + (void)addUserToDataBase;
-+ (void)updatePhoneNumWithNewNum:(NSString *)newPhoneNumber;
++ (void)updateUserInParse;
 @end

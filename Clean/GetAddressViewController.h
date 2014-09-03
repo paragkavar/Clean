@@ -11,5 +11,8 @@
 
 @interface GetAddressViewController : UIViewController
 @property JSQFlatButton *save;
+@property UIButton *locationButton;
+@property UIPageControl *page;
+- (void)animateHideKeyboard;
 - (void)nextVC;
 @end

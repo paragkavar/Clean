@@ -102,14 +102,19 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self sendSMSToNumber:[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"]];
+    [self sendSMSToNumber:[self testNumber]];
+}
+
+- (NSString *)testNumber
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
 }
 
 - (void)resend:(JSQFlatButton *)sender
 {
     [self dismissViewControllerAnimated:NO completion:nil];
 //    _codeEntry.text = @"";
-//    [self sendSMSToNumber:[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"]];
+    [self sendSMSToNumber:[self testNumber]];
 }
 
 - (void)enter:(JSQFlatButton *)sender

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface GetPriceViewController : UIViewController
-
+@property UIPageControl *page;
 @end

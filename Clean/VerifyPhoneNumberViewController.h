@@ -10,5 +10,5 @@
 
 @interface VerifyPhoneNumberViewController : UIViewController
 @property UIPageControl *page;
-- (void)sendSMSToNumber:(NSString *)phoneNumber;
+- (NSString *)testNumber;
 @end

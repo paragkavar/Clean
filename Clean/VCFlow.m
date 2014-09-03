@@ -88,9 +88,9 @@
     [user saveInBackground];
 }
 
-+ (void)updatePhoneNumWithNewNum:(NSString *)newPhoneNumber
++ (void)updateUserInParse
 {
-#warning updateInParse
+#warning updateinParse/Stripe
 }
 
 @end

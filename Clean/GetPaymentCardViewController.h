@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface GetPaymentCardViewController : UIViewController
-
+@property UIPageControl *page;
 @end
