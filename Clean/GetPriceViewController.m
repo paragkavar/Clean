@@ -82,7 +82,7 @@
 
 - (void)createPickers
 {
-    UILabel *day = [[UILabel alloc] initWithFrame:CGRectMake(20, 330, 280, 40)];
+    UILabel *day = [[UILabel alloc] initWithFrame:CGRectMake(20, 300, 280, 40)];
     day.textAlignment = NSTextAlignmentCenter;
     day.textColor = [UIColor whiteColor];
     day.text = @"pick a time";
@@ -275,25 +275,6 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (![[NSUserDefaults standardUserDefaults] integerForKey:@"plan"])
-    {
-        _save.enabled = YES;
-    }
-    else
-    {
-        if ([[NSUserDefaults standardUserDefaults] integerForKey:@"plan"] != indexPath.item)
-        {
-            _save.enabled = YES;
-        }
-        else if ([self dateChanged])
-        {
-            _save.enabled = YES;
-        }
-        else
-        {
-            _save.enabled = NO;
-        }
-    }
     for (UICollectionViewCell *cell in collectionView.visibleCells)
     {
         cell.contentView.layer.borderColor = [UIColor clearColor].CGColor;
@@ -303,16 +284,63 @@
     cell.contentView.layer.borderWidth = 1;
     cell.contentView.layer.borderColor = [UIColor whiteColor].CGColor;
     _selectedIndex = indexPath.item;
+
+    _save.enabled = [self enableSaveButton];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    _save.enabled = [self enableSaveButton];
+}
+
+- (BOOL)enableSaveButton
+{
+    if ([self firstTime])
+    {
+        if (_selectedIndex)
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
+    }
+    else if ([self dateChanged])
+    {
+        return YES;
+    }
+    else
+    {
+        if ([self planChanged])
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
+    }
+}
+
+- (BOOL)firstTime
+{
+    return ![[NSUserDefaults standardUserDefaults] integerForKey:@"plan"] ? YES : NO;
 }
 
 - (BOOL)dateChanged
 {
     BOOL day = [[[NSUserDefaults standardUserDefaults] objectForKey:@"day"] isEqualToString:_days[[_dayPicker selectedRowInComponent:0]]];
-    BOOL hour = [[NSUserDefaults standardUserDefaults] integerForKey:@"hour"] == [_timePicker selectedRowInComponent:0]-1;
+    BOOL hour = [[NSUserDefaults standardUserDefaults] integerForKey:@"hour"] == [_timePicker selectedRowInComponent:0]+1;
     BOOL minute = [[NSUserDefaults standardUserDefaults] integerForKey:@"minute"] == [_timePicker selectedRowInComponent:1];
-    BOOL am = [[NSUserDefaults standardUserDefaults] boolForKey:@"AM"] == [_timePicker selectedRowInComponent:2];
+    BOOL am = ([[NSUserDefaults standardUserDefaults] boolForKey:@"AM"] ? 0 : 1) == [_timePicker selectedRowInComponent:2];
 
-    return day || hour || minute || am;
+    return !(day && hour && minute && am);
+}
+
+- (BOOL)planChanged
+{
+    return _selectedIndex != [[NSUserDefaults standardUserDefaults] integerForKey:@"plan"];
 }
 
 @end

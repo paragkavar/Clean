@@ -71,6 +71,7 @@
     [[NSUserDefaults standardUserDefaults] setInteger:[user[@"minute"] intValue] forKey:@"minute"];
     [[NSUserDefaults standardUserDefaults] setBool:[user[@"AM"] boolValue] forKey:@"AM"];
     [[NSUserDefaults standardUserDefaults] setObject:user[@"plan"] forKey:@"plan"];
+    [[NSUserDefaults standardUserDefaults] setObject:user[@"last4"] forKey:@"last4"];
     [[NSUserDefaults standardUserDefaults] setObject:user[@"customerId"] forKey:@"customerId"];
     [[NSUserDefaults standardUserDefaults] setObject:user[@"subscriptionId"] forKey:@"subscriptionId"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -109,6 +110,7 @@
     user[@"minute"] = @([[NSUserDefaults standardUserDefaults] integerForKey:@"minute"]);
     user[@"AM"] = @([[NSUserDefaults standardUserDefaults] boolForKey:@"AM"]);
     user[@"plan"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"plan"];
+    user[@"last4"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"last4"];
     user[@"customerId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
     user[@"subscriptionId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"subscriptionId"];
     [user saveInBackground];

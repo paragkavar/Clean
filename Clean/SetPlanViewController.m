@@ -6,16 +6,14 @@
 //  Copyright (c) 2014 SapanBhuta. All rights reserved.
 //
 
-#warning problem highlighting mansion box at index 3 in super.collectionView
-#warning problems with button enable-disable
-#warning problems with Stripe
+#warning minor: problem highlighting mansion box at index 3 in super.collectionView
 
 #import "SetPlanViewController.h"
 #import "UIColor+FlatUI.h"
 #import "VCFlow.h"
 #import <Parse/Parse.h>
 
-@interface SetPlanViewController () <UIPickerViewDelegate>
+@interface SetPlanViewController ()
 
 @end
 
@@ -26,9 +24,6 @@
     [super viewDidLoad];
     super.page.hidden = YES;
     [self createButtons];
-
-    super.dayPicker.delegate = self;
-    super.timePicker.delegate = self;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -53,24 +48,21 @@
     super.save.frame = CGRectMake(self.view.frame.size.width/2+.25,self.view.frame.size.height-54,self.view.frame.size.width/2-.25,54);
 }
 
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    super.save.enabled = [super dateChanged];
-}
-
 - (void)save:(JSQFlatButton *)sender
 {
-    if ([super dateChanged] && ![self planChanged])
+    if ([super dateChanged] && ![super planChanged])
     {
         [self updateTimes];
+        [VCFlow updateUserInParse];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
-    else if ([super dateChanged] && [self planChanged])
+    else if ([super dateChanged] && [super planChanged])
     {
         [self updateTimes];
+        [VCFlow updateUserInParse];
         [self updateSubscripton];
     }
-    else if (![super dateChanged] && [self planChanged])
+    else if (![super dateChanged] && [super planChanged])
     {
         [self updateSubscripton];
     }
@@ -93,6 +85,8 @@
      {
          if (error)
          {
+             super.back.enabled = YES;
+             super.save.enabled = YES;
              [[[UIAlertView alloc] initWithTitle:@"Error trying to update card" message:@"Please try again with a good network connection and a working card" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
          }
          else
@@ -101,8 +95,6 @@
              [VCFlow updateUserInParse];
              [self dismissViewControllerAnimated:YES completion:nil];
          }
-         super.back.enabled = YES;
-         super.save.enabled = YES;
      }];
 }
 
@@ -113,12 +105,6 @@
     [[NSUserDefaults standardUserDefaults] setInteger:[super.timePicker selectedRowInComponent:1] forKey:@"minute"];
     [[NSUserDefaults standardUserDefaults] setBool:[super.timePicker selectedRowInComponent:2] == 0 forKey:@"AM"];;
     [[NSUserDefaults standardUserDefaults] synchronize];
-    [VCFlow updateUserInParse];
-}
-
-- (BOOL)planChanged
-{
-    return super.selectedIndex != [[NSUserDefaults standardUserDefaults] integerForKey:@"plan"];
 }
 
 @end

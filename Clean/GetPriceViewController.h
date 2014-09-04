@@ -18,6 +18,7 @@
 @property UICollectionView *collectionView;
 @property NSArray *days;
 @property NSInteger selectedIndex;
+- (BOOL)planChanged;
 - (BOOL)dateChanged;
 - (void)saveValues;
 @end

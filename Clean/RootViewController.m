@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 SapanBhuta. All rights reserved.
 //
 
+#warning minor: get real time map movements once cleaners have smartphones
+
 #define shimmeringFrame CGRectMake(15,20,290,55)
 #define dateFrame CGRectMake(0, 80, 320, 115)
 #define buttonFrame CGRectMake(0, self.view.frame.size.height-54, self.view.frame.size.width, 54)

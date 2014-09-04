@@ -58,7 +58,7 @@ Parse.Cloud.define("updateCustomer", function(request, response) {
   });
 });
 
-Parse.Cloud.define("updateSubscripton", function(request, response) {
+Parse.Cloud.define("updateSubscription", function(request, response) {
   Stripe.Subscriptions.update(request.params.customer, request.params.subscription, {
     plan: request.params.plan
   }, {
