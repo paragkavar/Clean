@@ -177,13 +177,18 @@
 
 - (void)save:(JSQFlatButton *)sender
 {
+    [self saveValues];
+    [self nextVC];
+}
+
+- (void)saveValues
+{
     [[NSUserDefaults standardUserDefaults] setObject:@(_selectedIndex).description forKey:@"plan"];
     [[NSUserDefaults standardUserDefaults] setObject:_days[[_dayPicker selectedRowInComponent:0]] forKey:@"day"];
     [[NSUserDefaults standardUserDefaults] setInteger:[_timePicker selectedRowInComponent:0]+1 forKey:@"hour"];
     [[NSUserDefaults standardUserDefaults] setInteger:[_timePicker selectedRowInComponent:1] forKey:@"minute"];
     [[NSUserDefaults standardUserDefaults] setBool:[_timePicker selectedRowInComponent:2] == 0 forKey:@"AM"];;
     [[NSUserDefaults standardUserDefaults] synchronize];
-    [self nextVC];
 }
 
 - (void)nextVC

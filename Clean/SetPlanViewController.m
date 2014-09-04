@@ -7,8 +7,8 @@
 //
 
 #warning problem highlighting mansion box at index 3 in super.collectionView
-#warning also update new subscription prefrences in Stripe for customer, and make any immdeiate charges necessary
 #warning problems with button enable-disable
+#warning problems with Stripe
 
 #import "SetPlanViewController.h"
 #import "UIColor+FlatUI.h"
@@ -29,13 +29,12 @@
 
     super.dayPicker.delegate = self;
     super.timePicker.delegate = self;
-    //create 2 Buttons
-    //hide save button
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    NSIndexPath *path = [NSIndexPath indexPathForItem:[[NSUserDefaults standardUserDefaults] integerForKey:@"plan"] inSection:0];
+    super.selectedIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"plan"];
+    NSIndexPath *path = [NSIndexPath indexPathForItem:super.selectedIndex inSection:0];
     [super.collectionView selectItemAtIndexPath:path animated:YES scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
     UICollectionViewCell *cell = [super.collectionView cellForItemAtIndexPath:path];
     cell.contentView.layer.borderWidth = 1;
@@ -46,9 +45,6 @@
     [super.timePicker selectRow:[[NSUserDefaults standardUserDefaults] integerForKey:@"hour"]-1 inComponent:0 animated:YES];
     [super.timePicker selectRow:[[NSUserDefaults standardUserDefaults] integerForKey:@"minute"] inComponent:1 animated:YES];
     [super.timePicker selectRow:[[NSUserDefaults standardUserDefaults] boolForKey:@"AM"] ? 0 : 1 inComponent:2 animated:YES];
-
-    super.dayPicker.delegate = self;
-    super.timePicker.delegate = self;
 }
 
 - (void)createButtons
@@ -62,13 +58,32 @@
     super.save.enabled = [super dateChanged];
 }
 
-- (void)nextVC
+- (void)save:(JSQFlatButton *)sender
 {
-    [self updateSubscripton];
+    if ([super dateChanged] && ![self planChanged])
+    {
+        [self updateTimes];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    else if ([super dateChanged] && [self planChanged])
+    {
+        [self updateTimes];
+        [self updateSubscripton];
+    }
+    else if (![super dateChanged] && [self planChanged])
+    {
+        [self updateSubscripton];
+    }
+    else
+    {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (void)updateSubscripton
 {
+    super.back.enabled = NO;
+    super.save.enabled = NO;
     NSString *customerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
     NSString *subscriptionId = [[NSUserDefaults standardUserDefaults] objectForKey:@"subscriptionId"];
     NSString *plan = [[NSUserDefaults standardUserDefaults] objectForKey:@"plan"];
@@ -78,30 +93,32 @@
      {
          if (error)
          {
-             [self handleStripeError:error];
+             [[[UIAlertView alloc] initWithTitle:@"Error trying to update card" message:@"Please try again with a good network connection and a working card" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
          }
          else
          {
-             [self handleStripeSuccess:subscriptionId];
+             [[NSUserDefaults standardUserDefaults] setObject:@(super.selectedIndex).description forKey:@"plan"];
+             [VCFlow updateUserInParse];
+             [self dismissViewControllerAnimated:YES completion:nil];
          }
+         super.back.enabled = YES;
+         super.save.enabled = YES;
      }];
 }
 
-- (void)handleStripeError:(NSError *)error
+- (void)updateTimes
 {
-
-}
-
-- (void)handleStripeSuccess:(NSString *)subscriptionId
-{
-    [[NSUserDefaults standardUserDefaults] setObject:subscriptionId forKey:@"subscriptionId"];
+    [[NSUserDefaults standardUserDefaults] setObject:super.days[[super.dayPicker selectedRowInComponent:0]] forKey:@"day"];
+    [[NSUserDefaults standardUserDefaults] setInteger:[super.timePicker selectedRowInComponent:0]+1 forKey:@"hour"];
+    [[NSUserDefaults standardUserDefaults] setInteger:[super.timePicker selectedRowInComponent:1] forKey:@"minute"];
+    [[NSUserDefaults standardUserDefaults] setBool:[super.timePicker selectedRowInComponent:2] == 0 forKey:@"AM"];;
     [[NSUserDefaults standardUserDefaults] synchronize];
     [VCFlow updateUserInParse];
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)displayErrorAlert
+- (BOOL)planChanged
 {
-    [[[UIAlertView alloc] initWithTitle:@"Error trying to update card" message:@"Please try again with a good network connection and a working card" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+    return super.selectedIndex != [[NSUserDefaults standardUserDefaults] integerForKey:@"plan"];
 }
+
 @end

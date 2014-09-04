@@ -19,5 +19,5 @@
 @property NSArray *days;
 @property NSInteger selectedIndex;
 - (BOOL)dateChanged;
-- (void)nextVC;
+- (void)saveValues;
 @end

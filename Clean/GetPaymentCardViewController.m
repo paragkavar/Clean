@@ -91,6 +91,7 @@
 - (void)subscribe:(UIButton *)sender
 {
     _subscribe.enabled = NO;
+    _back.enabled = NO;
     [self validateCard];
 }
 
@@ -119,7 +120,6 @@
         [self.stripeView createToken:^(STPToken *token, NSError *error) {
             if (error)
             {
-                _subscribe.enabled = YES;
                 [self handleStripeError:error];
             }
             else
@@ -143,6 +143,7 @@
         _back.transform = CGAffineTransformMakeTranslation(0, _back.transform.ty-216);
     }];
     _subscribe.enabled = YES;
+    _back.enabled = YES;
     _stripeView.hidden = NO;
     _cameraIcon.hidden = ![UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera];
     [_stripeView.paymentView becomeFirstResponder];
