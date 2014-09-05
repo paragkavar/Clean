@@ -24,6 +24,8 @@
 @property UIActivityIndicatorView *activity;
 @property NSTimer *buttonCheckTimer;
 @property BOOL saving;
+@property UIAlertView *errorAlert;
+@property UIAlertView *checkAlert;
 @end
 
 @implementation GetAddressViewController
@@ -244,11 +246,7 @@
     _saving = YES;
     if (_addressString && _gettingLocation)
     {
-        CGFloat latitude = _location.coordinate.latitude;
-        CGFloat longitude = _location.coordinate.longitude;
-        [User setLatitude:latitude];
-        [User setLongitude:longitude];
-        [User setAddress:_addressString];
+        [self saveGeocodedAddressInfo];
         [self nextVC];
     }
     else
@@ -257,10 +255,10 @@
         {
             if (error || placemarks.count != 1)
             {
-                UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Error Locating Address" message:@"Are you sure you entered the address correctly?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
-                errorAlert.delegate = self;
-                errorAlert.tag = 0;
-                [errorAlert show];
+                _errorAlert = [[UIAlertView alloc] initWithTitle:@"Error Locating Address" message:@"Are you sure you entered the address correctly?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+                _errorAlert.delegate = self;
+                _errorAlert.tag = 0;
+                [_errorAlert show];
             }
             else
             {
@@ -268,10 +266,10 @@
                 _location = placemark.location;
                 _formattedAddress = [placemark addressDictionary][@"FormattedAddressLines"];
                 _addressString = [NSString stringWithFormat:@"%@\n%@",_formattedAddress[0],_formattedAddress[1]];
-                UIAlertView *checkAlert = [[UIAlertView alloc] initWithTitle:@"Is this the correct address?" message:_addressString delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
-                checkAlert.delegate = self;
-                checkAlert.tag = 1;
-                [checkAlert show];
+                _checkAlert = [[UIAlertView alloc] initWithTitle:@"Is this the correct address?" message:_addressString delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+                _checkAlert.delegate = self;
+                _checkAlert.tag = 1;
+                [_checkAlert show];
             }
         }];
     }
@@ -279,28 +277,35 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (alertView.tag ==0 && buttonIndex == 0)
-    {
-        [User setAddress:_addressField.text];
-        [self nextVC];
-    }
-    else if (alertView.tag == 1 && buttonIndex == 0)
-    {
-        CGFloat latitude = _location.coordinate.latitude;
-        CGFloat longitude = _location.coordinate.longitude;
-        [User setLatitude:latitude];
-        [User setLongitude:longitude];
-        [User setAddress:_addressField.text];
-#warning addressString instead, check alert button order and stuff
-        [self nextVC];
-    }
-    else
+    if (buttonIndex == 1)
     {
         _saving = NO;
         _location = nil;
         _formattedAddress = nil;
         _addressString = nil;
     }
+    else
+    {
+        if (alertView.tag == 0)
+        {
+            [User setAddress:_addressField.text];
+            [self nextVC];
+        }
+        else
+        {
+            [self saveGeocodedAddressInfo];
+            [self nextVC];
+        }
+    }
+}
+
+- (void)saveGeocodedAddressInfo
+{
+    CGFloat latitude = _location.coordinate.latitude;
+    CGFloat longitude = _location.coordinate.longitude;
+    [User setLatitude:latitude];
+    [User setLongitude:longitude];
+    [User setAddress:_addressString];
 }
 
 - (void)nextVC
