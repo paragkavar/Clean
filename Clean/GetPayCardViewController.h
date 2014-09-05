@@ -10,7 +10,7 @@
 #import "JSQFlatButton.h"
 #import "STPView.h"
 
-@interface GetPaymentCardViewController : UIViewController
+@interface GetPayCardViewController : UIViewController
 @property UIPageControl *page;
 @property JSQFlatButton *back;
 @property JSQFlatButton *subscribe;

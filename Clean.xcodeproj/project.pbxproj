@@ -40,7 +40,7 @@
 		8E51483C19B5073F002CFCD1 /* calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E51483B19B5073F002CFCD1 /* calendar.png */; };
 		8E51483E19B507BF002CFCD1 /* credit-card.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E51483D19B507BF002CFCD1 /* credit-card.png */; };
 		8EB9A85A19AFE8AD0013849E /* GetAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A85319AFE8AD0013849E /* GetAddressViewController.m */; };
-		8EB9A85B19AFE8AD0013849E /* GetPaymentCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A85519AFE8AD0013849E /* GetPaymentCardViewController.m */; };
+		8EB9A85B19AFE8AD0013849E /* GetPayCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A85519AFE8AD0013849E /* GetPayCardViewController.m */; };
 		8EB9A85C19AFE8AD0013849E /* GetPhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A85719AFE8AD0013849E /* GetPhoneNumberViewController.m */; };
 		8EB9A85D19AFE8AD0013849E /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A85919AFE8AD0013849E /* IntroViewController.m */; };
 		8EB9A86319AFE8D00013849E /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A86019AFE8D00013849E /* RootViewController.m */; };
@@ -51,7 +51,7 @@
 		8EB9A86C19AFE8F50013849E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A86B19AFE8F50013849E /* main.m */; };
 		8EB9A86F19AFE9030013849E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A86E19AFE9030013849E /* AppDelegate.m */; };
 		8EB9A87119AFE9180013849E /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 8EB9A87019AFE9180013849E /* Podfile */; };
-		8EB9A87419B0E7AE0013849E /* GetPriceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A87319B0E7AE0013849E /* GetPriceViewController.m */; };
+		8EB9A87419B0E7AE0013849E /* GetPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A87319B0E7AE0013849E /* GetPlanViewController.m */; };
 		8EE7A0A519B3BBF3002C0CD3 /* VCFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE7A0A419B3BBF3002C0CD3 /* VCFlow.m */; };
 		8EE7A0A819B4156A002C0CD3 /* PRCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE7A0A719B4156A002C0CD3 /* PRCollectionViewCell.m */; };
 		8EE7A0AB19B42C61002C0CD3 /* INCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE7A0AA19B42C61002C0CD3 /* INCollectionViewCell.m */; };
@@ -119,8 +119,8 @@
 		8E51483D19B507BF002CFCD1 /* credit-card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "credit-card.png"; sourceTree = "<group>"; };
 		8EB9A85219AFE8AD0013849E /* GetAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetAddressViewController.h; sourceTree = "<group>"; };
 		8EB9A85319AFE8AD0013849E /* GetAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetAddressViewController.m; sourceTree = "<group>"; };
-		8EB9A85419AFE8AD0013849E /* GetPaymentCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetPaymentCardViewController.h; sourceTree = "<group>"; };
-		8EB9A85519AFE8AD0013849E /* GetPaymentCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPaymentCardViewController.m; sourceTree = "<group>"; };
+		8EB9A85419AFE8AD0013849E /* GetPayCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetPayCardViewController.h; sourceTree = "<group>"; };
+		8EB9A85519AFE8AD0013849E /* GetPayCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPayCardViewController.m; sourceTree = "<group>"; };
 		8EB9A85619AFE8AD0013849E /* GetPhoneNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetPhoneNumberViewController.h; sourceTree = "<group>"; };
 		8EB9A85719AFE8AD0013849E /* GetPhoneNumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPhoneNumberViewController.m; sourceTree = "<group>"; };
 		8EB9A85819AFE8AD0013849E /* IntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroViewController.h; sourceTree = "<group>"; };
@@ -136,8 +136,8 @@
 		8EB9A86D19AFE9030013849E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8EB9A86E19AFE9030013849E /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		8EB9A87019AFE9180013849E /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		8EB9A87219B0E7AE0013849E /* GetPriceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetPriceViewController.h; sourceTree = "<group>"; };
-		8EB9A87319B0E7AE0013849E /* GetPriceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPriceViewController.m; sourceTree = "<group>"; };
+		8EB9A87219B0E7AE0013849E /* GetPlanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetPlanViewController.h; sourceTree = "<group>"; };
+		8EB9A87319B0E7AE0013849E /* GetPlanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPlanViewController.m; sourceTree = "<group>"; };
 		8EE7A0A319B3BBF3002C0CD3 /* VCFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCFlow.h; sourceTree = "<group>"; };
 		8EE7A0A419B3BBF3002C0CD3 /* VCFlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCFlow.m; sourceTree = "<group>"; };
 		8EE7A0A619B4156A002C0CD3 /* PRCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRCollectionViewCell.h; sourceTree = "<group>"; };
@@ -296,10 +296,10 @@
 				8E51483019B50501002CFCD1 /* SetVerifyPhoneViewController.m */,
 				8E51483219B5050C002CFCD1 /* SetAddressViewController.h */,
 				8E51483319B5050C002CFCD1 /* SetAddressViewController.m */,
-				8E51483519B50514002CFCD1 /* SetPlanViewController.h */,
-				8E51483619B50514002CFCD1 /* SetPlanViewController.m */,
 				8E51483819B5052F002CFCD1 /* SetPayCardViewController.h */,
 				8E51483919B5052F002CFCD1 /* SetPayCardViewController.m */,
+				8E51483519B50514002CFCD1 /* SetPlanViewController.h */,
+				8E51483619B50514002CFCD1 /* SetPlanViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -317,12 +317,12 @@
 				8EB9A86219AFE8D00013849E /* VerifyPhoneNumberViewController.m */,
 				8EB9A85219AFE8AD0013849E /* GetAddressViewController.h */,
 				8EB9A85319AFE8AD0013849E /* GetAddressViewController.m */,
-				8EB9A87219B0E7AE0013849E /* GetPriceViewController.h */,
-				8EB9A87319B0E7AE0013849E /* GetPriceViewController.m */,
+				8EB9A85419AFE8AD0013849E /* GetPayCardViewController.h */,
+				8EB9A85519AFE8AD0013849E /* GetPayCardViewController.m */,
+				8EB9A87219B0E7AE0013849E /* GetPlanViewController.h */,
+				8EB9A87319B0E7AE0013849E /* GetPlanViewController.m */,
 				8EE7A0A619B4156A002C0CD3 /* PRCollectionViewCell.h */,
 				8EE7A0A719B4156A002C0CD3 /* PRCollectionViewCell.m */,
-				8EB9A85419AFE8AD0013849E /* GetPaymentCardViewController.h */,
-				8EB9A85519AFE8AD0013849E /* GetPaymentCardViewController.m */,
 			);
 			name = Onboard;
 			sourceTree = "<group>";
@@ -493,12 +493,12 @@
 				8E37254C19B6861800BA3208 /* User.m in Sources */,
 				8E51483719B50514002CFCD1 /* SetPlanViewController.m in Sources */,
 				8EE7A0A519B3BBF3002C0CD3 /* VCFlow.m in Sources */,
-				8EB9A85B19AFE8AD0013849E /* GetPaymentCardViewController.m in Sources */,
+				8EB9A85B19AFE8AD0013849E /* GetPayCardViewController.m in Sources */,
 				8E02E2E819B2C4FF0008CFE1 /* SBCollectionViewCell.m in Sources */,
 				8E51483419B5050C002CFCD1 /* SetAddressViewController.m in Sources */,
 				8E51483A19B5052F002CFCD1 /* SetPayCardViewController.m in Sources */,
 				8E51483119B50501002CFCD1 /* SetVerifyPhoneViewController.m in Sources */,
-				8EB9A87419B0E7AE0013849E /* GetPriceViewController.m in Sources */,
+				8EB9A87419B0E7AE0013849E /* GetPlanViewController.m in Sources */,
 				8EE7A0AB19B42C61002C0CD3 /* INCollectionViewCell.m in Sources */,
 				8EB9A86419AFE8D00013849E /* VerifyPhoneNumberViewController.m in Sources */,
 				8E51482E19B504F7002CFCD1 /* SetPhoneViewController.m in Sources */,

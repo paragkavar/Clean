@@ -6,20 +6,23 @@
 //  Copyright (c) 2014 SapanBhuta. All rights reserved.
 //
 
-#import "GetPriceViewController.h"
-#import "GetPaymentCardViewController.h"
+#import "GetPlanViewController.h"
+#import "RootViewController.h"
 #import "UIColor+FlatUI.h"
 #import <Parse/Parse.h>
 #import "PRCollectionViewCell.h"
+#import "VCFlow.h"
+#import "User.h"
 
-@interface GetPriceViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
+@interface GetPlanViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 @end
 
-@implementation GetPriceViewController
+@implementation GetPlanViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _selectedIndex = -1;
     self.view.backgroundColor = [UIColor midnightBlueColor];
     _days = @[@"Sunday",@"Monday",@"Tuesday",@"Wednesday",@"Thursday",@"Friday",@"Saturday"];
     [self createPage];
@@ -54,6 +57,14 @@
 
 - (void)createButton
 {
+    _later =  [[JSQFlatButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-54, self.view.frame.size.width/2-.25, 54)
+                                   backgroundColor:[UIColor colorWithRed:0.18f green:0.67f blue:0.84f alpha:1.0f]
+                                   foregroundColor:[UIColor colorWithRed:1.00f green:1.00f blue:1.00f alpha:1.0f]
+                                             title:@"later"
+                                             image:nil];
+    [_later addTarget:self action:@selector(later:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_later];
+
     _back = [[JSQFlatButton alloc] initWithFrame:CGRectZero
                                  backgroundColor:[UIColor colorWithRed:0.18f green:0.67f blue:0.84f alpha:1.0f]
                                  foregroundColor:[UIColor colorWithRed:1.00f green:1.00f blue:1.00f alpha:1.0f]
@@ -62,10 +73,7 @@
     [_back addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_back];
 
-    _save = [[JSQFlatButton alloc] initWithFrame:CGRectMake(0,
-                                                            self.view.frame.size.height-54,
-                                                            self.view.frame.size.width,
-                                                            54)
+    _save = [[JSQFlatButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2+.25, self.view.frame.size.height-54, self.view.frame.size.width/2-.25, 54)
                                  backgroundColor:[UIColor colorWithRed:1.00f green:1.00f blue:1.00f alpha:1.0f]
                                  foregroundColor:[UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f]
                                            title:@"save"
@@ -73,6 +81,13 @@
     [_save addTarget:self action:@selector(save:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_save];
     _save.enabled = NO;
+}
+
+- (void)later:(JSQFlatButton *)sender
+{
+    [self saveValues];
+    [VCFlow addUserToDataBase];
+    [self nextVC];
 }
 
 - (void)back:(JSQFlatButton *)sender
@@ -177,23 +192,21 @@
 
 - (void)save:(JSQFlatButton *)sender
 {
-    [self saveValues];
-    [self nextVC];
+    [self createSubscription];
 }
 
 - (void)saveValues
 {
-    [[NSUserDefaults standardUserDefaults] setObject:@(_selectedIndex).description forKey:@"plan"];
-    [[NSUserDefaults standardUserDefaults] setObject:_days[[_dayPicker selectedRowInComponent:0]] forKey:@"day"];
-    [[NSUserDefaults standardUserDefaults] setInteger:[_timePicker selectedRowInComponent:0]+1 forKey:@"hour"];
-    [[NSUserDefaults standardUserDefaults] setInteger:[_timePicker selectedRowInComponent:1] forKey:@"minute"];
-    [[NSUserDefaults standardUserDefaults] setBool:[_timePicker selectedRowInComponent:2] == 0 forKey:@"AM"];;
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [User setPlan:_selectedIndex];
+    [User setDay:_days[[_dayPicker selectedRowInComponent:0]]];
+    [User setHour:[_timePicker selectedRowInComponent:0]+1];
+    [User setMinute:[_timePicker selectedRowInComponent:1]];
+    [User setAM:[_timePicker selectedRowInComponent:2] == 0];
 }
 
 - (void)nextVC
 {
-    [self presentViewController:[GetPaymentCardViewController new] animated:NO completion:nil];
+    [self presentViewController:[RootViewController new] animated:NO completion:nil];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
@@ -297,7 +310,7 @@
 {
     if ([self firstTime])
     {
-        if (_selectedIndex)
+        if (_selectedIndex != -1)
         {
             return YES;
         }
@@ -325,22 +338,48 @@
 
 - (BOOL)firstTime
 {
+#warning no good
     return ![[NSUserDefaults standardUserDefaults] integerForKey:@"plan"] ? YES : NO;
 }
 
 - (BOOL)dateChanged
 {
-    BOOL day = [[[NSUserDefaults standardUserDefaults] objectForKey:@"day"] isEqualToString:_days[[_dayPicker selectedRowInComponent:0]]];
-    BOOL hour = [[NSUserDefaults standardUserDefaults] integerForKey:@"hour"] == [_timePicker selectedRowInComponent:0]+1;
-    BOOL minute = [[NSUserDefaults standardUserDefaults] integerForKey:@"minute"] == [_timePicker selectedRowInComponent:1];
-    BOOL am = ([[NSUserDefaults standardUserDefaults] boolForKey:@"AM"] ? 0 : 1) == [_timePicker selectedRowInComponent:2];
+    BOOL day = [[User day] isEqualToString:_days[[_dayPicker selectedRowInComponent:0]]];
+    BOOL hour = [User hour] == [_timePicker selectedRowInComponent:0]+1;
+    BOOL minute = [User minute] == [_timePicker selectedRowInComponent:1];
+    BOOL am = ([User AM] ? 0 : 1) == [_timePicker selectedRowInComponent:2];
 
     return !(day && hour && minute && am);
 }
 
 - (BOOL)planChanged
 {
-    return _selectedIndex != [[NSUserDefaults standardUserDefaults] integerForKey:@"plan"];
+    return _selectedIndex != [User plan];
+}
+
+- (void)createSubscription
+{
+    [PFCloud callFunctionInBackground:@"createSubscription"
+                       withParameters:@{@"customer":[User customerId], @"plan":@([User plan]).description}
+                                block:^(NSString *subscriptionId, NSError *error)
+     {
+         if (error)
+         {
+             [self displayErrorAlert];
+         }
+         else
+         {
+             [User setSubscriptionId:subscriptionId];
+             [self saveValues];
+             [VCFlow addUserToDataBase];
+             [self nextVC];
+         }
+     }];
+}
+
+- (void)displayErrorAlert
+{
+    [[[UIAlertView alloc] initWithTitle:@"Error trying to subscribe" message:@"Please try again with a good network connection and a working card" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
 }
 
 @end

@@ -10,6 +10,7 @@
 #import "CKCalendarView.h"
 #import "UIColor+FlatUI.h"
 #import "RMDateSelectionViewController.h"
+#import "User.h"
 
 @interface SBCollectionViewCell () <CKCalendarDelegate, MKMapViewDelegate, RMDateSelectionViewControllerDelegate, UITextViewDelegate>
 @property CKCalendarView *calendar;
@@ -304,8 +305,8 @@
                        options:UIViewAnimationOptionTransitionFlipFromTop
                     completion:^(BOOL finished) {
                         CLLocationCoordinate2D location;
-                        location.latitude = [[NSUserDefaults standardUserDefaults] floatForKey:@"latitude"];
-                        location.longitude = [[NSUserDefaults standardUserDefaults] floatForKey:@"longitude"];
+                        location.latitude = [User latitude];
+                        location.longitude = [User longitude];
 
                         MKCoordinateRegion mapRegion;
                         mapRegion.center = location;
@@ -316,7 +317,7 @@
                         MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
                         [annotation setCoordinate:location];
                         [annotation setTitle:@"Me"];
-                        [annotation setSubtitle:[[NSUserDefaults standardUserDefaults] objectForKey:@"address"]];
+                        [annotation setSubtitle:[User address]];
                         [_map addAnnotation:annotation];
                     }];
 }

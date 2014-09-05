@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "JSQFlatButton.h"
 
-@interface GetPriceViewController : UIViewController
+@interface GetPlanViewController : UIViewController
 @property UIPageControl *page;
+@property JSQFlatButton *later;
 @property JSQFlatButton *back;
 @property JSQFlatButton *save;
 @property UIPickerView *dayPicker;

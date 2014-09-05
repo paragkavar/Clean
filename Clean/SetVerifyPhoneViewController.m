@@ -11,6 +11,7 @@
 #import "JSQFlatButton.h"
 #import <Parse/Parse.h>
 #import "VCFlow.h"
+#import "User.h"
 
 @interface SetVerifyPhoneViewController ()
 @property UITextField *codeEntry;
@@ -30,7 +31,8 @@
 
 - (NSString *)testNumber
 {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@"setPhoneNumber"];
+    return [User testPhoneNumber];
+#warning test
 }
 
 - (void)back:(JSQFlatButton *)sender
@@ -40,8 +42,9 @@
 
 - (void)enter:(JSQFlatButton *)sender
 {
-    NSString *newNum = [[NSUserDefaults standardUserDefaults] objectForKey:@"setPhoneNumber"];
-    [[NSUserDefaults standardUserDefaults] setObject:newNum forKey:@"phoneNumber"];
+    NSString *newNum = [User testPhoneNumber];
+#warning test
+    [User setPhoneNumber:newNum];
     [VCFlow updateUserInParse];
     [self.presentingViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }

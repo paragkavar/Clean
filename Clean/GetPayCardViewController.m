@@ -9,22 +9,23 @@
 #define kStripePublishableKey @"pk_test_fO6i0Qb9j3ohWjPyxdTxXrft"
 #define kCardioToken @"87d236fddee4492c930cad66875ff1ab"
 
-#import "GetPaymentCardViewController.h"
+#import "GetPayCardViewController.h"
 #import "PKTextField.h"
 #import "UIColor+FlatUI.h"
 #import "CardIO.h"
 #import <Parse/Parse.h>
-#import "RootViewController.h"
+#import "GetPlanViewController.h"
 #import "VCFlow.h"
+#import "User.h"
 
-@interface GetPaymentCardViewController () <STPViewDelegate, CardIOPaymentViewControllerDelegate>
+@interface GetPayCardViewController () <STPViewDelegate, CardIOPaymentViewControllerDelegate>
 @property STPView *stripeView;
 @property STPCard *stripeCard;
 @property JSQFlatButton *camera;
 @property UIButton *cameraIcon;
 @end
 
-@implementation GetPaymentCardViewController
+@implementation GetPayCardViewController
 
 - (void)viewDidLoad
 {
@@ -76,7 +77,7 @@
                                                             54)
                                  backgroundColor:[UIColor colorWithRed:1.00f green:1.00f blue:1.00f alpha:1.0f]
                                  foregroundColor:[UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f]
-                                           title:@"subscribe"
+                                           title:@"save"
                                            image:nil];
     [_subscribe addTarget:self action:@selector(subscribe:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_subscribe];
@@ -247,7 +248,7 @@
 
 - (void)createCustomer:(STPToken *)token
 {
-    NSString *phoneNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
+    NSString *phoneNumber = [User phoneNumber];
     [PFCloud callFunctionInBackground:@"createCustomer"
                        withParameters:@{@"token":token.tokenId, @"phoneNumber":phoneNumber}
                                 block:^(NSString *customerId, NSError *error)
@@ -258,29 +259,9 @@
         }
         else
         {
-            [[NSUserDefaults standardUserDefaults] setObject:customerId forKey:@"customerId"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-
-            NSString *plan = [[NSUserDefaults standardUserDefaults] objectForKey:@"plan"];
-
-            [PFCloud callFunctionInBackground:@"createSubscription"
-                               withParameters:@{@"customer":customerId,
-                                                @"plan":plan}
-                                        block:^(NSString *subscriptionId, NSError *error)
-             {
-                  if (error)
-                  {
-                      [self handleStripeError:error];
-                  }
-                  else
-                  {
-                      [[NSUserDefaults standardUserDefaults] setObject:subscriptionId forKey:@"subscriptionId"];
-                      [[NSUserDefaults standardUserDefaults] setObject:_last4 forKey:@"last4"];
-                      [[NSUserDefaults standardUserDefaults] synchronize];
-                      [VCFlow addUserToDataBase];
-                      [self presentViewController:[RootViewController new] animated:NO completion:nil];
-                  }
-             }];
+            [User setCustomerId:customerId];
+            [User setLast4:_last4];
+            [self presentViewController:[GetPlanViewController new] animated:NO completion:nil];
         }
     }];
 }

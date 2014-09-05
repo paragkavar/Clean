@@ -13,6 +13,7 @@
 #import "SetAddressViewController.h"
 #import "SetPlanViewController.h"
 #import "SetPayCardViewController.h"
+#import "User.h"
 
 @interface SettingsViewController ()
 @property JSQFlatButton *back;
@@ -44,14 +45,14 @@
 {
     [super viewWillAppear:animated];
     _phoneLabel.text = [self formattedPhoneNumber];
-    _addressLabel.text = [@" " stringByAppendingString:[[NSUserDefaults standardUserDefaults] objectForKey:@"address"]];
+    _addressLabel.text = [@" " stringByAppendingString:[User address]];
     _planLabel.text = [self formattedPlanDescription];
-    _cardLabel.text = [NSString stringWithFormat:@" **** **** %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"last4"]];
+    _cardLabel.text = [NSString stringWithFormat:@" **** **** %@",[User last4]];
 }
 
 - (NSString *)formattedPhoneNumber
 {
-    NSMutableString *mutNumber1 = [[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"] mutableCopy];
+    NSMutableString *mutNumber1 = [[User phoneNumber] mutableCopy];
     NSMutableString *mutNumber2 = [[mutNumber1 substringFromIndex:1] mutableCopy];
     [mutNumber2 insertString:@"(" atIndex:0];
     [mutNumber2 insertString:@")" atIndex:4];
@@ -62,7 +63,7 @@
 
 - (NSString *)formattedPlanDescription
 {
-    int plan = [[NSUserDefaults standardUserDefaults] integerForKey:@"plan"];
+    int plan = [User plan];
     NSString *description;
 
     if (plan == 0)
@@ -77,9 +78,13 @@
     {
         description = @" $450/month";
     }
-    else
+    else if (plan == 3)
     {
         description = @" $600/month";
+    }
+    else
+    {
+        description = @"no plan";
     }
 
     return description;

@@ -9,6 +9,7 @@
 #import "GetPhoneNumberViewController.h"
 #import "UIColor+FlatUI.h"
 #import "VerifyPhoneNumberViewController.h"
+#import "User.h"
 
 @interface GetPhoneNumberViewController () <UITextFieldDelegate>
 @property UITextField *phoneEntry;
@@ -90,8 +91,7 @@
 
 - (void)saveTempPhoneNumber:(NSString *)number
 {
-    [[NSUserDefaults standardUserDefaults] setObject:number forKey:@"phoneNumber"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [User setPhoneNumber:number];
 }
 
 - (void)nextVC

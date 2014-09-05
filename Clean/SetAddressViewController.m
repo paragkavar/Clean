@@ -7,7 +7,7 @@
 //
 
 #import "SetAddressViewController.h"
-#import "GetPriceViewController.h"
+#import "GetPlanViewController.h"
 #import "VCFlow.h"
 #import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"

@@ -13,6 +13,7 @@
 #import "VCFlow.h"
 #import "GetAddressViewController.h"
 #import "RootViewController.h"
+#import "User.h"
 
 @interface VerifyPhoneNumberViewController ()
 @property UITextField *codeEntry;
@@ -107,7 +108,7 @@
 
 - (NSString *)testNumber
 {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
+    return [User phoneNumber];
 }
 
 - (void)resend:(JSQFlatButton *)sender
@@ -119,8 +120,7 @@
 
 - (void)enter:(JSQFlatButton *)sender
 {
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"verifiedPhoneNumber"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [User setVerifiedPhoneNumber:YES];
 
     [VCFlow checkForExistingUserWithCompletionHandler:^(bool exists) {
         if (exists) {

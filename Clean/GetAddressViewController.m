@@ -7,10 +7,11 @@
 //
 
 #import "GetAddressViewController.h"
-#import "GetPriceViewController.h"
+#import "GetPayCardViewController.h"
 #import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
 #import "INTULocationManager.h"
+#import "User.h"
 
 @interface GetAddressViewController () <UIAlertViewDelegate>
 @property UITextField *addressField;
@@ -245,10 +246,9 @@
     {
         CGFloat latitude = _location.coordinate.latitude;
         CGFloat longitude = _location.coordinate.longitude;
-        [[NSUserDefaults standardUserDefaults] setFloat:latitude forKey:@"latitude"];
-        [[NSUserDefaults standardUserDefaults] setFloat:longitude forKey:@"longitude"];
-        [[NSUserDefaults standardUserDefaults] setObject:_addressString forKey:@"address"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [User setLatitude:latitude];
+        [User setLongitude:longitude];
+        [User setAddress:_addressString];
         [self nextVC];
     }
     else
@@ -281,18 +281,17 @@
 {
     if (alertView.tag ==0 && buttonIndex == 0)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:_addressField.text forKey:@"address"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [User setAddress:_addressField.text];
         [self nextVC];
     }
     else if (alertView.tag == 1 && buttonIndex == 0)
     {
         CGFloat latitude = _location.coordinate.latitude;
         CGFloat longitude = _location.coordinate.longitude;
-        [[NSUserDefaults standardUserDefaults] setFloat:latitude forKey:@"latitude"];
-        [[NSUserDefaults standardUserDefaults] setFloat:longitude forKey:@"longitude"];
-        [[NSUserDefaults standardUserDefaults] setObject:_addressField.text forKey:@"address"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [User setLatitude:latitude];
+        [User setLongitude:longitude];
+        [User setAddress:_addressField.text];
+#warning addressString instead, check alert button order and stuff
         [self nextVC];
     }
     else
@@ -306,7 +305,7 @@
 
 - (void)nextVC
 {
-    [self presentViewController:[GetPriceViewController new] animated:NO completion:nil];
+    [self presentViewController:[GetPayCardViewController new] animated:NO completion:nil];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle

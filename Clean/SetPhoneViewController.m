@@ -10,6 +10,7 @@
 #import "SetVerifyPhoneViewController.h"
 #import "UIColor+FlatUI.h"
 #import "JSQFlatButton.h"
+#import "User.h"
 
 @interface SetPhoneViewController () <UITextFieldDelegate>
 @property JSQFlatButton *cancel;
@@ -45,8 +46,7 @@
 
 - (void)saveTempPhoneNumber:(NSString *)number
 {
-    [[NSUserDefaults standardUserDefaults] setObject:number forKey:@"setPhoneNumber"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [User setPhoneNumber:number];
 }
 
 - (void)cancel:(JSQFlatButton *)sender

@@ -11,6 +11,7 @@
 #import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
 #import "INCollectionViewCell.h"
+#import "User.h"
 
 @interface IntroViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property JSQFlatButton *start;
@@ -55,8 +56,7 @@
 
 - (void)start:(JSQFlatButton *)sender
 {
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"started"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [User setStarted:YES];
     [self presentViewController:[GetPhoneNumberViewController new] animated:NO completion:nil];
 }
 

@@ -10,6 +10,7 @@
 #import "UIColor+FlatUI.h"
 #import <Parse/Parse.h>
 #import "VCFlow.h"
+#import "User.h"
 
 @interface SetPayCardViewController ()
 @end
@@ -37,7 +38,7 @@
 
 - (void)updateCustomer:(STPToken *)token
 {
-    NSString *customerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
+    NSString *customerId = [User customerId];
     [PFCloud callFunctionInBackground:@"updateCustomer"
                        withParameters:@{@"customer":customerId, @"token":token.tokenId}
                                 block:^(NSString *customerId, NSError *error)
@@ -48,9 +49,8 @@
          }
          else
          {
-             [[NSUserDefaults standardUserDefaults] setObject:customerId forKey:@"customerId"];
-             [[NSUserDefaults standardUserDefaults] setObject:super.last4 forKey:@"last4"];
-             [[NSUserDefaults standardUserDefaults] synchronize];
+             [User setCustomerId:customerId];
+             [User setLast4:super.last4];
              [VCFlow updateUserInParse];
              [self dismissViewControllerAnimated:YES completion:nil];
          }

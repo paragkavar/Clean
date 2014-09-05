@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GetPriceViewController.h"
+#import "GetPlanViewController.h"
 
-@interface SetPlanViewController : GetPriceViewController
+@interface SetPlanViewController : GetPlanViewController
 
 @end

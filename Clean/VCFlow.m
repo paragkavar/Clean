@@ -11,33 +11,34 @@
 #import "IntroViewController.h"
 #import "GetPhoneNumberViewController.h"
 #import "GetAddressViewController.h"
-#import "GetPriceViewController.h"
-#import "GetPaymentCardViewController.h"
+#import "GetPlanViewController.h"
+#import "GetPayCardViewController.h"
 #import "RootViewController.h"
+#import "User.h"
 
 @implementation VCFlow
 
 + (UIViewController *)nextVC
 {
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"started"])
+    if (![User started])
     {
         return [IntroViewController new];
     }
-    else if (![[NSUserDefaults standardUserDefaults] boolForKey:@"verifiedPhoneNumber"])
+    else if (![User verifiedPhoneNumber])
     {
         return [GetPhoneNumberViewController new];
     }
-    else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"address"])
+    else if (![User address])
     {
         return [GetAddressViewController new];
     }
-    else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"plan"])
+    else if (![User customerId])
     {
-        return [GetPriceViewController new];
+        return [GetPayCardViewController new];
     }
-    else if (![[NSUserDefaults standardUserDefaults] objectForKey:@"subscriptionId"])
+    else if (![User plan])
     {
-        return [GetPaymentCardViewController new];
+        return [GetPlanViewController new];
     }
     else
     {
@@ -48,7 +49,7 @@
 + (void)checkForExistingUserWithCompletionHandler:(void (^)(bool exists))handler
 {
     PFQuery *query = [PFQuery queryWithClassName:@"User"];
-    [query whereKey:@"phoneNumber" equalTo:[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"]];
+    [query whereKey:@"phoneNumber" equalTo:[User phoneNumber]];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (objects.count==0) {
             handler(NO);
@@ -62,19 +63,18 @@
 
 + (void)getParseDataFromUser:(PFObject *)user
 {
-    [[NSUserDefaults standardUserDefaults] setObject:user[@"phoneNumber"] forKey:@"phoneNumber"];
-    [[NSUserDefaults standardUserDefaults] setObject:user[@"address"] forKey:@"address"];
-    [[NSUserDefaults standardUserDefaults] setFloat:[user[@"latitude"] floatValue] forKey:@"latitude"];
-    [[NSUserDefaults standardUserDefaults] setFloat:[user[@"longitude"] floatValue] forKey:@"longitude"];
-    [[NSUserDefaults standardUserDefaults] setObject:user[@"day"] forKey:@"hour"];
-    [[NSUserDefaults standardUserDefaults] setInteger:[user[@"hour"] intValue] forKey:@"visits"];
-    [[NSUserDefaults standardUserDefaults] setInteger:[user[@"minute"] intValue] forKey:@"minute"];
-    [[NSUserDefaults standardUserDefaults] setBool:[user[@"AM"] boolValue] forKey:@"AM"];
-    [[NSUserDefaults standardUserDefaults] setObject:user[@"plan"] forKey:@"plan"];
-    [[NSUserDefaults standardUserDefaults] setObject:user[@"last4"] forKey:@"last4"];
-    [[NSUserDefaults standardUserDefaults] setObject:user[@"customerId"] forKey:@"customerId"];
-    [[NSUserDefaults standardUserDefaults] setObject:user[@"subscriptionId"] forKey:@"subscriptionId"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [User setPhoneNumber:user[@"phoneNumber"]];
+    [User setAddress:user[@"address"]];
+    [User setLatitude:[user[@"latitude"] floatValue]];
+    [User setLongitude:[user[@"longitude"] floatValue]];
+    [User setDay:user[@"day"]];
+    [User setHour:[user[@"hour"] intValue]];
+    [User setMinute:[user[@"minute"] intValue]];
+    [User setAM:[user[@"AM"] boolValue]];
+    [User setPlan:[user[@"plan"] intValue]];
+    [User setLast4:user[@"last4"]];
+    [User setCustomerId:user[@"customerId"]];
+    [User setSubscriptionId:user[@"subscriptionId"]];
 }
 
 + (void)addUserToDataBase
@@ -86,7 +86,7 @@
 + (void)updateUserInParse
 {
     PFQuery *query = [PFQuery queryWithClassName:@"User"];
-    [query whereKey:@"phoneNumber" equalTo:[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"]];
+    [query whereKey:@"phoneNumber" equalTo:[User phoneNumber]];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error || objects.count !=1)
         {
@@ -101,18 +101,18 @@
 
 + (void)saveUserToParse:(PFObject *)user
 {
-    user[@"phoneNumber"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
-    user[@"address"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"address"];
-    user[@"latitude"] = @([[NSUserDefaults standardUserDefaults] floatForKey:@"latitude"]);
-    user[@"longitude"] = @([[NSUserDefaults standardUserDefaults] floatForKey:@"longitude"]);
-    user[@"day"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"day"];
-    user[@"hour"] = @([[NSUserDefaults standardUserDefaults] integerForKey:@"hour"]);
-    user[@"minute"] = @([[NSUserDefaults standardUserDefaults] integerForKey:@"minute"]);
-    user[@"AM"] = @([[NSUserDefaults standardUserDefaults] boolForKey:@"AM"]);
-    user[@"plan"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"plan"];
-    user[@"last4"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"last4"];
-    user[@"customerId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
-    user[@"subscriptionId"] = [[NSUserDefaults standardUserDefaults] objectForKey:@"subscriptionId"];
+    user[@"phoneNumber"] = [User phoneNumber];
+    user[@"address"] = [User address];
+    user[@"latitude"] = @([User latitude]);
+    user[@"longitude"] = @([User longitude]);
+    user[@"day"] = [User day];
+    user[@"hour"] = @([User hour]);
+    user[@"minute"] = @([User minute]);
+    user[@"AM"] = @([User AM]);
+    user[@"plan"] = @([User plan]);
+    user[@"last4"] = [User last4];
+    user[@"customerId"] = [User customerId];
+    user[@"subscriptionId"] = [User subscriptionId];
     [user saveInBackground];
 }
 
