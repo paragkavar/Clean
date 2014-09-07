@@ -10,5 +10,4 @@
 #import "GetPhoneNumberViewController.h"
 
 @interface SetPhoneViewController : GetPhoneNumberViewController
-- (void)saveTempPhoneNumber:(NSString *)number;
 @end

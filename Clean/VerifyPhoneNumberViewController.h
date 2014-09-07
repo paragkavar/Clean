@@ -10,5 +10,4 @@
 
 @interface VerifyPhoneNumberViewController : UIViewController
 @property UIPageControl *page;
-- (NSString *)testNumber;
 @end

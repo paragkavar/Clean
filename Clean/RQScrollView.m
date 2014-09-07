@@ -19,8 +19,6 @@
 @property UICollectionView *collectionView;
 @property UIDatePicker *pickerView;
 @property CKCalendarView *calendar;
-@property int plan;
-@property NSDate *date;
 @property JSQFlatButton *schedule;
 @end
 
@@ -107,7 +105,7 @@
 {
     PRCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
 
-    cell.contentView.layer.borderColor = indexPath.item != _plan-1 ? [UIColor clearColor].CGColor : [UIColor whiteColor].CGColor;
+    cell.contentView.layer.borderColor = indexPath.item != _size-1 ? [UIColor clearColor].CGColor : [UIColor whiteColor].CGColor;
 
     if (indexPath.item == 0)
     {
@@ -155,8 +153,8 @@
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
     cell.contentView.layer.borderWidth = 1;
     cell.contentView.layer.borderColor = [UIColor whiteColor].CGColor;
-    _plan = indexPath.item+1;
-
+    _size = indexPath.item+1;
+    _cost = (indexPath.item+1)*75;
     [self enableScheduleButton];
 }
 
@@ -173,7 +171,7 @@
 
 - (void)enableScheduleButton
 {
-    if (_plan && _date) {
+    if (_size && _date) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"schedule" object:@YES];
     } else {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"schedule" object:@NO];

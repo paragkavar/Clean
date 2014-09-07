@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface RQScrollView : UIScrollView
-
+@property int size;
+@property NSDate *date;
+@property double cost;
 @end

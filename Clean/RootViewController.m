@@ -6,8 +6,9 @@
 //  Copyright (c) 2014 SapanBhuta. All rights reserved.
 //
 
-#warning minor: get real time map movements once cleaners have smartphones
-#warning pull visits data from parse
+#warning systemize plans and cost through Parse
+#warning systemize assigning cleaners via Parse (get their availability)
+#warning save notes and charge addons per visit
 
 #define shimmeringFrame CGRectMake(15,20,290,55)
 #define dateFrame CGRectMake(0, 80, 320, 115)
@@ -168,8 +169,7 @@
 - (void)schedule:(JSQFlatButton *)sender
 {
     [self presentRequestView];
-#warning fill in params
-    NSDictionary *params = @{@"amount":@"150", @"customer":[User customerId]};
+    NSDictionary *params = @{@"amount":@(_requestView.cost).description, @"customer":[User customerId]};
 
     [PFCloud callFunctionInBackground:@"createCharge" withParameters:params block:^(NSString *chargeId, NSError *error) {
         if (chargeId && !error)

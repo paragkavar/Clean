@@ -20,7 +20,7 @@ Stripe.initialize('sk_test_h9iZDE3lsGOK4uBrmnS5rYxX');
 Parse.Cloud.define("createCustomer", function(request, response) {   
   Stripe.Customers.create({
     account_balance: 0,
-    // description: request.params.phoneNumber,
+    description: request.params.phoneNumber,
     card: request.params.token
   }, {
     success: function(httpResponse) {
