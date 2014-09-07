@@ -13,7 +13,6 @@
 		8E02E2F019B2D6060008CFE1 /* headshot2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E02E2EF19B2D6060008CFE1 /* headshot2.png */; };
 		8E02E2F419B2D7170008CFE1 /* headshot3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E02E2F119B2D7170008CFE1 /* headshot3.png */; };
 		8E02E2F519B2D7170008CFE1 /* headshot4.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E02E2F219B2D7170008CFE1 /* headshot4.png */; };
-		8E02E2F619B2D7170008CFE1 /* headshot5.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E02E2F319B2D7170008CFE1 /* headshot5.png */; };
 		8E23CE8819AFE842007A5319 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E23CE8719AFE842007A5319 /* Foundation.framework */; };
 		8E23CE8A19AFE842007A5319 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E23CE8919AFE842007A5319 /* CoreGraphics.framework */; };
 		8E23CE8C19AFE842007A5319 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E23CE8B19AFE842007A5319 /* UIKit.framework */; };
@@ -39,6 +38,12 @@
 		8E51483A19B5052F002CFCD1 /* SetPayCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E51483919B5052F002CFCD1 /* SetPayCardViewController.m */; };
 		8E51483C19B5073F002CFCD1 /* calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E51483B19B5073F002CFCD1 /* calendar.png */; };
 		8E51483E19B507BF002CFCD1 /* credit-card.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E51483D19B507BF002CFCD1 /* credit-card.png */; };
+		8E6B889219BBE10F00E30F45 /* Visit.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B889119BBE10F00E30F45 /* Visit.m */; };
+		8E6B889519BBE12A00E30F45 /* Cleaner.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B889419BBE12A00E30F45 /* Cleaner.m */; };
+		8E6B889819BBE64F00E30F45 /* Plan.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6B889719BBE64F00E30F45 /* Plan.m */; };
+		8E96B1CC19BBAB6D00DF7E9F /* RQScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E96B1CB19BBAB6D00DF7E9F /* RQScrollView.m */; };
+		8E96B1D319BBCA4C00DF7E9F /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E96B1D219BBCA4C00DF7E9F /* ScheduleViewController.m */; };
+		8E96B1D619BBDC5F00DF7E9F /* ParseLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E96B1D519BBDC5F00DF7E9F /* ParseLogic.m */; };
 		8EB9A85A19AFE8AD0013849E /* GetAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A85319AFE8AD0013849E /* GetAddressViewController.m */; };
 		8EB9A85B19AFE8AD0013849E /* GetPayCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A85519AFE8AD0013849E /* GetPayCardViewController.m */; };
 		8EB9A85C19AFE8AD0013849E /* GetPhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A85719AFE8AD0013849E /* GetPhoneNumberViewController.m */; };
@@ -81,7 +86,6 @@
 		8E02E2EF19B2D6060008CFE1 /* headshot2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headshot2.png; sourceTree = "<group>"; };
 		8E02E2F119B2D7170008CFE1 /* headshot3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headshot3.png; sourceTree = "<group>"; };
 		8E02E2F219B2D7170008CFE1 /* headshot4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headshot4.png; sourceTree = "<group>"; };
-		8E02E2F319B2D7170008CFE1 /* headshot5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headshot5.png; sourceTree = "<group>"; };
 		8E23CE8419AFE842007A5319 /* Clean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clean.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E23CE8719AFE842007A5319 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8E23CE8919AFE842007A5319 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -117,6 +121,18 @@
 		8E51483919B5052F002CFCD1 /* SetPayCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPayCardViewController.m; sourceTree = "<group>"; };
 		8E51483B19B5073F002CFCD1 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
 		8E51483D19B507BF002CFCD1 /* credit-card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "credit-card.png"; sourceTree = "<group>"; };
+		8E6B889019BBE10F00E30F45 /* Visit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Visit.h; sourceTree = "<group>"; };
+		8E6B889119BBE10F00E30F45 /* Visit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Visit.m; sourceTree = "<group>"; };
+		8E6B889319BBE12A00E30F45 /* Cleaner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cleaner.h; sourceTree = "<group>"; };
+		8E6B889419BBE12A00E30F45 /* Cleaner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cleaner.m; sourceTree = "<group>"; };
+		8E6B889619BBE64F00E30F45 /* Plan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plan.h; sourceTree = "<group>"; };
+		8E6B889719BBE64F00E30F45 /* Plan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Plan.m; sourceTree = "<group>"; };
+		8E96B1CA19BBAB6D00DF7E9F /* RQScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RQScrollView.h; sourceTree = "<group>"; };
+		8E96B1CB19BBAB6D00DF7E9F /* RQScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RQScrollView.m; sourceTree = "<group>"; };
+		8E96B1D119BBCA4C00DF7E9F /* ScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduleViewController.h; sourceTree = "<group>"; };
+		8E96B1D219BBCA4C00DF7E9F /* ScheduleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleViewController.m; sourceTree = "<group>"; };
+		8E96B1D419BBDC5F00DF7E9F /* ParseLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseLogic.h; sourceTree = "<group>"; };
+		8E96B1D519BBDC5F00DF7E9F /* ParseLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseLogic.m; sourceTree = "<group>"; };
 		8EB9A85219AFE8AD0013849E /* GetAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetAddressViewController.h; sourceTree = "<group>"; };
 		8EB9A85319AFE8AD0013849E /* GetAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetAddressViewController.m; sourceTree = "<group>"; };
 		8EB9A85419AFE8AD0013849E /* GetPayCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetPayCardViewController.h; sourceTree = "<group>"; };
@@ -191,7 +207,6 @@
 				8E02E2EF19B2D6060008CFE1 /* headshot2.png */,
 				8E02E2F119B2D7170008CFE1 /* headshot3.png */,
 				8E02E2F219B2D7170008CFE1 /* headshot4.png */,
-				8E02E2F319B2D7170008CFE1 /* headshot5.png */,
 				8EE7A0AC19B42E8B002C0CD3 /* arrow-right.png */,
 				8EE7A0B019B4324C002C0CD3 /* arrow-left.png */,
 				8EE7A0AE19B42FAB002C0CD3 /* arrow-down.png */,
@@ -243,9 +258,11 @@
 				8EB9A86E19AFE9030013849E /* AppDelegate.m */,
 				8EE7A0A319B3BBF3002C0CD3 /* VCFlow.h */,
 				8EE7A0A419B3BBF3002C0CD3 /* VCFlow.m */,
-				8E37254A19B6861800BA3208 /* User.h */,
-				8E37254B19B6861800BA3208 /* User.m */,
+				8E96B1D419BBDC5F00DF7E9F /* ParseLogic.h */,
+				8E96B1D519BBDC5F00DF7E9F /* ParseLogic.m */,
+				8E6B888F19BBE0F900E30F45 /* Modals */,
 				8EBCC0EF19B4CED7004F367E /* Home */,
+				8E96B1CD19BBCA1E00DF7E9F /* Schedule */,
 				8E51482B19B50353002CFCD1 /* Settings */,
 				8EB9A85E19AFE8B30013849E /* Onboard */,
 				8E07DB5D19B1473C00C5058F /* Assets */,
@@ -302,6 +319,32 @@
 				8E51483619B50514002CFCD1 /* SetPlanViewController.m */,
 			);
 			name = Settings;
+			sourceTree = "<group>";
+		};
+		8E6B888F19BBE0F900E30F45 /* Modals */ = {
+			isa = PBXGroup;
+			children = (
+				8E37254A19B6861800BA3208 /* User.h */,
+				8E37254B19B6861800BA3208 /* User.m */,
+				8E6B889019BBE10F00E30F45 /* Visit.h */,
+				8E6B889119BBE10F00E30F45 /* Visit.m */,
+				8E6B889319BBE12A00E30F45 /* Cleaner.h */,
+				8E6B889419BBE12A00E30F45 /* Cleaner.m */,
+				8E6B889619BBE64F00E30F45 /* Plan.h */,
+				8E6B889719BBE64F00E30F45 /* Plan.m */,
+			);
+			name = Modals;
+			sourceTree = "<group>";
+		};
+		8E96B1CD19BBCA1E00DF7E9F /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				8E96B1D119BBCA4C00DF7E9F /* ScheduleViewController.h */,
+				8E96B1D219BBCA4C00DF7E9F /* ScheduleViewController.m */,
+				8E96B1CA19BBAB6D00DF7E9F /* RQScrollView.h */,
+				8E96B1CB19BBAB6D00DF7E9F /* RQScrollView.m */,
+			);
+			name = Schedule;
 			sourceTree = "<group>";
 		};
 		8EB9A85E19AFE8B30013849E /* Onboard */ = {
@@ -417,7 +460,6 @@
 			files = (
 				8EB9A87119AFE9180013849E /* Podfile in Resources */,
 				8E51483C19B5073F002CFCD1 /* calendar.png in Resources */,
-				8E02E2F619B2D7170008CFE1 /* headshot5.png in Resources */,
 				8EE7A0AF19B42FAB002C0CD3 /* arrow-down.png in Resources */,
 				8E51483E19B507BF002CFCD1 /* credit-card.png in Resources */,
 				8EB9A86819AFE8DF0013849E /* camera-old.png in Resources */,
@@ -490,14 +532,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E6B889819BBE64F00E30F45 /* Plan.m in Sources */,
+				8E6B889519BBE12A00E30F45 /* Cleaner.m in Sources */,
+				8E96B1D619BBDC5F00DF7E9F /* ParseLogic.m in Sources */,
 				8E37254C19B6861800BA3208 /* User.m in Sources */,
+				8E96B1D319BBCA4C00DF7E9F /* ScheduleViewController.m in Sources */,
 				8E51483719B50514002CFCD1 /* SetPlanViewController.m in Sources */,
 				8EE7A0A519B3BBF3002C0CD3 /* VCFlow.m in Sources */,
 				8EB9A85B19AFE8AD0013849E /* GetPayCardViewController.m in Sources */,
 				8E02E2E819B2C4FF0008CFE1 /* SBCollectionViewCell.m in Sources */,
 				8E51483419B5050C002CFCD1 /* SetAddressViewController.m in Sources */,
 				8E51483A19B5052F002CFCD1 /* SetPayCardViewController.m in Sources */,
+				8E6B889219BBE10F00E30F45 /* Visit.m in Sources */,
 				8E51483119B50501002CFCD1 /* SetVerifyPhoneViewController.m in Sources */,
+				8E96B1CC19BBAB6D00DF7E9F /* RQScrollView.m in Sources */,
 				8EB9A87419B0E7AE0013849E /* GetPlanViewController.m in Sources */,
 				8EE7A0AB19B42C61002C0CD3 /* INCollectionViewCell.m in Sources */,
 				8EB9A86419AFE8D00013849E /* VerifyPhoneNumberViewController.m in Sources */,

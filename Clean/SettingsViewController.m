@@ -84,7 +84,7 @@
     }
     else
     {
-        description = @"no plan";
+        description = @" no plan";
     }
 
     return description;

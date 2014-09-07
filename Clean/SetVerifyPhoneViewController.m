@@ -12,6 +12,7 @@
 #import <Parse/Parse.h>
 #import "VCFlow.h"
 #import "User.h"
+#import "ParseLogic.h"
 
 @interface SetVerifyPhoneViewController ()
 @property UITextField *codeEntry;
@@ -29,12 +30,6 @@
     super.page.numberOfPages = 2;
 }
 
-- (NSString *)testNumber
-{
-    return [User testPhoneNumber];
-#warning test
-}
-
 - (void)back:(JSQFlatButton *)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -42,10 +37,9 @@
 
 - (void)enter:(JSQFlatButton *)sender
 {
-    NSString *newNum = [User testPhoneNumber];
-#warning test
+    NSString *newNum = [User phoneNumber];
     [User setPhoneNumber:newNum];
-    [VCFlow updateUserInParse];
+    [ParseLogic updateUserInParse];
     [self.presentingViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 #warning update customer description phone number in Stripe

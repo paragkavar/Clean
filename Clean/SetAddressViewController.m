@@ -12,6 +12,7 @@
 #import "JSQFlatButton.h"
 #import "UIColor+FlatUI.h"
 #import "INTULocationManager.h"
+#import "ParseLogic.h"
 
 @interface SetAddressViewController () <UIAlertViewDelegate>
 @end
@@ -33,7 +34,7 @@
 
 - (void)nextVC
 {
-    [VCFlow updateUserInParse];
+    [ParseLogic updateUserInParse];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

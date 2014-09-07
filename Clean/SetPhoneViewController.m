@@ -44,11 +44,6 @@
                                     54);
 }
 
-- (void)saveTempPhoneNumber:(NSString *)number
-{
-    [User setPhoneNumber:number];
-}
-
 - (void)cancel:(JSQFlatButton *)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];

@@ -114,7 +114,7 @@
     _addressField.textColor = [UIColor whiteColor];
     _addressField.adjustsFontSizeToFitWidth = YES;
     _addressField.keyboardAppearance = UIKeyboardAppearanceDark;
-    _addressField.keyboardType = UIKeyboardTypePhonePad;
+    _addressField.keyboardType = UIKeyboardTypeDefault;
     _addressField.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_addressField];
     [_addressField becomeFirstResponder];
@@ -161,7 +161,7 @@
     else
     {
         _gettingLocation = YES;
-        _locationButton.enabled = NO;
+//        _locationButton.enabled = NO;
         [_activity startAnimating];
 
         INTULocationManager *locMgr = [INTULocationManager sharedInstance];

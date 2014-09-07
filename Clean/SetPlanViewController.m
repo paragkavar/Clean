@@ -12,6 +12,8 @@
 #import "UIColor+FlatUI.h"
 #import "VCFlow.h"
 #import <Parse/Parse.h>
+#import "User.h"
+#import "ParseLogic.h"
 
 @interface SetPlanViewController ()
 
@@ -28,18 +30,21 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    super.selectedIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"plan"];
-    NSIndexPath *path = [NSIndexPath indexPathForItem:super.selectedIndex inSection:0];
-    [super.collectionView selectItemAtIndexPath:path animated:YES scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
-    UICollectionViewCell *cell = [super.collectionView cellForItemAtIndexPath:path];
-    cell.contentView.layer.borderWidth = 1;
-    cell.contentView.layer.borderColor = [UIColor whiteColor].CGColor;
+    if ([User plan] >= 0)
+    {
+        super.selectedIndex = [User plan];
+        NSIndexPath *path = [NSIndexPath indexPathForItem:super.selectedIndex inSection:0];
+        [super.collectionView selectItemAtIndexPath:path animated:YES scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
+        UICollectionViewCell *cell = [super.collectionView cellForItemAtIndexPath:path];
+        cell.contentView.layer.borderWidth = 1;
+        cell.contentView.layer.borderColor = [UIColor whiteColor].CGColor;
+    }
 
-    int dayIndex = [super.days indexOfObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"day"]];
+    int dayIndex = [super.days indexOfObject:[User day]];
     [super.dayPicker selectRow:dayIndex inComponent:0 animated:YES];
-    [super.timePicker selectRow:[[NSUserDefaults standardUserDefaults] integerForKey:@"hour"]-1 inComponent:0 animated:YES];
-    [super.timePicker selectRow:[[NSUserDefaults standardUserDefaults] integerForKey:@"minute"] inComponent:1 animated:YES];
-    [super.timePicker selectRow:[[NSUserDefaults standardUserDefaults] boolForKey:@"AM"] ? 0 : 1 inComponent:2 animated:YES];
+    [super.timePicker selectRow:[User hour]-1 inComponent:0 animated:YES];
+    [super.timePicker selectRow:[User minute] inComponent:1 animated:YES];
+    [super.timePicker selectRow:[User AM] ? 0 : 1 inComponent:2 animated:YES];
 }
 
 - (void)createButtons
@@ -53,18 +58,18 @@
     if ([super dateChanged] && ![super planChanged])
     {
         [self updateTimes];
-        [VCFlow updateUserInParse];
+        [ParseLogic updateUserInParse];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
     else if ([super dateChanged] && [super planChanged])
     {
         [self updateTimes];
-        [VCFlow updateUserInParse];
-        [self updateSubscripton];
+        [ParseLogic updateUserInParse];
+        ![User subscriptionId] ? [self createSubscription] : [self updateSubscripton];
     }
     else if (![super dateChanged] && [super planChanged])
     {
-        [self updateSubscripton];
+        ![User subscriptionId] ? [self createSubscription] : [self updateSubscripton];
     }
     else
     {
@@ -72,15 +77,36 @@
     }
 }
 
+- (void)createSubscription
+{
+    super.back.enabled = NO;
+    super.save.enabled = NO;
+    [PFCloud callFunctionInBackground:@"createSubscription"
+                       withParameters:@{@"customer":[User customerId], @"plan":@(super.selectedIndex).description}
+                                block:^(NSString *subscriptionId, NSError *error)
+     {
+         if (error)
+         {
+             super.back.enabled = YES;
+             super.save.enabled = YES;
+             [[[UIAlertView alloc] initWithTitle:@"Error trying to subscribe" message:@"Please try again with a good network connection and a working card" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+         }
+         else
+         {
+             [User setSubscriptionId:subscriptionId];
+             [super saveValues];
+             [ParseLogic updateUserInParse];
+             [self dismissViewControllerAnimated:YES completion:nil];
+         }
+     }];
+}
+
 - (void)updateSubscripton
 {
     super.back.enabled = NO;
     super.save.enabled = NO;
-    NSString *customerId = [[NSUserDefaults standardUserDefaults] objectForKey:@"customerId"];
-    NSString *subscriptionId = [[NSUserDefaults standardUserDefaults] objectForKey:@"subscriptionId"];
-    NSString *plan = [[NSUserDefaults standardUserDefaults] objectForKey:@"plan"];
     [PFCloud callFunctionInBackground:@"updateSubscription"
-                       withParameters:@{@"customer":customerId, @"subscription":subscriptionId, @"plan":plan}
+                       withParameters:@{@"customer":[User customerId], @"subscription":[User subscriptionId], @"plan":@(super.selectedIndex).description}
                                 block:^(NSString *subscriptionId, NSError *error)
      {
          if (error)
@@ -91,8 +117,9 @@
          }
          else
          {
-             [[NSUserDefaults standardUserDefaults] setObject:@(super.selectedIndex).description forKey:@"plan"];
-             [VCFlow updateUserInParse];
+             [User setPlan:super.selectedIndex];
+             [super saveValues];
+             [ParseLogic updateUserInParse];
              [self dismissViewControllerAnimated:YES completion:nil];
          }
      }];
@@ -100,11 +127,10 @@
 
 - (void)updateTimes
 {
-    [[NSUserDefaults standardUserDefaults] setObject:super.days[[super.dayPicker selectedRowInComponent:0]] forKey:@"day"];
-    [[NSUserDefaults standardUserDefaults] setInteger:[super.timePicker selectedRowInComponent:0]+1 forKey:@"hour"];
-    [[NSUserDefaults standardUserDefaults] setInteger:[super.timePicker selectedRowInComponent:1] forKey:@"minute"];
-    [[NSUserDefaults standardUserDefaults] setBool:[super.timePicker selectedRowInComponent:2] == 0 forKey:@"AM"];;
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [User setDay:super.days[[super.dayPicker selectedRowInComponent:0]]];
+    [User setHour:[super.timePicker selectedRowInComponent:0]+1];
+    [User setMinute:[super.timePicker selectedRowInComponent:1]];
+    [User setAM:[super.timePicker selectedRowInComponent:2] == 0];
 }
 
 @end

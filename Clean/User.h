@@ -11,12 +11,10 @@
 @interface User : NSObject
 + (BOOL)started;
 + (void)setStarted:(BOOL)newStarted;
-+ (BOOL)verifiedPhoneNumber;
-+ (void)setVerifiedPhoneNumber:(BOOL)newVerifiedPhoneNumber;
++ (NSString *)verifiedPhoneNumber;
++ (void)setVerifiedPhoneNumber:(NSString *)newVerifiedPhoneNumber;
 + (NSString *)phoneNumber;
 + (void)setPhoneNumber:(NSString *)newPhoneNumber;
-+ (NSString *)testPhoneNumber;
-+ (void)setTestPhoneNumber:(NSString *)newTestPhoneNumber;
 + (NSString *)address;
 + (void)setAddress:(NSString *)newAddress;
 + (CGFloat)latitude;

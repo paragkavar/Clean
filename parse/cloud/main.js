@@ -20,7 +20,7 @@ Stripe.initialize('sk_test_h9iZDE3lsGOK4uBrmnS5rYxX');
 Parse.Cloud.define("createCustomer", function(request, response) {   
   Stripe.Customers.create({
     account_balance: 0,
-    description: request.params.phoneNumber,
+    // description: request.params.phoneNumber,
     card: request.params.token
   }, {
     success: function(httpResponse) {
@@ -61,6 +61,21 @@ Parse.Cloud.define("updateCustomer", function(request, response) {
 Parse.Cloud.define("updateSubscription", function(request, response) {
   Stripe.Subscriptions.update(request.params.customer, request.params.subscription, {
     plan: request.params.plan
+  }, {
+    success: function(httpResponse) {
+      response.success(httpResponse.id);
+    },
+    error: function(httpResponse) {
+      response.error(httpResponse.message);
+    }
+  });
+});
+
+Parse.Cloud.define("createCharge", function(request, response) {
+  Stripe.Charges.create({
+    amount: request.params.amount,
+    currency: "usd",
+    customer: request.params.customer
   }, {
     success: function(httpResponse) {
       response.success(httpResponse.id);

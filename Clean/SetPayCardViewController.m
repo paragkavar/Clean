@@ -11,6 +11,7 @@
 #import <Parse/Parse.h>
 #import "VCFlow.h"
 #import "User.h"
+#import "ParseLogic.h"
 
 @interface SetPayCardViewController ()
 @end
@@ -51,7 +52,7 @@
          {
              [User setCustomerId:customerId];
              [User setLast4:super.last4];
-             [VCFlow updateUserInParse];
+             [ParseLogic updateUserInParse];
              [self dismissViewControllerAnimated:YES completion:nil];
          }
      }];

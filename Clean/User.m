@@ -34,14 +34,14 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+ (BOOL)verifiedPhoneNumber
++ (NSString *)verifiedPhoneNumber
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:@"verifiedPhoneNumber"];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"verifiedPhoneNumber"];
 }
 
-+ (void)setVerifiedPhoneNumber:(BOOL)newVerifiedPhoneNumber
++ (void)setVerifiedPhoneNumber:(NSString *)newVerifiedPhoneNumber
 {
-    [[NSUserDefaults standardUserDefaults] setBool:newVerifiedPhoneNumber forKey:@"verifiedPhoneNumber"];
+    [[NSUserDefaults standardUserDefaults] setObject:newVerifiedPhoneNumber forKey:@"verifiedPhoneNumber"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -53,17 +53,6 @@
 + (void)setPhoneNumber:(NSString *)newPhoneNumber
 {
     [[NSUserDefaults standardUserDefaults] setObject:newPhoneNumber forKey:@"phoneNumber"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-+ (NSString *)testPhoneNumber
-{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@"testPhoneNumber"];
-}
-
-+ (void)setTestPhoneNumber:(NSString *)newTestPhoneNumber
-{
-    [[NSUserDefaults standardUserDefaults] setObject:newTestPhoneNumber forKey:@"testPhoneNumber"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

@@ -14,6 +14,7 @@
 #import "GetAddressViewController.h"
 #import "RootViewController.h"
 #import "User.h"
+#import "ParseLogic.h"
 
 @interface VerifyPhoneNumberViewController ()
 @property UITextField *codeEntry;
@@ -103,26 +104,21 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self sendSMSToNumber:[self testNumber]];
-}
-
-- (NSString *)testNumber
-{
-    return [User phoneNumber];
+    [self sendSMSToNumber:[User phoneNumber]];
 }
 
 - (void)resend:(JSQFlatButton *)sender
 {
     [self dismissViewControllerAnimated:NO completion:nil];
 //    _codeEntry.text = @"";
-    [self sendSMSToNumber:[self testNumber]];
+    [self sendSMSToNumber:[User phoneNumber]];
 }
 
 - (void)enter:(JSQFlatButton *)sender
 {
-    [User setVerifiedPhoneNumber:YES];
+    [User setVerifiedPhoneNumber:[User phoneNumber]];
 
-    [VCFlow checkForExistingUserWithCompletionHandler:^(bool exists) {
+    [ParseLogic checkForExistingUserWithCompletionHandler:^(bool exists) {
         if (exists) {
             [self presentViewController:[VCFlow nextVC] animated:NO completion:nil];
         } else {
@@ -158,6 +154,7 @@
 
 - (void)sendSMSToNumber:(NSString *)phoneNumber
 {
+    NSLog(@"PHONE NUMBER: %@",phoneNumber);
     _randomNum = 1000 + arc4random_uniform(8999);
     NSLog(@"Clean Code: %@",@(_randomNum).description);
     NSString *message = [NSString stringWithFormat:@"Clean Code: %@",@(_randomNum).description];

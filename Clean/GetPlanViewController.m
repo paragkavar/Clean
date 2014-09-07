@@ -13,6 +13,7 @@
 #import "PRCollectionViewCell.h"
 #import "VCFlow.h"
 #import "User.h"
+#import "ParseLogic.h"
 
 @interface GetPlanViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 @end
@@ -47,7 +48,7 @@
 - (void)createTitle
 {
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, self.view.frame.size.width-2*10, 50)];
-    title.text = @"Price & Time";
+    title.text = @"Set up repeat visits?";
     title.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:50];
     title.textColor = [UIColor whiteColor];
     title.adjustsFontSizeToFitWidth = YES;
@@ -86,7 +87,7 @@
 - (void)later:(JSQFlatButton *)sender
 {
     [self saveValues];
-    [VCFlow addUserToDataBase];
+    [ParseLogic addUserToDataBase];
     [self nextVC];
 }
 
@@ -192,6 +193,7 @@
 
 - (void)save:(JSQFlatButton *)sender
 {
+    _save.enabled = NO;
     [self createSubscription];
 }
 
@@ -338,8 +340,7 @@
 
 - (BOOL)firstTime
 {
-#warning no good
-    return ![[NSUserDefaults standardUserDefaults] integerForKey:@"plan"] ? YES : NO;
+    return ![User plan] ? YES : NO;
 }
 
 - (BOOL)dateChanged
@@ -365,13 +366,15 @@
      {
          if (error)
          {
+             _save.enabled = YES;
              [self displayErrorAlert];
          }
          else
          {
              [User setSubscriptionId:subscriptionId];
              [self saveValues];
-             [VCFlow addUserToDataBase];
+             [ParseLogic addUserToDataBase];
+             [ParseLogic createVisits];
              [self nextVC];
          }
      }];
