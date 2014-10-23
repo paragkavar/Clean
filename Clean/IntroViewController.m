@@ -9,9 +9,9 @@
 #import "IntroViewController.h"
 #import "GetPhoneNumberViewController.h"
 #import "JSQFlatButton.h"
-#import "UIColor+FlatUI.h"
 #import "INCollectionViewCell.h"
 #import "User.h"
+#import "Constants.h"
 
 @interface IntroViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property JSQFlatButton *start;
@@ -24,7 +24,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor midnightBlueColor];
+    self.view.backgroundColor = [Constants backgroundColor];
     [self createPage];
     [self createButton];
     [self createCollectionView];

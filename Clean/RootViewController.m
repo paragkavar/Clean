@@ -17,7 +17,6 @@
 #import "RootViewController.h"
 #import <Parse/Parse.h>
 #import "JSQFlatButton.h"
-#import "UIColor+FlatUI.h"
 #import "FBShimmeringView.h"
 #import "SBCollectionViewCell.h"
 #import "SettingsViewController.h"
@@ -27,6 +26,7 @@
 #import "ParseLogic.h"
 #import "Visit.h"
 #import "Cleaner.h"
+#import "Constants.h"
 
 @interface RootViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 @property UICollectionView *collectionView;
@@ -54,7 +54,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor midnightBlueColor];
+    self.view.backgroundColor = [Constants backgroundColor];
     [self createPage];
     [self createTitle];
     [self createSettings];
@@ -129,7 +129,7 @@
 
     _requestView = [[RQScrollView alloc] initWithFrame:CGRectMake(10, 80, self.view.frame.size.width-20, self.view.frame.size.width-20)];
     _requestView.center = self.view.center;
-    _requestView.backgroundColor = [UIColor wetAsphaltColor];
+    _requestView.backgroundColor = [UIColor blackColor];
     _requestView.transform = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
     [self.view addSubview:_requestView];
 }

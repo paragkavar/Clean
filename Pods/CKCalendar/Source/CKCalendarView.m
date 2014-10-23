@@ -19,7 +19,6 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <QuartzCore/QuartzCore.h>
 #import "CKCalendarView.h"
-#import "UIColor+FlatUI.h"
 
 #define BUTTON_MARGIN 4
 #define CALENDAR_MARGIN 5
@@ -418,7 +417,7 @@
 }
 
 - (void)_setDefaultStyle {
-    self.backgroundColor = [UIColor midnightBlueColor];
+    self.backgroundColor = [UIColor blackColor];
 
     [self setTitleColor:[UIColor whiteColor]];
     [self setTitleFont:[UIFont boldSystemFontOfSize:17.0]];

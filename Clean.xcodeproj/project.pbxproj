@@ -44,6 +44,7 @@
 		8E96B1CC19BBAB6D00DF7E9F /* RQScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E96B1CB19BBAB6D00DF7E9F /* RQScrollView.m */; };
 		8E96B1D319BBCA4C00DF7E9F /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E96B1D219BBCA4C00DF7E9F /* ScheduleViewController.m */; };
 		8E96B1D619BBDC5F00DF7E9F /* ParseLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E96B1D519BBDC5F00DF7E9F /* ParseLogic.m */; };
+		8EA2B4F219F87F2100714FE1 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA2B4F119F87F2100714FE1 /* Constants.m */; };
 		8EB9A85A19AFE8AD0013849E /* GetAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A85319AFE8AD0013849E /* GetAddressViewController.m */; };
 		8EB9A85B19AFE8AD0013849E /* GetPayCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A85519AFE8AD0013849E /* GetPayCardViewController.m */; };
 		8EB9A85C19AFE8AD0013849E /* GetPhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB9A85719AFE8AD0013849E /* GetPhoneNumberViewController.m */; };
@@ -133,6 +134,8 @@
 		8E96B1D219BBCA4C00DF7E9F /* ScheduleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleViewController.m; sourceTree = "<group>"; };
 		8E96B1D419BBDC5F00DF7E9F /* ParseLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseLogic.h; sourceTree = "<group>"; };
 		8E96B1D519BBDC5F00DF7E9F /* ParseLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseLogic.m; sourceTree = "<group>"; };
+		8EA2B4F019F87F2100714FE1 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		8EA2B4F119F87F2100714FE1 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		8EB9A85219AFE8AD0013849E /* GetAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetAddressViewController.h; sourceTree = "<group>"; };
 		8EB9A85319AFE8AD0013849E /* GetAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetAddressViewController.m; sourceTree = "<group>"; };
 		8EB9A85419AFE8AD0013849E /* GetPayCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetPayCardViewController.h; sourceTree = "<group>"; };
@@ -260,6 +263,8 @@
 				8EE7A0A419B3BBF3002C0CD3 /* VCFlow.m */,
 				8E96B1D419BBDC5F00DF7E9F /* ParseLogic.h */,
 				8E96B1D519BBDC5F00DF7E9F /* ParseLogic.m */,
+				8EA2B4F019F87F2100714FE1 /* Constants.h */,
+				8EA2B4F119F87F2100714FE1 /* Constants.m */,
 				8E6B888F19BBE0F900E30F45 /* Modals */,
 				8EBCC0EF19B4CED7004F367E /* Home */,
 				8E96B1CD19BBCA1E00DF7E9F /* Schedule */,
@@ -558,6 +563,7 @@
 				8EB9A86C19AFE8F50013849E /* main.m in Sources */,
 				8EB9A85C19AFE8AD0013849E /* GetPhoneNumberViewController.m in Sources */,
 				8E51482419B4F908002CFCD1 /* SettingsViewController.m in Sources */,
+				8EA2B4F219F87F2100714FE1 /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

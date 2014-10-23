@@ -7,7 +7,6 @@
 //
 
 #import "SetVerifyPhoneViewController.h"
-#import "UIColor+FlatUI.h"
 #import "JSQFlatButton.h"
 #import <Parse/Parse.h>
 #import "VCFlow.h"

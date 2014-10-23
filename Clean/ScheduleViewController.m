@@ -7,9 +7,9 @@
 //
 
 #import "ScheduleViewController.h"
-#import "UIColor+FlatUI.h"
 #import "RQScrollView.h"
 #import "JSQFlatButton.h"
+#import "Constants.h"
 
 @interface ScheduleViewController ()
 @property JSQFlatButton *cancel;
@@ -21,7 +21,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor midnightBlueColor];
+    self.view.backgroundColor = [Constants backgroundColor];
     [self createTitle];
     [self createButtons];
     [self createContent];

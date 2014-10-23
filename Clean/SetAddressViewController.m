@@ -10,7 +10,6 @@
 #import "GetPlanViewController.h"
 #import "VCFlow.h"
 #import "JSQFlatButton.h"
-#import "UIColor+FlatUI.h"
 #import "INTULocationManager.h"
 #import "ParseLogic.h"
 

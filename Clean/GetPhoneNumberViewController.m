@@ -7,9 +7,9 @@
 //
 
 #import "GetPhoneNumberViewController.h"
-#import "UIColor+FlatUI.h"
 #import "VerifyPhoneNumberViewController.h"
 #import "User.h"
+#import "Constants.h"
 
 @interface GetPhoneNumberViewController () <UITextFieldDelegate>
 @property UITextField *phoneEntry;
@@ -21,7 +21,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor midnightBlueColor];
+    self.view.backgroundColor = [Constants backgroundColor];
     [self createPage];
     [self createTitle];
     [self createEntryField];

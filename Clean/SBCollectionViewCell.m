@@ -8,9 +8,9 @@
 
 #import "SBCollectionViewCell.h"
 #import "CKCalendarView.h"
-#import "UIColor+FlatUI.h"
 #import "RMDateSelectionViewController.h"
 #import "User.h"
+#import "Constants.h"
 
 @interface SBCollectionViewCell () <CKCalendarDelegate, MKMapViewDelegate, RMDateSelectionViewControllerDelegate, UITextViewDelegate>
 @property CKCalendarView *calendar;
@@ -66,7 +66,7 @@
                                                                self.contentView.bounds.origin.y+_padding,
                                                                self.contentView.bounds.size.width-2*_padding,
                                                                self.contentView.bounds.size.height-2*_padding)];
-    _notesContainer.backgroundColor = [UIColor wetAsphaltColor];
+    _notesContainer.backgroundColor = [Constants cardColor];
 
     UILabel *notesLabel = [[UILabel alloc] initWithFrame:CGRectMake(_notesContainer.bounds.origin.x, _notesContainer.bounds.origin.y+10, _notesContainer.bounds.size.width, 40)];
     notesLabel.text = @"leave a note";
@@ -140,7 +140,7 @@
                                                                   _front.bounds.origin.y+_padding,
                                                                   _front.bounds.size.width-2*_padding,
                                                                   _front.bounds.size.height-2*_padding)];
-    background.backgroundColor = [UIColor wetAsphaltColor];
+    background.backgroundColor = [Constants cardColor];
     [_front addSubview:background];
 
     int buttonX = background.frame.origin.x;
@@ -189,7 +189,7 @@
                                                        self.contentView.bounds.origin.y+_padding,
                                                        self.contentView.bounds.size.width-2*_padding,
                                                        self.contentView.bounds.size.height-2*_padding)];
-    _addons.backgroundColor = [UIColor wetAsphaltColor];
+    _addons.backgroundColor = [Constants cardColor];
 
     _addonBackButton = [[JSQFlatButton alloc] initWithFrame:CGRectMake(_addons.bounds.origin.x,
                                                                        _addons.bounds.size.height-54+_padding,

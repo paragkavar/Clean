@@ -8,7 +8,6 @@
 
 #import "SetPhoneViewController.h"
 #import "SetVerifyPhoneViewController.h"
-#import "UIColor+FlatUI.h"
 #import "JSQFlatButton.h"
 #import "User.h"
 

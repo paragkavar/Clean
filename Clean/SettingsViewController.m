@@ -7,13 +7,13 @@
 //
 
 #import "SettingsViewController.h"
-#import "UIColor+FlatUI.h"
 #import "JSQFlatButton.h"
 #import "SetPhoneViewController.h"
 #import "SetAddressViewController.h"
 #import "SetPlanViewController.h"
 #import "SetPayCardViewController.h"
 #import "User.h"
+#import "Constants.h"
 
 @interface SettingsViewController ()
 @property JSQFlatButton *back;
@@ -32,7 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor midnightBlueColor];
+    self.view.backgroundColor = [Constants backgroundColor];
     [self createTitle];
     [self createButton];
     [self createPhone];

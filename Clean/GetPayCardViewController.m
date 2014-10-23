@@ -11,12 +11,12 @@
 
 #import "GetPayCardViewController.h"
 #import "PKTextField.h"
-#import "UIColor+FlatUI.h"
 #import "CardIO.h"
 #import <Parse/Parse.h>
 #import "GetPlanViewController.h"
 #import "VCFlow.h"
 #import "User.h"
+#import "Constants.h"
 
 @interface GetPayCardViewController () <STPViewDelegate, CardIOPaymentViewControllerDelegate>
 @property STPView *stripeView;
@@ -30,7 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor midnightBlueColor];
+    self.view.backgroundColor = [Constants backgroundColor];
     [self createPage];
     [self createTitle];
     [self createStripeViewDefault];

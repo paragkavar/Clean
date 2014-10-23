@@ -8,12 +8,12 @@
 
 #import "GetPlanViewController.h"
 #import "RootViewController.h"
-#import "UIColor+FlatUI.h"
 #import <Parse/Parse.h>
 #import "PRCollectionViewCell.h"
 #import "VCFlow.h"
 #import "User.h"
 #import "ParseLogic.h"
+#import "Constants.h"
 
 @interface GetPlanViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 @end
@@ -24,7 +24,7 @@
 {
     [super viewDidLoad];
     _selectedIndex = -1;
-    self.view.backgroundColor = [UIColor midnightBlueColor];
+    self.view.backgroundColor = [Constants backgroundColor];
     _days = @[@"Sunday",@"Monday",@"Tuesday",@"Wednesday",@"Thursday",@"Friday",@"Saturday"];
     [self createPage];
     [self createTitle];

@@ -7,7 +7,6 @@
 //
 
 #import "VerifyPhoneNumberViewController.h"
-#import "UIColor+FlatUI.h"
 #import "JSQFlatButton.h"
 #import <Parse/Parse.h>
 #import "VCFlow.h"
@@ -15,6 +14,7 @@
 #import "RootViewController.h"
 #import "User.h"
 #import "ParseLogic.h"
+#import "Constants.h"
 
 @interface VerifyPhoneNumberViewController ()
 @property UITextField *codeEntry;
@@ -29,7 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor midnightBlueColor];
+    self.view.backgroundColor = [Constants backgroundColor];
     [self createPage];
     [self createTitle];
     [self createEntryField];

@@ -7,7 +7,6 @@
 //
 
 #import "SetPayCardViewController.h"
-#import "UIColor+FlatUI.h"
 #import <Parse/Parse.h>
 #import "VCFlow.h"
 #import "User.h"

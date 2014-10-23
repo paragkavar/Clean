@@ -9,7 +9,6 @@
 #warning minor: problem highlighting mansion box at index 3 in super.collectionView
 
 #import "SetPlanViewController.h"
-#import "UIColor+FlatUI.h"
 #import "VCFlow.h"
 #import <Parse/Parse.h>
 #import "User.h"

@@ -9,9 +9,9 @@
 #import "GetAddressViewController.h"
 #import "GetPayCardViewController.h"
 #import "JSQFlatButton.h"
-#import "UIColor+FlatUI.h"
 #import "INTULocationManager.h"
 #import "User.h"
+#import "Constants.h"
 
 @interface GetAddressViewController () <UIAlertViewDelegate>
 @property UITextField *addressField;
@@ -33,7 +33,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor midnightBlueColor];
+    self.view.backgroundColor = [Constants backgroundColor];
     [self createPage];
     [self createTitle];
     [self createButton];

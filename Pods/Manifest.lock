@@ -1,10 +1,9 @@
 PODS:
-  - Bolts (1.1.2)
+  - Bolts (1.1.3)
   - CardIO (3.8.3)
   - CKCalendar (1.0.0)
-  - Facebook-iOS-SDK (3.17.0):
-    - Bolts
-  - FlatUIKit (1.4)
+  - Facebook-iOS-SDK (3.19.0):
+    - Bolts (~> 1.0)
   - INTULocationManager (1.2.0)
   - JSQFlatButton (2.0.0)
   - Parse (1.2.21):
@@ -18,7 +17,6 @@ PODS:
 DEPENDENCIES:
   - CardIO
   - CKCalendar
-  - FlatUIKit
   - INTULocationManager
   - JSQFlatButton
   - Parse
@@ -27,11 +25,10 @@ DEPENDENCIES:
   - Stripe
 
 SPEC CHECKSUMS:
-  Bolts: 2635e8698a630774689441047f3465d78c48d485
+  Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
   CardIO: de8d02da5003619533f52e4a5c44d84496ddb25c
   CKCalendar: a361e9851d97e266f4e38dd50e2c57478706cc09
-  Facebook-iOS-SDK: f20274d809f112ba540842e2b6cbe50128d51b7b
-  FlatUIKit: edc1ed0c130687dc64a10e45851cc58925f6893d
+  Facebook-iOS-SDK: cb7d74759d0b1ba546e6e6f1dde407b0d4e448d6
   INTULocationManager: 596c57e35a00ca1ee9d59bf4cc2b63dc299b580e
   JSQFlatButton: e8a11ba46496e7db757ddc24469774c254365ece
   Parse: 4be4e9fe2ee6dae16010e7622a5641a7c89154b7
