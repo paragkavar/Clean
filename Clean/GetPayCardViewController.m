@@ -43,7 +43,7 @@
     _page = [[UIPageControl alloc] init];
     _page.center = CGPointMake(self.view.center.x, 100);
     _page.numberOfPages = 5;
-    _page.currentPage = 4;
+    _page.currentPage = 3;
     _page.backgroundColor = [UIColor clearColor];
     _page.tintColor = [UIColor whiteColor];
     _page.currentPageIndicatorTintColor = [UIColor colorWithRed:0.0f green:0.49f blue:0.96f alpha:1.0f];

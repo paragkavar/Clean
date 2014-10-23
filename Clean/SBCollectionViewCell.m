@@ -467,7 +467,7 @@
     [_front addSubview:who];
 
     _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 150, 128*.75, 128*.75)];
-    _imageView.image = [UIImage imageNamed:@"headshot1"];
+//    _imageView.image = [UIImage imageNamed:@"headshot1"];
     _imageView.layer.masksToBounds = YES;
     _imageView.layer.cornerRadius = _imageView.frame.size.width/2;
     [_front addSubview:_imageView];

@@ -39,7 +39,7 @@
         cell.contentView.layer.borderColor = [UIColor whiteColor].CGColor;
     }
 
-    int dayIndex = [super.days indexOfObject:[User day]];
+    int dayIndex = (int)[super.days indexOfObject:[User day]];
     [super.dayPicker selectRow:dayIndex inComponent:0 animated:YES];
     [super.timePicker selectRow:[User hour]-1 inComponent:0 animated:YES];
     [super.timePicker selectRow:[User minute] inComponent:1 animated:YES];
@@ -116,7 +116,7 @@
          }
          else
          {
-             [User setPlan:super.selectedIndex];
+             [User setPlan:(int)super.selectedIndex];
              [super saveValues];
              [ParseLogic updateUserInParse];
              [self dismissViewControllerAnimated:YES completion:nil];
@@ -127,8 +127,8 @@
 - (void)updateTimes
 {
     [User setDay:super.days[[super.dayPicker selectedRowInComponent:0]]];
-    [User setHour:[super.timePicker selectedRowInComponent:0]+1];
-    [User setMinute:[super.timePicker selectedRowInComponent:1]];
+    [User setHour:(int)[super.timePicker selectedRowInComponent:0]+1];
+    [User setMinute:(int)[super.timePicker selectedRowInComponent:1]];
     [User setAM:[super.timePicker selectedRowInComponent:2] == 0];
 }
 

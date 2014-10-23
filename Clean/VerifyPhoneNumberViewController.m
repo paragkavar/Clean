@@ -129,8 +129,7 @@
 
 - (BOOL)codeIsValid
 {
-    return _randomNum == [_codeEntry.text intValue] || [_codeEntry.text isEqualToString:@"0000"];
-#warning minor: 0000 default pin remove in production
+    return _randomNum == [_codeEntry.text intValue];
 }
 
 - (void)buttonCheck

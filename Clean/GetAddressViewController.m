@@ -165,12 +165,12 @@
         [_activity startAnimating];
 
         INTULocationManager *locMgr = [INTULocationManager sharedInstance];
-        _requestID = [locMgr requestLocationWithDesiredAccuracy:INTULocationAccuracyHouse
-                                                        timeout:30.0
-                                           delayUntilAuthorized:YES
-                                                          block:^(CLLocation *currentLocation,
-                                                                  INTULocationAccuracy achievedAccuracy,
-                                                                  INTULocationStatus status)
+        _requestID = (int)[locMgr requestLocationWithDesiredAccuracy:INTULocationAccuracyHouse
+                                                             timeout:30.0
+                                                delayUntilAuthorized:YES
+                                                               block:^(CLLocation *currentLocation,
+                                                                       INTULocationAccuracy achievedAccuracy,
+                                                                       INTULocationStatus status)
          {
              if (status == INTULocationStatusSuccess)
              {

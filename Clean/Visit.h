@@ -16,4 +16,5 @@
 @property CGFloat latitude;
 @property CGFloat longitude;
 @property NSArray *cleaners;
+@property NSString *notes;
 @end

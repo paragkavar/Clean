@@ -102,7 +102,13 @@
     visit[@"date"] = @"Unscheduled";
     visit[@"latitude"] = @([User latitude]);
     visit[@"longitude"] = @([User longitude]);
-    [visit saveInBackground];
+
+    PFQuery *query = [PFQuery queryWithClassName:@"Cleaner"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        int index = arc4random_uniform(objects.count);
+        visit[@"cleaners"] = @[objects[index]];
+        [visit saveInBackground];
+    }];
 }
 
 + (void)createVisitWithCompletionHandler:(void (^)(BOOL succeeded, NSError *error))handler
@@ -112,8 +118,14 @@
     visit[@"date"] = @"Unscheduled";
     visit[@"latitude"] = @([User latitude]);
     visit[@"longitude"] = @([User longitude]);
-    [visit saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        handler(succeeded, error);
+
+    PFQuery *query = [PFQuery queryWithClassName:@"Cleaner"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        int index = arc4random_uniform(objects.count);
+        visit[@"cleaners"] = @[objects[index]];
+        [visit saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            handler(succeeded, error);
+        }];
     }];
 }
 
@@ -140,6 +152,11 @@
             handler([NSArray arrayWithArray:visits]);
         }
     }];
+}
+
++ (void)updateVisitInParse
+{
+#warning update things like Notes, Date, Time, and Addons
 }
 
 @end

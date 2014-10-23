@@ -129,7 +129,7 @@
 
     _requestView = [[RQScrollView alloc] initWithFrame:CGRectMake(10, 80, self.view.frame.size.width-20, self.view.frame.size.width-20)];
     _requestView.center = self.view.center;
-    _requestView.backgroundColor = [UIColor blackColor];
+    _requestView.backgroundColor = [Constants backgroundColor];
     _requestView.transform = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
     [self.view addSubview:_requestView];
 }
@@ -228,6 +228,10 @@
 
 - (void)spin
 {
+    if (CGAffineTransformIsIdentity(_settings.transform))
+    {
+        [self presentViewController:[SettingsViewController new] animated:YES completion:nil];
+    }
     [UIView animateWithDuration:.8 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:2 options:UIViewAnimationOptionCurveEaseOut animations:^{
         if (CGAffineTransformIsIdentity(_settings.transform))
         {
@@ -240,8 +244,6 @@
     } completion:^(BOOL finished) {
 
     }];
-
-    [self presentViewController:[SettingsViewController new] animated:YES completion:nil];
 }
 
 - (void)createCollectionView
@@ -283,22 +285,27 @@
 {
     SBCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     _page.currentPage = indexPath.item;
-    cell.titleLabel.text = [NSString stringWithFormat:@"visit %i",indexPath.item+1];
+    cell.titleLabel.text = [NSString stringWithFormat:@"visit %li",indexPath.item+1];
 
     if (_visits && [_visits[indexPath.item] cleaners])
     {
         Visit *visit = _visits[indexPath.item];
-        Cleaner *cleaner = visit.cleaners.firstObject;
-
-        cell.nameLabel.text = cleaner.name;
         cell.dateLabel.text = visit.date;
-        cell.imageView.image = cleaner.profilePic;
-    }
-    else
-    {
-        cell.nameLabel.text = @"Michelle Borromeo";
-        cell.dateLabel.text = @"12:00pm on 8/30/2014";
-        cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"headshot%i",(indexPath.item%4)+1]];
+
+        PFObject *pfCleaner = visit.cleaners.firstObject;
+        NSLog(@"%@",visit.cleaners);
+
+        cell.imageView.image = nil;
+        [pfCleaner fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            [object[@"headshot"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                Cleaner *cleaner = [Cleaner new];
+                cleaner.name = object[@"name"];
+                cell.nameLabel.text = cleaner.name;
+                cleaner.headshot = [UIImage imageWithData:data];
+                cell.imageView.image = cleaner.headshot;
+            }];
+
+        }];
     }
 
     return cell;

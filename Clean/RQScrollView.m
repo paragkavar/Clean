@@ -153,7 +153,7 @@
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
     cell.contentView.layer.borderWidth = 1;
     cell.contentView.layer.borderColor = [UIColor whiteColor].CGColor;
-    _size = indexPath.item+1;
+    _size = (int)indexPath.item+1;
     _cost = (indexPath.item+1)*75;
     [self enableScheduleButton];
 }

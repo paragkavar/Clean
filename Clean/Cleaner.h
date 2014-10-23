@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface Cleaner : NSObject
-@property UIImage *profilePic;
+@property UIImage *headshot;
 @property NSString *name;
 @end

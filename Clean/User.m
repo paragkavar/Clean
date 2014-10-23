@@ -102,7 +102,7 @@
 
 + (int)hour
 {
-    return [[NSUserDefaults standardUserDefaults] integerForKey:@"hour"];
+    return (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"hour"];
 }
 
 + (void)setHour:(int)newHour
@@ -113,7 +113,7 @@
 
 + (int)minute
 {
-    return [[NSUserDefaults standardUserDefaults] integerForKey:@"minute"];
+    return (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"minute"];
 }
 
 + (void)setMinute:(int)newMinute
@@ -135,7 +135,7 @@
 
 + (int)plan
 {
-    return [[NSUserDefaults standardUserDefaults] integerForKey:@"plan"];
+    return (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"plan"];
 }
 
 + (void)setPlan:(int)newPlan
