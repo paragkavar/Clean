@@ -11,6 +11,7 @@
 #import "User.h"
 
 @interface Visit : NSObject
+@property NSString *objectId;
 @property NSString *phoneNumber;
 @property NSString *date;
 @property CGFloat latitude;

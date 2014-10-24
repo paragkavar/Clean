@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 SapanBhuta. All rights reserved.
 //
 
-#warning minor: problem highlighting mansion box at index 3 in super.collectionView
-
 #import "SetPlanViewController.h"
 #import "VCFlow.h"
 #import <Parse/Parse.h>

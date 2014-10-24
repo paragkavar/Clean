@@ -181,7 +181,6 @@
     [_notesButtons addTarget:self action:@selector(showNotes) forControlEvents:UIControlEventTouchUpInside];
     [_front addSubview:_notesButtons];
 }
-#warning minor: slight offset on right edge of notes button, all three buttons not properly placed
 
 - (void)createAddons
 {
@@ -472,9 +471,10 @@
     _imageView.layer.cornerRadius = _imageView.frame.size.width/2;
     [_front addSubview:_imageView];
 
-    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(138, 194, 320-148, 40)];
+    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(138, 194, 320-158, 40)];
     _nameLabel.center = CGPointMake(_nameLabel.center.x, _imageView.center.y);
     _nameLabel.textColor = [UIColor whiteColor];
+    _nameLabel.textAlignment = NSTextAlignmentRight;
     _nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
     [_front addSubview:_nameLabel];
 }

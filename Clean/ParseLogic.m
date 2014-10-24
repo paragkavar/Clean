@@ -9,7 +9,7 @@
 #import "ParseLogic.h"
 #import "User.h"
 #import <Parse/Parse.h>
-#import "Visit.h"
+//#import "Visit.h"
 #import "Cleaner.h"
 
 @implementation ParseLogic
@@ -17,8 +17,11 @@
 + (void)checkForExistingUserWithCompletionHandler:(void (^)(bool exists))handler
 {
     PFQuery *query = [PFQuery queryWithClassName:@"User"];
-    [query whereKey:@"phoneNumber" equalTo:[User phoneNumber]];
+    [query whereKey:@"verifiedPhoneNumber" equalTo:[User phoneNumber]];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+
+        NSLog(@"%@", objects);
+
         if (objects.count==0) {
             handler(NO);
         } else {
@@ -141,6 +144,7 @@
             for (PFObject *object in objects)
             {
                 Visit *visit = [Visit new];
+                visit.objectId = object[@"objectId"];
                 visit.phoneNumber = object[@"phoneNumber"];
                 visit.date = object[@"date"];
                 visit.latitude = [object[@"latitude"] floatValue];
@@ -154,9 +158,11 @@
     }];
 }
 
-+ (void)updateVisitInParse
++ (void)updateVisitInParse:(Visit *)visit Notes:(NSString *)notes Date:(NSDate *)date Addons:(NSDictionary *)addons
 {
 #warning update things like Notes, Date, Time, and Addons
+
+    
 }
 
 @end

@@ -49,6 +49,7 @@
                                       foregroundColor:[UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f]
                                                 title:@"register now"
                                                 image:nil];
+    _start.transform = CGAffineTransformMakeTranslation(0, 54);
     [_start addTarget:self action:@selector(start:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_start];
     _start.hidden = YES;
@@ -94,7 +95,12 @@
     {
         _start.hidden = NO;
         cell.imageView.image = [UIImage imageNamed:@"arrow-left"];
-        cell.shimmeringView.transform = CGAffineTransformMakeRotation(-M_PI_2);
+        cell.shimmeringView.transform = CGAffineTransformMakeRotation(M_PI);
+
+        [UIView animateWithDuration:.5 animations:^{
+            cell.shimmeringView.transform = CGAffineTransformMakeRotation(-M_PI_2);
+            _start.transform = CGAffineTransformMakeTranslation(0, 0);
+        }];
     }
     else
     {

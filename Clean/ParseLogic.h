@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Visit.h"
 
 @interface ParseLogic : NSObject
 + (void)checkForExistingUserWithCompletionHandler:(void (^)(bool exists))handler;
@@ -16,4 +17,5 @@
 + (void)createVisitWithCompletionHandler:(void (^)(BOOL succeeded, NSError *error))handler;
 + (void)createVisits;
 + (void)retrieveVisitsWithCompletionHandler:(void (^)(NSArray *visits))handler;
++ (void)updateVisitInParse:(Visit *)visit Notes:(NSString *)notes Date:(NSDate *)date Addons:(NSDictionary *)addons;
 @end

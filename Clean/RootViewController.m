@@ -6,10 +6,6 @@
 //  Copyright (c) 2014 SapanBhuta. All rights reserved.
 //
 
-#warning systemize plans and cost through Parse
-#warning systemize assigning cleaners via Parse (get their availability)
-#warning save notes and charge addons per visit
-
 #define shimmeringFrame CGRectMake(15,20,290,55)
 #define dateFrame CGRectMake(0, 80, 320, 115)
 #define buttonFrame CGRectMake(0, self.view.frame.size.height-54, self.view.frame.size.width, 54)
@@ -77,8 +73,28 @@
     [ParseLogic retrieveVisitsWithCompletionHandler:^(NSArray *visits) {
         _visits = visits;
         _page.numberOfPages = _visits.count;
-        [_collectionView reloadData];
+        [self fetchCleanersFromVisits];
     }];
+}
+
+- (void)fetchCleanersFromVisits
+{
+    for (Visit *visit in _visits)
+    {
+        if (visit.cleaners)
+        {
+            PFObject *pfCleaner = visit.cleaners.firstObject;
+            [pfCleaner fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                [object[@"headshot"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                    Cleaner *cleaner = [Cleaner new];
+                    cleaner.name = object[@"name"];
+                    cleaner.headshot = [UIImage imageWithData:data];
+                    visit.cleaners = @[cleaner];
+                    [_collectionView reloadData];
+                }];
+            }];
+        }
+    }
 }
 
 - (void)createRequest
@@ -88,7 +104,7 @@
                                                                self.view.frame.size.width,
                                                                54)
                                    backgroundColor:[UIColor colorWithRed:1.00f green:1.00f blue:1.00f alpha:1.0f]
-                                   foregroundColor:[UIColor colorWithRed:0.35f green:0.35f blue:0.81f alpha:1.0f]
+                                   foregroundColor:[UIColor colorWithRed:0.00f green:0.49f blue:0.96f alpha:1.0f]
                                              title:@"request a clean"
                                              image:nil];
     [_request addTarget:self action:@selector(request:) forControlEvents:UIControlEventTouchUpInside];
@@ -287,25 +303,13 @@
     _page.currentPage = indexPath.item;
     cell.titleLabel.text = [NSString stringWithFormat:@"visit %li",indexPath.item+1];
 
-    if (_visits && [_visits[indexPath.item] cleaners])
+    Visit *visit = _visits[indexPath.item];
+    cell.dateLabel.text = visit.date;
+
+    if ([visit.cleaners.firstObject isKindOfClass:[Cleaner class]])
     {
-        Visit *visit = _visits[indexPath.item];
-        cell.dateLabel.text = visit.date;
-
-        PFObject *pfCleaner = visit.cleaners.firstObject;
-        NSLog(@"%@",visit.cleaners);
-
-        cell.imageView.image = nil;
-        [pfCleaner fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            [object[@"headshot"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-                Cleaner *cleaner = [Cleaner new];
-                cleaner.name = object[@"name"];
-                cell.nameLabel.text = cleaner.name;
-                cleaner.headshot = [UIImage imageWithData:data];
-                cell.imageView.image = cleaner.headshot;
-            }];
-
-        }];
+        cell.nameLabel.text = [visit.cleaners.firstObject name];
+        cell.imageView.image = [visit.cleaners.firstObject headshot];
     }
 
     return cell;
